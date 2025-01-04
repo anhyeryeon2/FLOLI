@@ -13,21 +13,6 @@ import {
 } from '@/pages'
 import { Home } from '@/pages/Home'
 
-// const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-//   const session = supabase.auth.getSession()
-
-//   if (!session) {
-//     return (
-//       <Navigate
-//         to="/login"
-//         replace
-//       />
-//     )
-//   }
-
-//   return <>{children}</>
-// }
-
 const router = createBrowserRouter([
   {
     path: '/',
