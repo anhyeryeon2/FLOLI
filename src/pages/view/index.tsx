@@ -44,22 +44,21 @@ const DescriptionText = ({ description }: Pick<IViewProps, 'description'>) => {
   )
 }
 
-export const View = (
-  {
-    // playlistTitle,
-    // VideoTitle,
-    // createAt,
-    // description,
-    // creatorImgPath,
-    // creatorName,
-    // subscCount,
-    // isSubsc,
-    // isLike,
-    // isStore,
-    // commentCount,
-    // trackCount,
-  }: IViewProps
-) => {
+// {
+//   playlistTitle,
+//   VideoTitle,
+//   createAt,
+//   description,
+//   creatorImgPath,
+//   creatorName,
+//   subscCount,
+//   isSubsc,
+//   isLike,
+//   isStore,
+//   commentCount,
+//   trackCount,
+// }: IViewProps
+export const View = () => {
   const playlistTitle =
     '플레이리스트 제목 플레이리스트 제목 플레이리스트 제목 플레이리스트 제목 플레이리스트 제목플레이리스트 제목플레이리스트 제목플레이리스트 제목플레이리스트 제목'
   const VideoTitle = '영상 제목 가나다라 마바사아'
@@ -71,7 +70,7 @@ export const View = (
   const creatorName =
     '홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동'
   const subscCount = 2857612
-  const isSubsc = false
+  // const isSubsc = false
   const isLike = false
   const isStore = false
   const commentCount = 172
