@@ -90,6 +90,8 @@
   --ff_kor: 'Pretendard'; /* 한글 폰트*/
   --ff_eng: 'Pretendard'; /* 영문, 숫자 폰트 */
 
+  --ls_base: -0.02em;
+
   /* Spacing */
   --spacing-1: 0.4rem; /* 4px */
   --spacing-2: 0.8rem; /* 8px */

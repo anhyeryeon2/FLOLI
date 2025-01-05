@@ -45,4 +45,7 @@ export const nickname = styled.p`
   font-size: var(--fs-m);
   color: var(--color-gray);
   margin: var(--spacing-1) 0 var(--spacing-1);
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 `
