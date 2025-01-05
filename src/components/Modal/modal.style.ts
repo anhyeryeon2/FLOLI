@@ -34,5 +34,5 @@ export const ModalContainer = styled.div<{ $height?: string }>`
 
 export const ModalContent = styled.div`
   flex: 1 1 auto;
-  padding: var(--layout-padding);
+  padding: 0 var(--layout-padding);
 `
