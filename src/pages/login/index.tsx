@@ -61,7 +61,8 @@ export function Login() {
         <Button
           width="100%"
           fontSize="1.8rem"
-          disabled={isSubmitting}>
+          disabled={isSubmitting}
+          bordertype={'기본'}>
           {isSubmitting ? '로그인 중...' : '로그인'}
         </Button>
 
@@ -70,7 +71,8 @@ export function Login() {
           width="100%"
           fontSize="1.8rem"
           onClick={() => alert('구글 로그인')}
-          disabled={isSubmitting}>
+          disabled={isSubmitting}
+          bordertype={'기본'}>
           또는 구글로 로그인
         </Button>
       </S.Form>
