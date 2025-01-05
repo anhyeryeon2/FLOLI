@@ -1,5 +1,5 @@
 import { FeedListProps } from '@/types/List'
-import * as S from './FeedList.styles'
+import * as S from './Feedlist.styles'
 import { FeedFooter } from './Footer'
 
 const FeedList = ({

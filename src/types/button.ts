@@ -7,4 +7,6 @@ export type TButtonProps = {
   disabled?: boolean
   fontSize?: string
   width?: string
+  type?: string
+  bordertype: '구독' | '기본'
 }
