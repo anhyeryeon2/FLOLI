@@ -48,10 +48,10 @@ const Modal = ({
   return ReactDOM.createPortal(
     <S.ModalOverlay
       $isBg={isBg}
-      onClick={closeModal}>
+      onClick={closeModal}
+      className={className}
+      id={id}>
       <S.ModalContainer
-        id={id}
-        className={className}
         $height={height}
         onClick={handleClick}>
         <S.ModalContent>{children}</S.ModalContent>

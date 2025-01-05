@@ -47,11 +47,10 @@ const ModalFull = ({
   if (!isOpen) return null
 
   return ReactDOM.createPortal(
-    <S.ModalOverlay>
-      <S.ModalContainer
-        id={id}
-        className={className}
-        onClick={handleClick}>
+    <S.ModalOverlay
+      className={className}
+      id={id}>
+      <S.ModalContainer onClick={handleClick}>
         <HeaderSub onClick={handleModalClose}>{pageTitle}</HeaderSub>
         <S.ModalContent>{children}</S.ModalContent>
       </S.ModalContainer>
