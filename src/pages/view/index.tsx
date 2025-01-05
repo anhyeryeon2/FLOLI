@@ -70,7 +70,7 @@ export const View = () => {
   const creatorName =
     '홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동'
   const subscCount = 2857612
-  // const isSubsc = false
+  const isSubsc = false
   const isLike = false
   const isStore = false
   const commentCount = 172
@@ -102,12 +102,15 @@ export const View = () => {
               <h3 className="creator-name">{creatorName}</h3>
               <span className="subsc-count">{subscCount}</span>
             </div>
-            {/* <Button>구독</Button> */}
-            <button
-              type="button"
-              className="subsc-button">
-              구독
-            </button>
+            {isSubsc ? (
+              <S.StyledButton
+                type="button"
+                className="subsc-cancel">
+                구독 취소
+              </S.StyledButton>
+            ) : (
+              <S.StyledButton type="button">구독</S.StyledButton>
+            )}
           </S.CreatorProfileWrapper>
           <S.ActionButtonWrapper>
             <button type="button">

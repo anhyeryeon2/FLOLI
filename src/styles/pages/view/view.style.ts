@@ -92,14 +92,24 @@ export const CreatorProfileWrapper = styled.div`
   .subsc-count {
     color: var(--color-gray);
   }
+`
 
-  .profile-img {
-  }
+export const StyledButton = styled.button`
+  flex: 0 0 auto;
+  width: auto;
+  padding: 0.8rem 1.6rem;
+  margin-left: var(--spacing-5);
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--color-white);
+  background: var(--color-black);
+  border-radius: var(--radius-full);
 
-  .subsc-button {
-    flex: 0 0 auto;
-    margin-left: var(--spacing-5);
-    font-size: 1.4rem;
+  &.subsc-cancel {
+    padding: 0.8rem 1rem;
+    background: var(--color-white);
+    color: var(--color-black);
+    border: 1px solid var(--color-black);
   }
 `
 
@@ -141,9 +151,11 @@ export const CommentWrapper = styled.div`
 
 export const VideoListPanel = styled.div`
   position: fixed;
-  left: var(--spacing-2);
-  right: var(--spacing-2);
+  left: 50%;
+  transform: translateX(-50%);
   bottom: var(--spacing-5);
+  width: calc(100% - 1.6rem);
+  max-width: calc(var(--max-width) - 1.6rem);
   display: flex;
   align-items: center;
   justify-content: space-between;
