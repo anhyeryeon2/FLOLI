@@ -10,9 +10,10 @@ export const Container = styled.div`
   }
 `
 
-export const TitleWrapper = styled.div`
+export const TitleWrapper = styled.header`
   display: flex;
   align-items: flex-start;
+  gap: 0.8rem;
   position: sticky;
   top: 0;
   padding: var(--layout-padding) 0;
