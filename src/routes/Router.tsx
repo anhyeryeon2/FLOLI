@@ -3,30 +3,15 @@ import Layout, { Container } from '@/components/Layout/Layout'
 import {
   Login,
   Mypage,
-  MyPlaylists,
+  MyPlayLists,
   NotFound,
-  PlaylistCreate,
+  PlayListCreate,
   Signup,
   Subscriptions,
   UserProfile,
   View
 } from '@/pages'
 import { Home } from '@/pages/Home'
-
-// const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-//   const session = supabase.auth.getSession()
-
-//   if (!session) {
-//     return (
-//       <Navigate
-//         to="/login"
-//         replace
-//       />
-//     )
-//   }
-
-//   return <>{children}</>
-// }
 
 const router = createBrowserRouter([
   {
@@ -70,16 +55,16 @@ const router = createBrowserRouter([
         element: <Subscriptions />
       },
       {
-        path: '/my-playlists',
-        element: <MyPlaylists />
+        path: '/my-playLists',
+        element: <MyPlayLists />
       },
       {
         path: '/profile/:userId',
         element: <UserProfile />
       },
       {
-        path: '/playlist/create',
-        element: <PlaylistCreate />
+        path: '/playList/create',
+        element: <PlayListCreate />
       }
     ]
   }

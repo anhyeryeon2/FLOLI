@@ -45,7 +45,7 @@ const DescriptionText = ({ description }: Pick<IViewProps, 'description'>) => {
 }
 
 // {
-//   playlistTitle,
+//   playListTitle,
 //   VideoTitle,
 //   createAt,
 //   description,
@@ -59,7 +59,7 @@ const DescriptionText = ({ description }: Pick<IViewProps, 'description'>) => {
 //   trackCount,
 // }: IViewProps
 export const View = () => {
-  const playlistTitle =
+  const playListTitle =
     '플레이리스트 제목 플레이리스트 제목 플레이리스트 제목 플레이리스트 제목 플레이리스트 제목플레이리스트 제목플레이리스트 제목플레이리스트 제목플레이리스트 제목'
   const VideoTitle = '영상 제목 가나다라 마바사아'
   const createAt = '2024년 9월 10일'
@@ -86,7 +86,7 @@ export const View = () => {
         {/* todo: 영상 들어가는 영역 - sticky 넣기 */}
         <S.VideoInfoWrapper>
           <h2>{VideoTitle}</h2>
-          <h1>{playlistTitle}</h1>
+          <h1>{playListTitle}</h1>
           <div className="info-box">
             <span className="create-at">{createAt}</span>
             <DescriptionText description={description} />
@@ -148,13 +148,13 @@ export const View = () => {
 
         <S.VideoListPanel onClick={openVideoList}>
           <RiPlayList2Fill size="24" />
-          <div className="playlist-info-wrapper">
+          <div className="playList-info-wrapper">
             <p className="next-video-title">
               다음 영상 제목 들어가기다음 영상 제목 들어가기 다음 영상 제목
               들어가기
             </p>
-            <div className="playlist-info">
-              <p>{playlistTitle} 말줄임표 넣기</p>
+            <div className="playList-info">
+              <p>{playListTitle} 말줄임표 넣기</p>
               <span>&nbsp;|&nbsp;</span>
               <span>2/{trackCount}</span>
             </div>
@@ -172,7 +172,7 @@ export const View = () => {
           <ViewVideoList
             closeModal={closeVideoList}
             trackCount={trackCount}
-            playlistTitle={playlistTitle}
+            playListTitle={playListTitle}
           />
         </S.StyledModal>
       </S.Container>
