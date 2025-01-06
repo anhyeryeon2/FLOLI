@@ -1,9 +1,12 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Header from '../header/header-main/Header'
 import Navbar from '../navbar/Navbar'
 import { ROUTER_PATH, ROUTER_PATH_REGEX } from '@/constants/constant'
 import HeaderSub from '../header/header-sub/HeaderSub'
+
+const queryClient = new QueryClient()
 
 const Container = styled.div`
   max-width: var(--max-width);
@@ -47,11 +50,13 @@ const Layout = () => {
   }
 
   return (
-    <Container className={!isNoNavbarPaths ? 'is-navbar' : ''}>
-      {renderHeader()}
-      <Outlet />
-      {!isNoNavbarPaths && <Navbar />}
-    </Container>
+    <QueryClientProvider client={queryClient}>
+      <Container className={!isNoNavbarPaths ? 'is-navbar' : ''}>
+        {renderHeader()}
+        <Outlet />
+        {!isNoNavbarPaths && <Navbar />}
+      </Container>
+    </QueryClientProvider>
   )
 }
 
