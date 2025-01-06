@@ -1,6 +1,6 @@
-import FeedList from '@/components/FeedList/FeedList'
-import * as S from '../components/FeedList/FeedList.styles'
-const playlists = [
+import FeedList from '@/components/Feedlist/Feedlist'
+import * as S from '../components/Feedlist/Feedlist.styles'
+const playLists = [
   {
     id: '1',
     title: 'Relax and Unwind',
@@ -84,21 +84,21 @@ const playlists = [
 export function Home() {
   return (
     <S.FeedConteiner>
-      {playlists.map(playlist => (
+      {playLists.map(playList => (
         <FeedList
-          image={playlist.thumbnail}
-          profileImage={playlist.profileImage}
-          nickname={playlist.name}
-          likes={playlist.likes}
-          track={playlist.tracks.length}
-          date={playlist.createdAt}
-          title={playlist.title}
-          comments={playlist.commentsCount}
-          key={playlist.id}
+          image={playList.thumbnail}
+          profileImage={playList.profileImage}
+          nickname={playList.name}
+          likes={playList.likes}
+          track={playList.tracks.length}
+          date={playList.createdAt}
+          title={playList.title}
+          comments={playList.commentsCount}
+          key={playList.id}
         />
       ))}
     </S.FeedConteiner>
   )
 }
 
-export default playlists
+export default playLists

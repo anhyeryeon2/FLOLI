@@ -1,7 +1,7 @@
 import styled from 'styled-components'
 
 export const Container = styled.div`
-  .detail-play-list {
+  .detail-play-List {
     padding-bottom: var(--layout-padding);
 
     & > *:nth-child(n + 2) {

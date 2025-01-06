@@ -49,14 +49,14 @@ const testArr = [
 
 const ViewVideoList = ({
   closeModal,
-  playlistTitle,
+  playListTitle,
   trackCount
-}: Pick<Combined, 'closeModal' | 'playlistTitle' | 'trackCount'>) => {
+}: Pick<Combined, 'closeModal' | 'playListTitle' | 'trackCount'>) => {
   return (
     <S.Container>
       <S.TitleWrapper>
         <div className="title-box">
-          <h2>{playlistTitle}</h2>
+          <h2>{playListTitle}</h2>
           <span>2/{trackCount}</span>
         </div>
         <button
@@ -66,7 +66,7 @@ const ViewVideoList = ({
         </button>
       </S.TitleWrapper>
 
-      <div className="detail-play-list">
+      <div className="detail-play-List">
         {testArr.map(data => (
           <DetailPlayList
             key={data.title}

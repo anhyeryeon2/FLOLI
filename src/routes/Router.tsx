@@ -1,60 +1,39 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Layout, { Container } from '@/components/Layout/Layout'
+import Layout from '@/components/Layout/Layout'
 import {
   Login,
   Mypage,
-  MyPlaylists,
+  MyPlayLists,
   NotFound,
-  PlaylistCreate,
+  PlayListCreate,
   Signup,
   Subscriptions,
   UserProfile,
   View
 } from '@/pages'
 import { Home } from '@/pages/Home'
-
-// const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-//   const session = supabase.auth.getSession()
-
-//   if (!session) {
-//     return (
-//       <Navigate
-//         to="/login"
-//         replace
-//       />
-//     )
-//   }
-
-//   return <>{children}</>
-// }
+import { ROUTER_PATH } from '@/constants/constant'
 
 const router = createBrowserRouter([
   {
-    path: '/login',
-    element: (
-      <Container>
-        <Login />
-      </Container>
-    ),
-    errorElement: <NotFound />
-  },
-  {
-    path: '/signup',
-    element: (
-      <Container>
-        <Signup />
-      </Container>
-    ),
-    errorElement: <NotFound />
-  },
-  {
-    path: '/',
+    path: ROUTER_PATH.HOME,
     element: <Layout />,
     errorElement: <NotFound />,
     children: [
-      { path: '/', element: <Home /> },
       {
-        path: '/mypage',
+        path: ROUTER_PATH.HOME,
+        element: <Home />
+      },
+      {
+        path: ROUTER_PATH.LOGIN,
+        element: <Login />
+      },
+      {
+        path: ROUTER_PATH.SIGNUP,
+        element: <Signup />
+      },
+      {
+        path: ROUTER_PATH.MYPAGE,
         element: (
           // <ProtectedRoute>
           <Mypage />
@@ -62,24 +41,24 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/view/:id',
+        path: ROUTER_PATH.VIEW,
         element: <View />
       },
       {
-        path: '/subscriptions',
+        path: ROUTER_PATH.SUBSCRIPTIONS,
         element: <Subscriptions />
       },
       {
-        path: '/my-playlists',
-        element: <MyPlaylists />
+        path: ROUTER_PATH.MYPLAYLISTS,
+        element: <MyPlayLists />
       },
       {
-        path: '/profile/:userId',
+        path: ROUTER_PATH.USERPROFILE,
         element: <UserProfile />
       },
       {
-        path: '/playlist/create',
-        element: <PlaylistCreate />
+        path: ROUTER_PATH.PLAYLISTCREATE,
+        element: <PlayListCreate />
       }
     ]
   }
