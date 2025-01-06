@@ -1,19 +1,29 @@
 import styled from 'styled-components'
 import { FaEllipsisH } from 'react-icons/fa'
 
+export const FeedConteiner = styled.div`
+  display: flex;
+  flex-direction: column;
+  max-width: var(--max-width);
+  gap: 20px;
+  justify-content: center;
+`
+
 export const CardContainer = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
   background-color: var(--color-bg1);
   box-shadow: var(--shadow-s);
-  max-width: 50rem;
+  justify-content: center;
+  align-items: center;
   margin: auto;
+  max-width: 50rem;
+  min-width: 36rem;
 `
 
 export const ImageWrapper = styled.div`
   width: 100%;
-  height: 15rem;
+  height: 16rem;
   position: relative;
   overflow: hidden;
   img {
@@ -39,6 +49,7 @@ export const ContentWrapper = styled.div`
   align-items: flex-start;
   width: 100%;
   padding: var(--spacing-4) var(--spacing-3) 0 var(--spacing-3);
+  height: 10rem;
 `
 
 export const ProfileImage = styled.div`

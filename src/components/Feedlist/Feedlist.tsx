@@ -10,10 +10,11 @@ const FeedList = ({
   likes,
   comments,
   date,
-  track
+  track,
+  key
 }: FeedListProps) => {
   return (
-    <S.CardContainer>
+    <S.CardContainer key={key}>
       <S.ImageWrapper>
         <img
           src={image}
