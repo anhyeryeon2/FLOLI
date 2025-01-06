@@ -6,7 +6,7 @@ export default function Header() {
     <S.HeaderWrapper>
       <S.Logo src={MainLogo} />
       <S.SearchIcon>
-        <IoIosSearch size={30} />
+        <IoIosSearch size={24} />
       </S.SearchIcon>
     </S.HeaderWrapper>
   )

@@ -12,6 +12,7 @@ import {
   View
 } from '@/pages'
 import { Home } from '@/pages/Home'
+import { ROUTER_PATH } from '@/constants/constant'
 
 // const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
 //   const session = supabase.auth.getSession()
@@ -30,31 +31,24 @@ import { Home } from '@/pages/Home'
 
 const router = createBrowserRouter([
   {
-    path: '/login',
-    element: (
-      <Container>
-        <Login />
-      </Container>
-    ),
-    errorElement: <NotFound />
-  },
-  {
-    path: '/signup',
-    element: (
-      <Container>
-        <Signup />
-      </Container>
-    ),
-    errorElement: <NotFound />
-  },
-  {
-    path: '/',
+    path: ROUTER_PATH.HOME,
     element: <Layout />,
     errorElement: <NotFound />,
     children: [
-      { path: '/', element: <Home /> },
       {
-        path: '/mypage',
+        path: ROUTER_PATH.HOME,
+        element: <Home />
+      },
+      {
+        path: ROUTER_PATH.LOGIN,
+        element: <Login />
+      },
+      {
+        path: ROUTER_PATH.SIGNUP,
+        element: <Signup />
+      },
+      {
+        path: ROUTER_PATH.MYPAGE,
         element: (
           // <ProtectedRoute>
           <Mypage />
@@ -62,23 +56,23 @@ const router = createBrowserRouter([
         )
       },
       {
-        path: '/view/:id',
+        path: ROUTER_PATH.VIEW,
         element: <View />
       },
       {
-        path: '/subscriptions',
+        path: ROUTER_PATH.SUBSCRIPTIONS,
         element: <Subscriptions />
       },
       {
-        path: '/my-playlists',
+        path: ROUTER_PATH.MYPLAYLISTS,
         element: <MyPlaylists />
       },
       {
-        path: '/profile/:userId',
+        path: ROUTER_PATH.USERPROFILE,
         element: <UserProfile />
       },
       {
-        path: '/playlist/create',
+        path: ROUTER_PATH.PLAYLISTCREATE,
         element: <PlaylistCreate />
       }
     ]
