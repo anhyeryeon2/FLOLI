@@ -12,6 +12,7 @@ export const NavbarWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   width: 100%;
+  height: var(--navbar-height);
   max-width: var(--max-width);
   background-color: var(--color-white);
   box-shadow: var(--shadow-s);
@@ -19,25 +20,40 @@ export const NavbarWrapper = styled.div`
 `
 export const Menu = styled.div`
   display: flex;
-  flex: 1;
   justify-content: space-around;
   align-items: center;
-  padding: 1rem;
-  background-color: var(--color-white);
+  height: 100%;
 `
 
 export const MenuItem = styled(Link)<{ $isCenter?: boolean }>`
+  flex: 1 1 100%;
+  display: flex;
+  flex-direction: column;
   align-items: center;
+  gap: 0.4rem;
   cursor: pointer;
-  text-align: center;
-  flex: ${props => (props.$isCenter ? '0 0 20%' : '1')};
+
   span {
     font-size: var(--fs-m);
-    color: #333;
+    color: var(--color-black);
   }
 `
 
 export const Icon = styled.div<IconProps>`
-  font-size: 3rem;
-  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  svg {
+    font-size: 2.4rem;
+  }
+
+  .profile-img {
+    width: 2.4rem;
+    height: 2.4rem;
+    border-radius: 50%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
 `

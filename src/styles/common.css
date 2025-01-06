@@ -31,8 +31,9 @@
   /* max-width */
   --max-width: 600px;
 
-  /*Header 높이 값*/
-  --header-height: 6rem;
+  /* 요소 높이 값*/
+  --header-height: 4.8rem;
+  --navbar-height: 5.8rem;
 
   /* 컨테이너 좌우 간격 */
   --layout-padding: 1.2rem;
