@@ -1,7 +1,7 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import Header from '../header/header-main/Header'
-import Navbar from '../navbar/Navbar'
+import Navbar from '../Navbar/Navbar'
 import { ROUTER_PATH, ROUTER_PATH_REGEX } from '@/constants/constant'
 import HeaderSub from '../header/header-sub/HeaderSub'
 
