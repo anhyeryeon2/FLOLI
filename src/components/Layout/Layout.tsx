@@ -24,20 +24,31 @@ const Layout = () => {
     ROUTER_PATH.SIGNUP,
     ROUTER_PATH.VIEW
   ]
+  const backHeaderPaths = ROUTER_PATH_REGEX.VIEW.test(location.pathname)
 
-  const isNoHeaderPaths =
-    noHeaderPaths.includes(location.pathname) ||
-    ROUTER_PATH_REGEX.VIEW.test(location.pathname)
+  const isNoHeaderPaths = noHeaderPaths.includes(location.pathname)
+  const isBackHeaderPaths = backHeaderPaths
   const isNoNavbarPaths =
     noNavbarPaths.includes(location.pathname) ||
     ROUTER_PATH_REGEX.VIEW.test(location.pathname)
 
-  const isSubHeaderPaths = ROUTER_PATH_REGEX.VIEW.test(location.pathname)
+  const isSubHeaderPaths = ''
+
+  const renderHeader = () => {
+    if (isSubHeaderPaths) {
+      return <HeaderSub />
+    } else if (isBackHeaderPaths) {
+      return <Header isBack={true} />
+    } else if (isNoHeaderPaths) {
+      return null
+    } else {
+      return <Header />
+    }
+  }
 
   return (
     <Container className={!isNoNavbarPaths ? 'is-navbar' : ''}>
-      {!isNoHeaderPaths && <Header />}
-      {isSubHeaderPaths && <HeaderSub />}
+      {renderHeader()}
       <Outlet />
       {!isNoNavbarPaths && <Navbar />}
     </Container>
