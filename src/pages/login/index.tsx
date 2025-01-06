@@ -1,63 +1,97 @@
-import React, { useState } from 'react'
 import { supabase } from '../../../supabaseConfig'
+import { useNavigate } from 'react-router-dom'
+import Input from '@/components/Input/Input'
+import { Button } from '@/components/button/Button'
+import * as S from './login.styles'
+import { useForm, SubmitHandler } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { loginSchema, LoginFormInputs } from '@/schema/loginSchema'
+import MainLogo from '@/assets/img/logo/floli.svg'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 
 export function Login() {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [error, setError] = useState('')
-  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
+  const { showToastMessage } = useToastMessageContext()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isSubmitting }
+  } = useForm<LoginFormInputs>({ resolver: zodResolver(loginSchema) })
 
-  const handleLogin = async (e: React.FormEvent) => {
-    e.preventDefault()
-    setError('')
-    setLoading(true)
+  const handleLogin: SubmitHandler<LoginFormInputs> = async data => {
+    const { email, password } = data
 
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { error } = await supabase.auth.signInWithPassword({
       email,
       password
     })
 
-    setLoading(false)
-
     if (error) {
-      setError(error.message)
+      showToastMessage({
+        message: `로그인 실패하였습니다 `,
+        type: 'error'
+      })
     } else {
-      console.log('로그인 성공:', data)
-      alert('로그인 성공!')
+      showToastMessage({
+        message: '로그인 성공하였습니다 ',
+        type: 'success'
+      })
+      navigate('/')
     }
   }
 
   return (
-    <div>
-      <h1>로그인</h1>
-      <form onSubmit={handleLogin}>
-        <div>
-          <label htmlFor="email">이메일:</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="이메일을 입력하세요"
-            value={email}
-            onChange={e => setEmail(e.target.value)}
+    <S.Container>
+      <S.Logo src={MainLogo} />
+
+      <S.Form onSubmit={handleSubmit(handleLogin)}>
+        <S.InputWrapper>
+          <Input
+            {...register('email')}
+            placeholder="example@test.com"
           />
-        </div>
-        <div>
-          <label htmlFor="password">비밀번호:</label>
-          <input
-            id="password"
+          {errors.email && (
+            <S.ErrorMessage>{errors.email.message}</S.ErrorMessage>
+          )}
+        </S.InputWrapper>
+        <S.InputWrapper>
+          <Input
             type="password"
-            placeholder="비밀번호를 입력하세요"
-            value={password}
-            onChange={e => setPassword(e.target.value)}
+            {...register('password')}
+            placeholder="비밀번호"
           />
-        </div>
-        <button
-          type="submit"
-          disabled={loading}>
-          {loading ? '로그인 중...' : '로그인'}
-        </button>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
-      </form>
-    </div>
+          {errors.password && (
+            <S.ErrorMessage>{errors.password.message}</S.ErrorMessage>
+          )}
+        </S.InputWrapper>
+
+        <Button
+          width="100%"
+          fontSize="1.8rem"
+          disabled={isSubmitting}
+          bordertype={'기본'}
+          type="submit">
+          {isSubmitting ? '로그인 중...' : '로그인'}
+        </Button>
+
+        <S.Divider />
+        <Button
+          width="100%"
+          fontSize="1.8rem"
+          backgroundColor="var(--color-border)"
+          onClick={() => alert('구글 로그인')}
+          disabled={isSubmitting}
+          bordertype={'기본'}>
+          구글로 로그인
+        </Button>
+      </S.Form>
+
+      <S.SignupText>
+        계정이 없으신가요?{' '}
+        <S.SignupLink onClick={() => navigate('/signup')}>
+          회원가입하기
+        </S.SignupLink>
+      </S.SignupText>
+    </S.Container>
   )
 }

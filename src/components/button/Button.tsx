@@ -8,6 +8,7 @@ import { TButtonProps } from '@/types/button'
 export function Button({
   className = '',
   color,
+  backgroundColor,
   padding,
   onClick,
   children,
@@ -21,6 +22,7 @@ export function Button({
     <S.StyledButton
       className={className}
       $color={color}
+      $backgroundColor={backgroundColor}
       $padding={padding}
       onClick={onClick}
       $fontSize={fontSize}
