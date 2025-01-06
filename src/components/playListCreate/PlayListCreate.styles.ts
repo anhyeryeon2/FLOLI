@@ -100,6 +100,8 @@ export const ThumbnailPreview = styled.div`
   background-color: var(--color-bg2);
   border-radius: var(--radius-lg);
   overflow: hidden;
+  height: 120px; /* 부모 컨테이너 높이 고정 */
+  width: 100%;
 `
 export const EmptyThumbnail = styled.div`
   width: 160px;
@@ -111,14 +113,16 @@ export const EmptyThumbnail = styled.div`
   justify-content: center;
   font-size: var(--fs-xl);
   border-radius: var(--radius-lg);
+  flex-shrink: 0;
 `
 
 export const ThumbnailInfo = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 2px;
-  gap: var(--spacing-1);
+  flex: 1;
+  overflow: hidden;
+  min-width: 0;
 `
 export const ThumbnailImage = styled.img`
   width: 160px;
@@ -128,6 +132,7 @@ export const ThumbnailImage = styled.img`
   border-radius: var(--radius-lg);
   border: 1px solid var(--color-border);
   position: relative;
+  flex-shrink: 0;
 `
 export const TextEllipsis = css`
   overflow: hidden;

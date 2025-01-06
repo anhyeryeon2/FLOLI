@@ -9,6 +9,7 @@ import { PlaylistInfo } from '@/components/playListCreate/PlayListInfo'
 import { PlaylistIsPublic } from '@/components/playListCreate/PlayListIsPublic'
 import { RiImageAddLine } from 'react-icons/ri'
 import { useImageUpload } from '@/hooks/useImageUpload'
+import { useDebounce } from '@/hooks/useDebounce'
 
 export function PlayListCreate() {
   const [playlistTitle, setPlaylistTitle] = useState('')
@@ -25,6 +26,8 @@ export function PlayListCreate() {
     handleRemoveVideo
   } = useVideoLink()
   const { thumbnail, handleThumbnailUpload, resetThumbnail } = useImageUpload()
+
+  const debouncedTitle = useDebounce(playlistTitle, 300)
 
   const handleCreatePlaylist = async () => {
     const accessToken = localStorage.getItem('accessToken')
@@ -117,7 +120,13 @@ export function PlayListCreate() {
           <Input
             value={videoLink}
             onChange={e => setVideoLink(e.target.value)}
-            placeholder="영상 링크를 입력해주세요" //todo: enter 입력추가
+            placeholder="영상 링크를 입력해주세요"
+            onKeyDown={e => {
+              if (e.key === 'Enter') {
+                e.preventDefault()
+                handleAddVideo()
+              }
+            }}
           />
           <S.AddButton onClick={handleAddVideo}>+</S.AddButton>
         </S.VideoLinkInput>
@@ -175,7 +184,7 @@ export function PlayListCreate() {
             <S.TrackTag>Track: {videoList.length}</S.TrackTag>
           </div>
           <S.ThumbnailInfo>
-            <S.ThumbnailTitle>{playlistTitle || ''}</S.ThumbnailTitle>
+            <S.ThumbnailTitle>{debouncedTitle || ''}</S.ThumbnailTitle>
             <S.ThumbnailMaker>//user.nickname 추가예정</S.ThumbnailMaker>
           </S.ThumbnailInfo>
         </S.ThumbnailPreview>
