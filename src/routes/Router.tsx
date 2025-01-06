@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Layout from '@/components/Layout/Layout'
+import Layout, { Container } from '@/components/Layout/Layout'
 import {
   Login,
   Mypage,
@@ -30,13 +30,29 @@ import { Home } from '@/pages/Home'
 
 const router = createBrowserRouter([
   {
+    path: '/login',
+    element: (
+      <Container>
+        <Login />
+      </Container>
+    ),
+    errorElement: <NotFound />
+  },
+  {
+    path: '/signup',
+    element: (
+      <Container>
+        <Signup />
+      </Container>
+    ),
+    errorElement: <NotFound />
+  },
+  {
     path: '/',
     element: <Layout />,
     errorElement: <NotFound />,
     children: [
       { path: '/', element: <Home /> },
-      { path: '/login', element: <Login /> },
-      { path: '/signup', element: <Signup /> },
       {
         path: '/mypage',
         element: (

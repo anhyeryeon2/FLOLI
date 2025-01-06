@@ -1,6 +1,7 @@
 export type TButtonProps = {
   className?: string
   color?: string
+  backgroundColor?: string
   padding?: string
   onClick?: () => void
   children?: React.ReactNode

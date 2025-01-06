@@ -16,9 +16,8 @@ export const HeaderWrapper = styled.div`
   box-sizing: border-box;
 `
 
-export const Logo = styled.div`
-  font-size: 2.4rem;
-  font-weight: 700;
+export const Logo = styled.img`
+  width: 90px;
   color: var(--color-black);
 `
 
