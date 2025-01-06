@@ -9,12 +9,12 @@ export const PlaylistIsPublic = ({
     <S.Section>
       <S.ToggleContainer>
         <S.ToggleButton
-          isActive={isPublic}
+          $isActive={isPublic}
           onClick={() => setIsPublic(true)}>
           공개
         </S.ToggleButton>
         <S.ToggleButton
-          isActive={!isPublic}
+          $isActive={!isPublic}
           onClick={() => setIsPublic(false)}>
           비공개
         </S.ToggleButton>

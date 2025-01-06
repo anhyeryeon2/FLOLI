@@ -7,12 +7,15 @@ import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { useVideoLink } from '@/hooks/useVideoLink'
 import { PlaylistInfo } from '@/components/playListCreate/PlayListInfo'
 import { PlaylistIsPublic } from '@/components/playListCreate/PlayListIsPublic'
+import { RiImageAddLine } from 'react-icons/ri'
+import { useImageUpload } from '@/hooks/useImageUpload'
 
-export function PlaylistCreate() {
+export function PlayListCreate() {
   const [playlistTitle, setPlaylistTitle] = useState('')
   const [playlistDescription, setPlaylistDescription] = useState('')
   const [isPublic, setIsPublic] = useState(true)
   const { showToastMessage } = useToastMessageContext()
+
   const {
     videoLink,
     setVideoLink,
@@ -21,6 +24,7 @@ export function PlaylistCreate() {
     handleAddVideo,
     handleRemoveVideo
   } = useVideoLink()
+  const { thumbnail, handleThumbnailUpload, resetThumbnail } = useImageUpload()
 
   const handleCreatePlaylist = async () => {
     const accessToken = localStorage.getItem('accessToken')
@@ -46,13 +50,19 @@ export function PlaylistCreate() {
         type: 'error'
       })
     }
+    if (videoList.length === 0) {
+      return showToastMessage({
+        message: '영상을 1개이상 추가해주세요.',
+        type: 'error'
+      })
+    }
     try {
       const userId = user.user?.id
       const { error } = await supabase.from('playlists').insert([
         {
           title: playlistTitle,
           description: playlistDescription || '',
-          thumbnail: videoList[0]?.thumbnail || '',
+          thumbnail: thumbnail || videoList[0]?.thumbnail,
           video_url: videoList.map(video => video.link).join(',') || '',
           is_public: isPublic,
           likes_count: 0,
@@ -60,7 +70,7 @@ export function PlaylistCreate() {
           user_id: userId,
           video_count: videoList.length || 0,
           created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString() // todo
+          updated_at: new Date().toISOString()
         }
       ])
 
@@ -76,6 +86,7 @@ export function PlaylistCreate() {
       setPlaylistTitle('')
       setPlaylistDescription('')
       setVideoList([])
+      resetThumbnail()
     } catch (error) {
       showToastMessage({
         message: `플레이리스트 생성 실패하였습니다`,
@@ -106,7 +117,7 @@ export function PlaylistCreate() {
           <Input
             value={videoLink}
             onChange={e => setVideoLink(e.target.value)}
-            placeholder="영상 링크를 입력해주세요" //todo: enter 추가
+            placeholder="영상 링크를 입력해주세요" //todo: enter 입력추가
           />
           <S.AddButton onClick={handleAddVideo}>+</S.AddButton>
         </S.VideoLinkInput>
@@ -138,7 +149,36 @@ export function PlaylistCreate() {
 
       <S.Section>
         <S.Label>썸네일 등록</S.Label>
-        //todo
+        <S.ThumbnailPreview>
+          <div style={{ position: 'relative' }}>
+            <label htmlFor="thumbnail-upload">
+              {thumbnail ? (
+                <S.ThumbnailImage
+                  src={thumbnail}
+                  alt="썸네일 미리보기"
+                />
+              ) : (
+                <S.EmptyThumbnail>
+                  <span>
+                    <RiImageAddLine />
+                  </span>
+                </S.EmptyThumbnail>
+              )}
+              <input
+                type="file"
+                id="thumbnail-upload"
+                accept="image/*"
+                onChange={handleThumbnailUpload}
+                style={{ display: 'none' }}
+              />
+            </label>
+            <S.TrackTag>Track: {videoList.length}</S.TrackTag>
+          </div>
+          <S.ThumbnailInfo>
+            <S.ThumbnailTitle>{playlistTitle || ''}</S.ThumbnailTitle>
+            <S.ThumbnailMaker>//user.nickname 추가예정</S.ThumbnailMaker>
+          </S.ThumbnailInfo>
+        </S.ThumbnailPreview>
       </S.Section>
 
       <S.ButtonContainer>

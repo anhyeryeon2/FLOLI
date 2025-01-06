@@ -1,11 +1,11 @@
-import styled from 'styled-components'
+import { styled, css } from 'styled-components'
 
 export const Container = styled.div`
   padding: var(--spacing-6);
   display: flex;
   flex-direction: column;
   gap: var(--spacing-4);
-  margin-bottom: 6rem;
+  margin-bottom: 3rem;
   overflow-y: auto;
 `
 
@@ -25,14 +25,14 @@ export const ToggleContainer = styled.div`
   display: flex;
 `
 
-export const ToggleButton = styled.button<{ isActive: boolean }>`
+export const ToggleButton = styled.button<{ $isActive: boolean }>`
   flex: 1;
   padding: var(--spacing-2);
   font-size: var(--fs-lg);
   text-align: center;
   border: 1px solid var(--color-border);
-  background-color: ${({ isActive }) =>
-    isActive ? 'var(--color-main2)' : 'var(--color-bg1)'};
+  background-color: ${({ $isActive }) =>
+    $isActive ? 'var(--color-main2)' : 'var(--color-bg1)'};
   color: var(--color-black);
   font-weight: 500;
 `
@@ -86,5 +86,76 @@ export const RemoveButton = styled.button`
 `
 export const ButtonContainer = styled.div`
   position: sticky;
+  padding-top: var(--spacing-2);
   width: 100%;
+`
+
+export const ThumbnailPreview = styled.div`
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: var(--spacing-2);
+  margin-top: var(--spacing-1);
+  background-color: var(--color-bg2);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+`
+export const EmptyThumbnail = styled.div`
+  width: 160px;
+  height: 120px;
+  background-color: var(--color-bg1);
+  border: 1px dashed var(--color-border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: var(--fs-xl);
+  border-radius: var(--radius-lg);
+`
+
+export const ThumbnailInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 2px;
+  gap: var(--spacing-1);
+`
+export const ThumbnailImage = styled.img`
+  width: 160px;
+  height: 120px;
+  object-fit: cover;
+  overflow: hidden;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--color-border);
+  position: relative;
+`
+export const TextEllipsis = css`
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+`
+export const ThumbnailTitle = styled.p`
+  font-size: var(--fs-l);
+  font-weight: 600;
+  color: var(--color-black);
+  ${TextEllipsis}
+`
+export const ThumbnailMaker = styled.p`
+  font-size: var(--fs-m);
+  font-weight: 500;
+  color: var(--color-black);
+  ${TextEllipsis}
+`
+export const TrackTag = styled.div`
+  position: absolute;
+  bottom: var(--spacing-2);
+  right: var(--spacing-2);
+  background-color: rgba(70, 70, 70, 0.6);
+  color: var(--color-white);
+  padding: var(--spacing-1) var(--spacing-2);
+  font-size: var(--fs-s);
+  border-radius: var(--radius-base);
+  z-index: 2;
 `
