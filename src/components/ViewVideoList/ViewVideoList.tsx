@@ -2,7 +2,7 @@ import { IoIosArrowDown } from 'react-icons/io'
 import * as S from './ViewVideoList.style'
 import { IViewProps } from '@/types/View'
 import { IModalDefaultProps } from '@/types/modal'
-import DetailPlayList from '../DetailPlayList/DetailPlayList'
+import DetailPlayList from '../DetailPlayList/DetailPlaylist'
 
 type Combined = IViewProps & IModalDefaultProps
 
