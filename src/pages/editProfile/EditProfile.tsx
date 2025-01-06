@@ -71,7 +71,9 @@ export default function EditProfile() {
         <S.Label htmlFor="nickname">닉네임</S.Label>
         <S.ContentBox>
           <Input
-            {...register('nickname', { required: '닉네임을 설정해주세요.' })}
+            id="nickname"
+            {...register('nickname', { required: '닉네임을 입력력해주세요.' })}
+            placeholder="닉네임을 입력해주세요"
           />
           <Button
             width="9rem"
@@ -86,9 +88,11 @@ export default function EditProfile() {
         <S.Label htmlFor="introduction">소개글</S.Label>
         <S.ContentBox>
           <Input
+            id="introduction"
             {...register('introduction', {
-              required: '소개 글을 작성해주세요.'
+              required: '소개 글을 입력해주세요.'
             })}
+            placeholder="소개 글을 입력해주세요"
           />
           <Button
             width="9rem"
