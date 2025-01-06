@@ -15,3 +15,5 @@ export const ROUTER_PATH_REGEX = {
   VIEW: /^\/view\/[^/]+$/,
   USERPROFILE: /^\/profile\/[^/]+$/
 }
+
+export const DEFAULT_PROFILE_IMAGE = '/assets/img/profile/default_profile.png'

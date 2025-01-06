@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { IoHomeOutline, IoHomeSharp, IoAddCircle } from 'react-icons/io5'
 import { IoIosAddCircleOutline } from 'react-icons/io'
 import {
@@ -7,15 +7,25 @@ import {
   MdOutlineSubscriptions,
   MdSubscriptions
 } from 'react-icons/md'
-
 import * as S from './Navbar.styled'
+import { useAuthStore } from '@/store/useAuthStore'
+import Profile from '../Profile/Profile'
 
 export default function Navbar() {
+  const { user } = useAuthStore()
   const [active, setActive] = useState<string>('home')
+  const [profileImage, setProfileImage] = useState<string>()
 
   const handleClick = (icon: string) => {
     setActive(icon)
   }
+  useEffect(() => {
+    console.log('✅ Zustand User State:', user)
+
+    if (user) {
+      setProfileImage(user.profileImage)
+    }
+  }, [user])
 
   return (
     <S.NavbarWrapper>
@@ -69,15 +79,13 @@ export default function Navbar() {
         </S.MenuItem>
         {/* 유저 프로필 사진 */}
         <S.MenuItem to="/mypage">
-          <S.Icon>
-            {/* 임시 */}
-            <div
-              className="profile-img"
-              style={{
-                backgroundImage:
-                  'url(https://cdn.pixabay.com/photo/2016/01/26/18/35/dog-1163076_1280.jpg)'
-              }}></div>
-          </S.Icon>
+          <Profile
+            imageUrl={user?.profileImage}
+            altText="profile"
+            userId={user?.id || ''}
+            size="xsmall"
+          />
+
           <span>라이브러리</span>
         </S.MenuItem>
       </S.Menu>
