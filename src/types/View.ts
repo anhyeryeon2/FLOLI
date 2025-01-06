@@ -1,5 +1,5 @@
 export interface IViewProps {
-  playlistTitle: string
+  playListTitle: string
   title: string
   createAt: string
   description: string

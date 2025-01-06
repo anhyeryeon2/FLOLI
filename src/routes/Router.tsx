@@ -1,11 +1,11 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Layout, { Container } from '@/components/Layout/Layout'
+import Layout from '@/components/Layout/Layout'
 import {
   Login,
   Mypage,
-  MyPlaylists,
+  MyPlayLists,
   NotFound,
-  PlaylistCreate,
+  PlayListCreate,
   Signup,
   Subscriptions,
   UserProfile,
@@ -13,21 +13,6 @@ import {
 } from '@/pages'
 import { Home } from '@/pages/Home'
 import { ROUTER_PATH } from '@/constants/constant'
-
-// const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-//   const session = supabase.auth.getSession()
-
-//   if (!session) {
-//     return (
-//       <Navigate
-//         to="/login"
-//         replace
-//       />
-//     )
-//   }
-
-//   return <>{children}</>
-// }
 
 const router = createBrowserRouter([
   {
@@ -65,7 +50,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTER_PATH.MYPLAYLISTS,
-        element: <MyPlaylists />
+        element: <MyPlayLists />
       },
       {
         path: ROUTER_PATH.USERPROFILE,
@@ -73,7 +58,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTER_PATH.PLAYLISTCREATE,
-        element: <PlaylistCreate />
+        element: <PlayListCreate />
       }
     ]
   }

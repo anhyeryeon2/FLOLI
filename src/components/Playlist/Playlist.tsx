@@ -46,7 +46,7 @@ const PlayList = ({
       </S.TextWrapper>
       <S.Options>
         {optionIcon === 'heart' && <FaHeart />}
-        {optionIcon === 'bookmark' && <S.PlaylistSaveIcon />}
+        {optionIcon === 'bookmark' && <S.PlayListSaveIcon />}
         {optionIcon === 'option' && <FaEllipsisH />}
       </S.Options>
     </S.CardContainer>
