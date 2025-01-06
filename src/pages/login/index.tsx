@@ -7,10 +7,11 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, LoginFormInputs } from '@/schema/loginSchema'
 import MainLogo from '@/assets/img/logo/floli.svg'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 
 export function Login() {
   const navigate = useNavigate()
-
+  const { showToastMessage } = useToastMessageContext()
   const {
     register,
     handleSubmit,
@@ -26,9 +27,15 @@ export function Login() {
     })
 
     if (error) {
-      alert(`로그인 실패: ${error.message}`)
+      showToastMessage({
+        message: `로그인 실패하였습니다 `,
+        type: 'error'
+      })
     } else {
-      alert('로그인 성공!')
+      showToastMessage({
+        message: '로그인 성공하였습니다 ',
+        type: 'success'
+      })
       navigate('/')
     }
   }
