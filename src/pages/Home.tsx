@@ -1,4 +1,4 @@
-import FeedList from '@/components/FeedList/FeedList'
+import FeedList from '@/components/Feedlist/Feedlist'
 import * as S from '../components/FeedList/FeedList.styles'
 const playLists = [
   {
