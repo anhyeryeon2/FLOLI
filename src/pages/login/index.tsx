@@ -21,10 +21,12 @@ export function Login() {
   const handleLogin: SubmitHandler<LoginFormInputs> = async data => {
     const { email, password } = data
 
-    const { error } = await supabase.auth.signInWithPassword({
-      email,
-      password
-    })
+    const { data: sessionData, error } = await supabase.auth.signInWithPassword(
+      {
+        email,
+        password
+      }
+    )
 
     if (error) {
       showToastMessage({
@@ -32,6 +34,9 @@ export function Login() {
         type: 'error'
       })
     } else {
+      const { access_token } = sessionData.session
+      localStorage.setItem('accessToken', access_token)
+
       showToastMessage({
         message: '로그인 성공하였습니다 ',
         type: 'success'
