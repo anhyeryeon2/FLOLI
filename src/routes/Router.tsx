@@ -3,9 +3,9 @@ import Layout, { Container } from '@/components/Layout/Layout'
 import {
   Login,
   Mypage,
-  MyPlaylists,
+  MyPlayLists,
   NotFound,
-  PlaylistCreate,
+  PlayListCreate,
   Signup,
   Subscriptions,
   UserProfile,
@@ -70,16 +70,16 @@ const router = createBrowserRouter([
         element: <Subscriptions />
       },
       {
-        path: '/my-playlists',
-        element: <MyPlaylists />
+        path: '/my-playLists',
+        element: <MyPlayLists />
       },
       {
         path: '/profile/:userId',
         element: <UserProfile />
       },
       {
-        path: '/playlist/create',
-        element: <PlaylistCreate />
+        path: '/playList/create',
+        element: <PlayListCreate />
       }
     ]
   }
