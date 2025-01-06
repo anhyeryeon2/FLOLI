@@ -1,4 +1,4 @@
-import * as S from './FeedList.styles'
+import * as S from './Feedlist.styles'
 import { FaHeart } from 'react-icons/fa'
 import { BiConversation } from 'react-icons/bi'
 
