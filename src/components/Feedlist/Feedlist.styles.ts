@@ -7,6 +7,7 @@ export const FeedConteiner = styled.div`
   max-width: var(--max-width);
   gap: 20px;
   justify-content: center;
+  /* position: relative; */
 `
 
 export const CardContainer = styled.div`
@@ -50,6 +51,7 @@ export const ContentWrapper = styled.div`
   width: 100%;
   padding: var(--spacing-4) var(--spacing-3) 0 var(--spacing-3);
   height: 10rem;
+  position: relative;
 `
 
 export const ProfileImage = styled.div`
@@ -70,6 +72,7 @@ export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
 `
 
 export const Title = styled.h3`
