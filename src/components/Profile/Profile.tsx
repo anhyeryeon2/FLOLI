@@ -26,13 +26,15 @@ const Profile = ({
   altText = 'Profile',
   userId,
   className,
-  size = 'medium'
+  size = 'medium',
+  radius
 }: ProfileButtonProps) => {
   return (
     <S.ProfileButtonWrapper
       to={`/profile/${userId}`}
       size={size}
-      className={className}>
+      className={className}
+      radius={radius}>
       <S.ProfileImage
         src={imageUrl}
         alt={altText}
