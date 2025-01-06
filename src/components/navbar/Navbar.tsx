@@ -48,9 +48,9 @@ export default function Navbar() {
           $isCenter>
           <S.Icon active={active === 'add'}>
             {active === 'add' ? (
-              <IoAddCircle size={48} />
+              <IoAddCircle size={40} />
             ) : (
-              <IoIosAddCircleOutline size={48} />
+              <IoIosAddCircleOutline size={40} />
             )}
           </S.Icon>
         </S.MenuItem>
@@ -69,7 +69,15 @@ export default function Navbar() {
         </S.MenuItem>
         {/* 유저 프로필 사진 */}
         <S.MenuItem to="/mypage">
-          <S.Icon>🧑</S.Icon>
+          <S.Icon>
+            {/* 임시 */}
+            <div
+              className="profile-img"
+              style={{
+                backgroundImage:
+                  'url(https://cdn.pixabay.com/photo/2016/01/26/18/35/dog-1163076_1280.jpg)'
+              }}></div>
+          </S.Icon>
           <span>라이브러리</span>
         </S.MenuItem>
       </S.Menu>
