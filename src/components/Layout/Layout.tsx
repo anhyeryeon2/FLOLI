@@ -1,8 +1,9 @@
 import { Outlet } from 'react-router-dom'
 import styled from 'styled-components'
 import Header from '../header/header-main/Header'
+import Navbar from '../navbar/Navbar'
 
-const Container = styled.div`
+export const Container = styled.div`
   max-width: var(--max-width);
   min-height: 100vh;
   margin: 0 auto;
@@ -14,6 +15,7 @@ const Layout = () => {
     <Container>
       <Header />
       <Outlet />
+      <Navbar />
     </Container>
   )
 }
