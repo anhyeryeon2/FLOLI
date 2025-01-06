@@ -1,28 +1,26 @@
 import { ProfileButtonSize } from '@/types/profile'
+import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 
-export const ProfileButtonWrapper = styled.button<{ size?: ProfileButtonSize }>`
+export const ProfileButtonWrapper = styled(Link)<{ size?: ProfileButtonSize }>`
   background: none;
   border: none;
   padding: 0;
   cursor: pointer;
   width: ${({ size }) => {
-    if (size === 'small') return '2rem'
-    if (size === 'medium') return '3.5rem'
-    if (size === 'large') return '10rem'
-    return size || '6.5rem'
+    if (size === 'small') return '6rem'
+    if (size === 'medium') return '10rem'
+    if (size === 'large') return '30rem'
+    return size || '10rem'
   }};
   height: ${({ size }) => {
-    if (size === 'small') return '2rem'
-    if (size === 'medium') return '3.5rem'
-    if (size === 'large') return '10rem'
-    return size || '3.5rem'
+    if (size === 'small') return '6rem'
+    if (size === 'medium') return '10rem'
+    if (size === 'large') return '30rem'
+    return size || '10rem'
   }};
   border-radius: var(--radius-xl);
   overflow: hidden;
-  &:hover {
-    filter: brightness(1.1);
-  }
 `
 
 export const ProfileImage = styled.img`

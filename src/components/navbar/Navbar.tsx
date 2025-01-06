@@ -11,7 +11,7 @@ import {
 import * as S from './Navbar.styled'
 
 export default function Navbar() {
-  const [active, setActive] = useState<String>('home')
+  const [active, setActive] = useState<string>('home')
 
   const handleClick = (icon: string) => {
     setActive(icon)
@@ -31,7 +31,7 @@ export default function Navbar() {
 
         <S.MenuItem
           onClick={() => handleClick('subscribe')}
-          to="/subscribe">
+          to="/subscriptions">
           <S.Icon active={active === 'subscribe'}>
             {active === 'subscribe' ? (
               <MdSubscriptions />
@@ -44,7 +44,8 @@ export default function Navbar() {
         </S.MenuItem>
         <S.MenuItem
           onClick={() => handleClick('add')}
-          to="/add">
+          to="/playlist/create"
+          $isCenter>
           <S.Icon active={active === 'add'}>
             {active === 'add' ? (
               <IoAddCircle size={48} />
@@ -56,7 +57,7 @@ export default function Navbar() {
         {/* 내 플리 */}
         <S.MenuItem
           onClick={() => handleClick('mine')}
-          to="/mypli">
+          to="/my-playlists">
           <S.Icon active={active === 'mine'}>
             {active === 'mine' ? (
               <MdPlaylistAddCheckCircle />
@@ -67,8 +68,8 @@ export default function Navbar() {
           <span>내 플리</span>
         </S.MenuItem>
         {/* 유저 프로필 사진 */}
-        <S.MenuItem to="/profile">
-          <S.Icon>프로필</S.Icon>
+        <S.MenuItem to="/mypage">
+          <S.Icon>🧑</S.Icon>
           <span>라이브러리</span>
         </S.MenuItem>
       </S.Menu>
