@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 import { IoHomeOutline, IoHomeSharp, IoAddCircle } from 'react-icons/io5'
 import { IoIosAddCircleOutline } from 'react-icons/io'
 import {
@@ -14,18 +14,10 @@ import Profile from '../Profile/Profile'
 export default function Navbar() {
   const { user } = useAuthStore()
   const [active, setActive] = useState<string>('home')
-  const [profileImage, setProfileImage] = useState<string>()
 
   const handleClick = (icon: string) => {
     setActive(icon)
   }
-  useEffect(() => {
-    console.log('✅ Zustand User State:', user)
-
-    if (user) {
-      setProfileImage(user.profileImage)
-    }
-  }, [user])
 
   return (
     <S.NavbarWrapper>
@@ -80,7 +72,10 @@ export default function Navbar() {
         {/* 유저 프로필 사진 */}
         <S.MenuItem to="/mypage">
           <Profile
-            imageUrl={user?.profileImage}
+            imageUrl={
+              user?.profile_img ||
+              'https://vpxgcvxodypztnxelmqx.supabase.co/storage/v1/object/public/avatar/default_profile.png'
+            }
             altText="profile"
             userId={user?.id || ''}
             size="xsmall"

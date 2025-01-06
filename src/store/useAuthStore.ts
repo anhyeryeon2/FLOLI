@@ -1,10 +1,11 @@
 import { create } from 'zustand'
+import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface User {
   id: string
   email: string
   nickname: string
-  profileImage?: string
+  profile_img: string
 }
 
 interface AuthState {
@@ -13,14 +14,22 @@ interface AuthState {
   clearUser: () => void
 }
 
-export const useAuthStore = create<AuthState>(set => ({
-  user: null,
-  setUser: user =>
-    set({
-      user: {
-        ...user,
-        profileImage: user.profileImage
-      }
+export const useAuthStore = create<AuthState>()(
+  persist(
+    set => ({
+      user: null,
+      setUser: user =>
+        set({
+          user: {
+            ...user,
+            profile_img: user.profile_img
+          }
+        }),
+      clearUser: () => set({ user: null })
     }),
-  clearUser: () => set({ user: null })
-}))
+    {
+      name: 'auth-storage', // localStorage에 저장될 키 이름
+      storage: createJSONStorage(() => localStorage) // localStorage 사용
+    }
+  )
+)

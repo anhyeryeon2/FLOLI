@@ -8,12 +8,14 @@ export const ProfileButtonWrapper = styled(Link)<{ size?: ProfileButtonSize }>`
   padding: 0;
   cursor: pointer;
   width: ${({ size }) => {
+    if (size === 'xsmall') return '3rem'
     if (size === 'small') return '6rem'
     if (size === 'medium') return '10rem'
     if (size === 'large') return '30rem'
     return size || '10rem'
   }};
   height: ${({ size }) => {
+    if (size === 'xsmall') return '3rem'
     if (size === 'small') return '6rem'
     if (size === 'medium') return '10rem'
     if (size === 'large') return '30rem'

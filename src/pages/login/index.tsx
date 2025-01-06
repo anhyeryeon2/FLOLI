@@ -9,7 +9,6 @@ import { loginSchema, LoginFormInputs } from '@/schema/loginSchema'
 import MainLogo from '@/assets/img/logo/floli.svg'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { useAuthStore } from '@/store/useAuthStore'
-import { DEFAULT_PROFILE_IMAGE } from '@/constants/constant'
 
 export function Login() {
   const { setUser } = useAuthStore()
@@ -47,9 +46,7 @@ export function Login() {
           id: sessionData.user.id,
           email: sessionData.user.email || '',
           nickname: sessionData.user.user_metadata?.nickname,
-          profileImage:
-            sessionData.user.user_metadata?.profileImage ||
-            DEFAULT_PROFILE_IMAGE
+          profile_img: sessionData.user.user_metadata?.profile_img
         })
         console.log(' Zustand User State:', sessionData.user)
       }
