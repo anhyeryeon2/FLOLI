@@ -1,66 +1,26 @@
 import { useState } from 'react'
 import { Button } from '@/components/button/Button'
 import Input from '@/components/Input/Input'
-import * as S from './PlayListCreate.styles'
+import * as S from '../../components/playListCreate/PlayListCreate.styles'
 import { supabase } from '../../../supabaseConfig'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
-import Textarea from '@/components/Textarea/Textarea'
-
-interface VideoItem {
-  id: string
-  title: string
-  thumbnail: string
-  link: string
-  channel: string
-}
+import { useVideoLink } from '@/hooks/useVideoLink'
+import { PlaylistInfo } from '@/components/playListCreate/PlayListInfo'
+import { PlaylistIsPublic } from '@/components/playListCreate/PlayListIsPublic'
 
 export function PlaylistCreate() {
-  const [videoLink, setVideoLink] = useState('')
-  const [videoList, setVideoList] = useState<VideoItem[]>([])
   const [playlistTitle, setPlaylistTitle] = useState('')
   const [playlistDescription, setPlaylistDescription] = useState('')
   const [isPublic, setIsPublic] = useState(true)
   const { showToastMessage } = useToastMessageContext()
-
-  // 유튜브 영상 ID 추출
-  const extractYouTubeVideoId = (url: string) => {
-    const regExp =
-      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
-    const match = url.match(regExp)
-    return match ? match[1] : null
-  }
-
-  // 영상 추가 핸들러
-  const handleAddVideo = async () => {
-    if (!videoLink.trim()) return alert('유튜브 링크를 입력해주세요.')
-
-    const videoId = extractYouTubeVideoId(videoLink)
-    if (!videoId) return alert('올바른 유튜브 링크를 입력해주세요.')
-
-    try {
-      const response = await fetch(
-        `https://www.youtube.com/oembed?url=https://www.youtube.com/watch?v=${videoId}&format=json`
-      )
-      const data = await response.json()
-
-      const newVideo: VideoItem = {
-        id: videoId,
-        title: data.title,
-        thumbnail: `https://img.youtube.com/vi/${videoId}/0.jpg`,
-        link: videoLink,
-        channel: data.author_name || '알 수 없는 채널'
-      }
-
-      setVideoList([...videoList, newVideo])
-      setVideoLink('')
-    } catch (error) {
-      console.error('Error fetching ', error)
-      alert('영상 정보를 불러오는 데 실패했습니다.')
-    }
-  }
-  const handleRemoveVideo = (index: number) => {
-    setVideoList(videoList.filter((_, i) => i !== index))
-  }
+  const {
+    videoLink,
+    setVideoLink,
+    videoList,
+    setVideoList,
+    handleAddVideo,
+    handleRemoveVideo
+  } = useVideoLink()
 
   const handleCreatePlaylist = async () => {
     const accessToken = localStorage.getItem('accessToken')
@@ -80,9 +40,6 @@ export function PlaylistCreate() {
         type: 'error'
       })
     }
-
-    const userId = user.user?.id
-
     if (!playlistTitle.trim()) {
       return showToastMessage({
         message: '플레이리스트 제목을 입력해주세요.',
@@ -90,6 +47,7 @@ export function PlaylistCreate() {
       })
     }
     try {
+      const userId = user.user?.id
       const { error } = await supabase.from('playlists').insert([
         {
           title: playlistTitle,
@@ -130,38 +88,17 @@ export function PlaylistCreate() {
 
   return (
     <S.Container>
-      <S.Section>
-        <S.Label>플레이리스트 제목</S.Label>
-        <Input
-          value={playlistTitle}
-          onChange={e => setPlaylistTitle(e.target.value)}
-          placeholder="플레이리스트 제목을 입력해주세요"
-        />
-      </S.Section>
+      <PlaylistInfo
+        playlistTitle={playlistTitle}
+        setPlaylistTitle={setPlaylistTitle}
+        playlistDescription={playlistDescription}
+        setPlaylistDescription={setPlaylistDescription}
+      />
 
-      <S.Section>
-        <S.Label>플레이리스트 설명</S.Label>
-        <Textarea
-          value={playlistDescription}
-          onChange={e => setPlaylistDescription(e.target.value)}
-          placeholder="플레이리스트 설명을 입력해주세요"
-        />
-      </S.Section>
-
-      <S.Section>
-        <S.ToggleContainer>
-          <S.ToggleButton
-            isActive={isPublic}
-            onClick={() => setIsPublic(true)}>
-            공개
-          </S.ToggleButton>
-          <S.ToggleButton
-            isActive={!isPublic}
-            onClick={() => setIsPublic(false)}>
-            비공개
-          </S.ToggleButton>
-        </S.ToggleContainer>
-      </S.Section>
+      <PlaylistIsPublic
+        isPublic={isPublic}
+        setIsPublic={setIsPublic}
+      />
 
       <S.Section>
         <S.Label>영상 링크 추가</S.Label>
