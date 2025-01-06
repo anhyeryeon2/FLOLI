@@ -179,11 +179,11 @@ export const VideoListPanel = styled.div`
     white-space: nowrap;
   }
 
-  .playlist-info-wrapper {
+  .playList-info-wrapper {
     padding: 0 var(--spacing-4);
   }
 
-  .playlist-info {
+  .playList-info {
     min-width: 0;
     display: flex;
     align-items: center;

@@ -68,6 +68,6 @@ export const Icon = styled.span`
   font-size: var(--fs-s);
 `
 
-export const PlaylistSaveIcon = styled(MdOutlinePlaylistAdd)`
+export const PlayListSaveIcon = styled(MdOutlinePlaylistAdd)`
   font-size: var(--fs-xl);
 `
