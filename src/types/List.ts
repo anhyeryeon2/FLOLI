@@ -7,6 +7,7 @@ export interface FeedListProps {
   comments: number
   date: string
   track: number
+  key: string
 }
 
 export interface PlayListProps {

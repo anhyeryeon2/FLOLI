@@ -30,7 +30,7 @@ const Input = forwardRef<HTMLInputElement, IInputProps>(
 )
 
 const mainStyle = css`
-  padding: var(--spacing-4) var(--spacing-5);
+  padding: var(--spacing-3) var(--spacing-4);
   font-size: var(--fs-l);
   border-radius: var(--radius-base);
   border: 1px solid var(--color-border);
