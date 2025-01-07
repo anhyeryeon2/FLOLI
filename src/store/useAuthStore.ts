@@ -28,8 +28,8 @@ export const useAuthStore = create<AuthState>()(
       clearUser: () => set({ user: null })
     }),
     {
-      name: 'auth-storage', // localStorage에 저장될 키 이름
-      storage: createJSONStorage(() => localStorage) // localStorage 사용
+      name: 'auth-storage', 
+      storage: createJSONStorage(() => localStorage) 
     }
   )
 )
