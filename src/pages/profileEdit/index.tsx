@@ -6,7 +6,7 @@ import img from '@/assets/img/profile/default_profile.png'
 import Input from '@/components/Input/Input'
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
-import { apiProfileEdit } from '@/apis/apiProfileEdit'
+import { UserProfileEdit } from '@/apis/userInfoApi'
 
 type FormData = {
   nickname: string
@@ -30,7 +30,7 @@ export function ProfileEdit() {
 
   const { mutate } = useMutation({
     mutationFn: ({ data, id }: { data: EditProfile; id: string }) =>
-      apiProfileEdit(data, id)
+      UserProfileEdit(data, id)
   })
 
   function handleClick() {

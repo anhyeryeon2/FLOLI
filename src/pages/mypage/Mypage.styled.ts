@@ -72,3 +72,9 @@ export const PlayListsBox = styled.div`
   flex-direction: column;
   gap: var(--spacing-5);
 `
+
+export const NotFound = styled.div`
+  margin: 0 auto;
+  font-size: var(--fs-xl);
+  font-weight: 700;
+`

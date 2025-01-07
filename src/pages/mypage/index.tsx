@@ -4,12 +4,30 @@ import * as S from '@/pages/mypage/Mypage.styled'
 import { Button } from '@/components/Button/Button'
 import Profile from '@/components/Profile/Profile'
 import { ROUTER_PATH } from '@/constants/constant'
+import { useQuery } from '@tanstack/react-query'
+import { userInfoGet } from '@/apis/userInfoApi'
+import Loading from '@/components/LoadingSpinner/Loading'
+import { useAuthStore } from '@/store/useAuthStore'
 
 export const Mypage = () => {
+  const { user } = useAuthStore()
+
   const navigate = useNavigate()
 
   const handleEditProfileClick = () => {
     navigate(ROUTER_PATH.ProfileEdit)
+  }
+
+  const { isPending, data } = useQuery({
+    queryKey: ['userInfo', user?.id],
+    queryFn: () => userInfoGet(user?.id),
+    enabled: !!user?.id
+  })
+
+  if (isPending) return <Loading />
+
+  if (!data || data.length === 0) {
+    return <S.NotFound>정보가 존재하지 않는 유저입니다.</S.NotFound>
   }
 
   return (
@@ -20,10 +38,10 @@ export const Mypage = () => {
             className="profile-img"
             size="8rem"
             userId="userIdtest"
-            imageUrl="https://cdn.pixabay.com/photo/2023/03/11/20/24/animal-7845217_1280.jpg"
+            imageUrl={data[0].profile_img}
           />
           <S.ProfileDetailBox>
-            <S.UserName>Floli</S.UserName>
+            <S.UserName>{data[0].nickname}</S.UserName>
             <S.SubscribeCount>3 구독자</S.SubscribeCount>
           </S.ProfileDetailBox>
         </S.ProfileBox>
@@ -36,7 +54,7 @@ export const Mypage = () => {
           </Button>
         </S.ButtonBox>
       </S.HeaderBox>
-      <S.IntruductionBox>채널 소개글</S.IntruductionBox>
+      <S.IntruductionBox>{data[0].introduction}</S.IntruductionBox>
       <S.SeparatingBox>
         <S.ShowTypes>저장된 플리</S.ShowTypes>
         <S.ShowTypes>좋아요</S.ShowTypes>

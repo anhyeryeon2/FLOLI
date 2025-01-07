@@ -6,7 +6,7 @@ interface EditProfile {
   intro?: string
 }
 
-export async function apiProfileEdit(editProfile: EditProfile, id: string) {
+export async function UserProfileEdit(editProfile: EditProfile, id: string) {
   let imagePath = null
 
   if (editProfile.image && editProfile.image.length > 0) {
@@ -32,6 +32,20 @@ export async function apiProfileEdit(editProfile: EditProfile, id: string) {
   if (error) {
     console.error(error)
     throw new Error('프로필 업데이트에 실패했습니다!')
+  }
+
+  return data
+}
+
+export async function userInfoGet(userId: string | undefined) {
+  const { data, error } = await supabase
+    .from('userinfo')
+    .select('*')
+    .eq('id', userId)
+
+  if (error) {
+    console.error(error)
+    throw new Error('유저 정보를 불러오지 못했습니다다')
   }
 
   return data
