@@ -24,10 +24,6 @@ export const StyledButton = styled.button<{
   &:disabled {
     cursor: not-allowed;
     color: var(--color-white);
-    border: 2px solid var(--color-input);
     background-color: var(--color-input);
-    &:hover {
-      background-color: var(--color-input);
-    }
   }
 `

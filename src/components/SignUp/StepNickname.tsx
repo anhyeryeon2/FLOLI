@@ -66,7 +66,7 @@ export default function StepNickname() {
             type="text"
             value={nickname}
             onChange={handleNicknameChange}
-            placeholder="example@test.com"
+            placeholder=""
           />
           {error && <S.ErrorMessage>{error}</S.ErrorMessage>}
         </S.InputWrapper>
