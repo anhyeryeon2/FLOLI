@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button } from '@/components/button/Button'
+import { Button } from '@/components/Button/Button'
 import Input from '@/components/Input/Input'
 import * as S from '../../components/playListCreate/PlayListCreate.styles'
 import { supabase } from '../../../supabaseConfig'
