@@ -193,7 +193,6 @@ export function PlayListCreate() {
       <S.ButtonContainer>
         <Button
           bordertype="기본"
-          fontSize="1.6rem"
           width="100%"
           onClick={handleCreatePlaylist}>
           플레이리스트 생성하기
