@@ -43,11 +43,9 @@ export const Icon = styled.div<IconProps>`
   display: flex;
   align-items: center;
   justify-content: center;
-
   svg {
     font-size: 2.4rem;
   }
-
   .profile-img {
     width: 2.4rem;
     height: 2.4rem;

@@ -2,7 +2,7 @@ import { Outlet, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Header from '../header/header-main/Header'
-import Navbar from '../navbar/Navbar'
+import Navbar from '../Navbar/Navbar'
 import { ROUTER_PATH, ROUTER_PATH_REGEX } from '@/constants/constant'
 import HeaderSub from '../header/header-sub/HeaderSub'
 
@@ -13,7 +13,6 @@ const Container = styled.div`
   min-height: 100vh;
   margin: 0 auto;
   background: var(--color-white);
-
   &.is-navbar {
     padding-bottom: var(--navbar-height);
   }

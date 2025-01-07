@@ -6,4 +6,5 @@ export interface ProfileButtonProps {
   size?: ProfileButtonSize
   userId?: string
   className?: string
+  radius?: string
 }
