@@ -63,7 +63,7 @@ export function Login() {
           <Input
             type="password"
             {...register('password')}
-            placeholder="비밀번호"
+            placeholder=""
           />
           {errors.password && (
             <S.ErrorMessage>{errors.password.message}</S.ErrorMessage>

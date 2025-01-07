@@ -40,7 +40,7 @@ export const InputWrapper = styled.div`
 `
 
 export const ErrorMessage = styled.p`
-  font-size: 0.9rem;
+  font-size: 1.2rem;
   color: red;
   margin-top: 8px;
 `

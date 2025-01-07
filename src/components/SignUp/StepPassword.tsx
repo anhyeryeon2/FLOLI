@@ -23,7 +23,7 @@ export default function StepPassword() {
         <S.Title>비밀번호를 입력해주세요 </S.Title>
         <S.InputWrapper>
           <Input
-            type="text"
+            type="password"
             value={password}
             onChange={e => setPassword(e.target.value)}
           />
@@ -32,7 +32,7 @@ export default function StepPassword() {
         <S.Title>비밀번호를 다시 입력해주세요</S.Title>
         <S.InputWrapper>
           <Input
-            type="text"
+            type="password"
             value={confirmPassword}
             onChange={e => setconfirmPassword(e.target.value)}
           />
