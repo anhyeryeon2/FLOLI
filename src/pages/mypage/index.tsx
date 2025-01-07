@@ -1,8 +1,17 @@
+import { useNavigate } from 'react-router-dom'
+
+import * as S from '@/pages/mypage/Mypage.styled'
 import { Button } from '@/components/Button/Button'
 import Profile from '@/components/Profile/Profile'
-import * as S from '@/pages/mypage/Mypage.styled'
+import { ROUTER_PATH } from '@/constants/constant'
 
 export const Mypage = () => {
+  const navigate = useNavigate()
+
+  const handleEditProfileClick = () => {
+    navigate(ROUTER_PATH.ProfileEdit)
+  }
+
   return (
     <S.Container>
       <S.HeaderBox>
@@ -21,7 +30,8 @@ export const Mypage = () => {
         <S.ButtonBox>
           <Button
             bordertype="기본"
-            width="20rem">
+            width="20rem"
+            onClick={handleEditProfileClick}>
             프로필 수정
           </Button>
         </S.ButtonBox>

@@ -6,7 +6,13 @@ import Navbar from '../Navbar/Navbar'
 import { ROUTER_PATH, ROUTER_PATH_REGEX } from '@/constants/constant'
 import HeaderSub from '../header/header-sub/HeaderSub'
 
-const queryClient = new QueryClient()
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: {
+      staleTime: 60 * 1000
+    }
+  }
+})
 
 const Container = styled.div`
   max-width: var(--max-width);

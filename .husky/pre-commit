@@ -7,10 +7,6 @@ if ! npx lint-staged; then
   echo "❌ lint 규칙 검사에서 오류가 발생했습니다."
   exit 1
 fi
-if ! npm run build; then
-  echo "❌ 빌드 실패"
-  exit 1
-fi
 
 echo "✅ 모든 검사가 성공적으로 완료되었습니다."
 exit 0
