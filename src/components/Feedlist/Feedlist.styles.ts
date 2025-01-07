@@ -7,7 +7,6 @@ export const FeedConteiner = styled.div`
   max-width: var(--max-width);
   gap: 20px;
   justify-content: center;
-  /* position: relative; */
 `
 
 export const CardContainer = styled.div`
@@ -115,4 +114,12 @@ export const OptionsIcon = styled(FaEllipsisH)`
   margin-bottom: var(--spacing-1);
   color: var(--color-gray);
   cursor: pointer;
+`
+export const ModalWrapper = styled.div`
+  display: flex;
+  font-size: var(--fs-xl);
+  padding: var(--spacing-4);
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 1rem;
 `

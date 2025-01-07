@@ -1,11 +1,11 @@
 import { FeedListProps } from '@/types/List'
 import * as S from './Feedlist.styles'
 import { FeedFooter } from './Footer'
-import { OpitonPopup } from '../OptionPopup/OptionPopup'
 import Modal from '../Modal/Modal'
 import { RiUserUnfollowLine } from 'react-icons/ri'
 import { MdPlaylistAdd } from 'react-icons/md'
 import { useState } from 'react'
+import { FaShareAlt } from 'react-icons/fa'
 
 const FeedList = ({
   image,
@@ -19,18 +19,16 @@ const FeedList = ({
   key
 }: FeedListProps) => {
   const [isOpen, setIsOpen] = useState(false)
-  // const [closeModal, setCloseModal] = useState(false)
   const options = [
-    { id: '1', name: '구독취소', icon: <RiUserUnfollowLine /> },
-    { id: '2', name: '저장', icon: <MdPlaylistAdd /> }
+    { id: '1', name: '구독취소', icon: <RiUserUnfollowLine size={24} /> },
+    { id: '2', name: '저장', icon: <MdPlaylistAdd size={24} /> },
+    { id: '3', name: '공유', icon: <FaShareAlt size={24} /> }
   ]
 
-  const handleOptionsPopup = () => {
-    setIsOpen(true)
-  }
-  const handleOptionsPopState = () => {
-    setIsOpen(false)
-  }
+  const handleOptionsPopup = () => setIsOpen(true)
+
+  const handleOptionsPopState = () => setIsOpen(false)
+
   return (
     <>
       <S.CardContainer key={key}>
@@ -58,19 +56,19 @@ const FeedList = ({
               onClick={handleOptionsPopup}
             />
           </S.TextWrapper>
-          <OpitonPopup />
         </S.ContentWrapper>
       </S.CardContainer>
       <Modal
         id="testmodal"
         isOpen={isOpen}
         closeModal={handleOptionsPopState}
-        className="feedoption">
+        className="feedoption"
+        isBg={true}>
         {options.map(value => (
-          <div key={value.id}>
+          <S.ModalWrapper key={value.id}>
             <span>{value.icon}</span>
             <span>{value.name}</span>
-          </div>
+          </S.ModalWrapper>
         ))}
       </Modal>
     </>
