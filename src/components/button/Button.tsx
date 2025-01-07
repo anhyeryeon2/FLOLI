@@ -28,7 +28,7 @@ export function Button({
       $fontSize={fontSize}
       width={width}
       type={type}
-      bordertype={bordertype}
+      $bordertype={bordertype}
       disabled={disabled}>
       {children}
     </S.StyledButton>

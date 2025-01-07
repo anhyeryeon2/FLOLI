@@ -1,7 +1,7 @@
 import { supabase } from '../../../supabaseConfig'
 import { useNavigate } from 'react-router-dom'
 import Input from '@/components/Input/Input'
-import { Button } from '@/components/button/Button'
+import { Button } from '@/components/Button/Button'
 import * as S from './login.styles'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
