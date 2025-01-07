@@ -8,8 +8,10 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, LoginFormInputs } from '@/schema/loginSchema'
 import MainLogo from '@/assets/img/logo/floli.svg'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { useAuthStore } from '@/store/useAuthStore'
 
 export function Login() {
+  const { setUser } = useAuthStore()
   const navigate = useNavigate()
   const { showToastMessage } = useToastMessageContext()
   const {
@@ -34,8 +36,20 @@ export function Login() {
         type: 'error'
       })
     } else {
-      const { access_token } = sessionData.session
-      localStorage.setItem('accessToken', access_token)
+      if (sessionData.session) {
+        const { access_token, refresh_token } = sessionData.session
+        localStorage.setItem('accessToken', access_token)
+        localStorage.setItem('refreshToken', refresh_token)
+      }
+      if (sessionData?.user) {
+        setUser({
+          id: sessionData.user.id,
+          email: sessionData.user.email || '',
+          nickname: sessionData.user.user_metadata?.nickname,
+          profile_img: sessionData.user.user_metadata?.profile_img
+        })
+        console.log(' Zustand User State:', sessionData.user)
+      }
 
       showToastMessage({
         message: '로그인 성공하였습니다 ',
