@@ -1,16 +1,18 @@
 import { Outlet, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import Header from '../header/header-main/Header'
 import Navbar from '../Navbar/Navbar'
 import { ROUTER_PATH, ROUTER_PATH_REGEX } from '@/constants/constant'
 import HeaderSub from '../header/header-sub/HeaderSub'
+
+const queryClient = new QueryClient()
 
 const Container = styled.div`
   max-width: var(--max-width);
   min-height: 100vh;
   margin: 0 auto;
   background: var(--color-white);
-
   &.is-navbar {
     padding-bottom: var(--navbar-height);
   }
@@ -47,12 +49,13 @@ const Layout = () => {
   }
 
   return (
-    <Container className={!isNoNavbarPaths ? 'is-navbar' : ''}>
-      {renderHeader()}
-      <Outlet />
-      {!isNoNavbarPaths && <Navbar />}
-    </Container>
+    <QueryClientProvider client={queryClient}>
+      <Container className={!isNoNavbarPaths ? 'is-navbar' : ''}>
+        {renderHeader()}
+        <Outlet />
+        {!isNoNavbarPaths && <Navbar />}
+      </Container>
+    </QueryClientProvider>
   )
 }
-
 export default Layout
