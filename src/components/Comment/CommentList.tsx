@@ -1,4 +1,4 @@
-import * as S from '@/styles/components/comment/comment-list.style'
+import * as S from '@/styles/components/Comment/Comment-list.style'
 import CommentItem from './CommentItem'
 
 const CommentList = () => {
