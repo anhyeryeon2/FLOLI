@@ -17,7 +17,7 @@ export const ToastItemContainer = styled.div<{ type: ToastMessageType }>`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding: var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-4);
   box-shadow: var(--shadow-s);
   border-radius: var(--radius-base);
   animation: ${slideIn} 0.3s ease-in-out;
@@ -41,7 +41,7 @@ export const ToastItemContainer = styled.div<{ type: ToastMessageType }>`
     `}
 
   span {
-    font-size: 1rem;
+    font-size: 1.2rem;
     font-weight: 500;
     margin-right: 1rem;
   }
