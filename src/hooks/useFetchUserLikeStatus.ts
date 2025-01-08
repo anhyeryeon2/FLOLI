@@ -18,10 +18,10 @@ const fetchUserLikeStatus = async (
 /**
  * @param {string} userId - 유저 ID
  * @param {string} playlistId - 플레이리스트 ID
- * @returns {object} data, error, isLoading
- * @example const { data, error, isLoading } = useFetchUserLike(userId, playlistId);
+ * @returns {object} data, error, isPending
+ * @example const { data, error, isPending } = useFetchUserLikeStatus(userId, playlistId);
  */
-const useFetchUserLike = (userId: string, playlistId: string) => {
+const useFetchUserLikeStatus = (userId: string, playlistId: string) => {
   return useQuery({
     queryKey: ['userLikeStatus', userId, playlistId],
     queryFn: () => fetchUserLikeStatus(userId, playlistId),
@@ -29,4 +29,4 @@ const useFetchUserLike = (userId: string, playlistId: string) => {
   })
 }
 
-export default useFetchUserLike
+export default useFetchUserLikeStatus
