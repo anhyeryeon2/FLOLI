@@ -13,7 +13,6 @@ const Container = styled.div`
   min-height: 100vh;
   margin: 0 auto;
   background: var(--color-white);
-
   &.is-navbar {
     padding-bottom: var(--navbar-height);
   }
@@ -59,5 +58,4 @@ const Layout = () => {
     </QueryClientProvider>
   )
 }
-
 export default Layout
