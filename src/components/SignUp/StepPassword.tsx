@@ -7,10 +7,24 @@ import { useSignupStore } from '@/store/signupStore'
 import { PasswordForm, passwordSchema } from '@/schema/signupSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useForm } from 'react-hook-form'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { useEffect } from 'react'
 
 export default function StepPassword() {
   const navigate = useNavigate()
-  const { setPassword } = useSignupStore()
+  const { email, setPassword } = useSignupStore()
+  const { showToastMessage } = useToastMessageContext()
+
+  useEffect(() => {
+    if (!email) {
+      showToastMessage({
+        message: `이메일 정보가 없습니다. `,
+        type: 'error'
+      })
+      navigate('/signup/email')
+    }
+  }, [email, navigate])
+
   const {
     register,
     handleSubmit,

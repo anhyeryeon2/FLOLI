@@ -9,17 +9,28 @@ import { useForm } from 'react-hook-form'
 import { NicknameForm, nicknameSchema } from '@/schema/signupSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { useEffect } from 'react'
 
 export default function StepNickname() {
   const { email, password } = useSignupStore()
   const navigate = useNavigate()
   const { showToastMessage } = useToastMessageContext()
 
-  console.log('@Zustand 상태 확인:', { email, password })
+  useEffect(() => {
+    if (!email || !password) {
+      showToastMessage({
+        message: `이메일과 비밀번호 정보가 없습니다. `,
+        type: 'error'
+      })
+      navigate('/signup/email')
+    }
+  }, [email, password, navigate])
+
   const {
     register,
     handleSubmit,
-    formState: { errors }
+    formState: { errors, isValid },
+    watch
   } = useForm<NicknameForm>({
     resolver: zodResolver(nicknameSchema)
   })
@@ -84,7 +95,7 @@ export default function StepNickname() {
           <Button
             width="100%"
             bordertype={'기본'}
-            type="submit">
+            disabled={!isValid || !watch('nickname')}>
             다음
           </Button>
         </S.BottomSection>
