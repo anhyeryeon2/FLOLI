@@ -93,7 +93,7 @@ export function Login() {
 
       <S.SignupText>
         계정이 없으신가요?{' '}
-        <S.SignupLink onClick={() => navigate('/signup')}>
+        <S.SignupLink onClick={() => navigate('/signup/email')}>
           회원가입하기
         </S.SignupLink>
       </S.SignupText>
