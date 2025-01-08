@@ -17,3 +17,9 @@ export const passwordSchema = z
   })
 
 export type PasswordForm = z.infer<typeof passwordSchema>
+
+export const nicknameSchema = z.object({
+  nickname: z.string().max(8, '닉네임은 최대 8자 이하이어야 합니다.')
+})
+
+export type NicknameForm = z.infer<typeof nicknameSchema>

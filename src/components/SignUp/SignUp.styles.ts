@@ -6,8 +6,8 @@ export const Container = styled.div`
   justify-content: space-between;
   align-items: center;
   height: 100vh;
-  background-color: #ffffff;
-  padding: 20px;
+  background-color: var(--color-white);
+  padding: var(--spacing-6);
 `
 
 export const TopSection = styled.div`
@@ -21,32 +21,39 @@ export const TopSection = styled.div`
 
 export const Logo = styled.img`
   width: 120px;
-  margin-bottom: 30px;
+  margin-bottom: var(--spacing-7);
 `
 
 export const Title = styled.h2`
-  font-size: 1.8rem;
-  color: #333;
-  margin: 15px 0;
+  font-size: var(--fs-xl);
+  color: var(--color-black);
+  margin: var(--spacing-5) 0;
   text-align: left;
   width: 100%;
-  max-width: 400px;
+  max-width: var(--max-width);
 `
 
 export const InputWrapper = styled.div`
   width: 100%;
-  max-width: 400px;
-  margin-bottom: 20px;
+  max-width: var(--max-width);
+  margin-bottom: var(--spacing-4);
 `
 
 export const ErrorMessage = styled.p`
-  font-size: 1.2rem;
-  color: red;
-  margin-top: 8px;
+  font-size: var(--fs-l);
+  color: var(--color-red);
+  margin-top: var(--spacing-2);
 `
 
 export const BottomSection = styled.div`
   width: 100%;
-  max-width: 400px;
-  margin-bottom: 30px;
+  max-width: var(--max-width);
+  margin-bottom: var(--spacing-5);
+`
+
+export const LoadingMessage = styled.p`
+  font-size: var(--fs-l);
+  color: var(--color-gray);
+  margin-top: var(--spacing-2);
+  text-align: center;
 `

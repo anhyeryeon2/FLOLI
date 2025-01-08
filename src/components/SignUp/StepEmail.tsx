@@ -7,6 +7,7 @@ import { useSignupStore } from '@/store/signupStore'
 import { EmailForm, emailSchema } from '@/schema/signupSchema'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useEmailCheck } from '@/hooks/useEmailCheck'
 
 export default function StepEmail() {
   const navigate = useNavigate()
@@ -15,16 +16,34 @@ export default function StepEmail() {
   const {
     register,
     handleSubmit,
-    formState: { errors, isValid }
+    formState: { errors, isValid },
+    setError,
+    clearErrors,
+    watch
   } = useForm<EmailForm>({
     resolver: zodResolver(emailSchema),
     mode: 'onChange'
   })
-  const handleNext = (data: EmailForm) => {
-    setEmail(data.email)
-    navigate('/signup/password')
-  }
+  const email = watch('email')
+  const { isLoading, isError, checkEmail } = useEmailCheck(email)
 
+  const handleNext = async (data: EmailForm) => {
+    try {
+      if (!email) return
+      const isEmailExists = await checkEmail()
+      if (isEmailExists) {
+        setError('email', { message: '이미 사용 중인 이메일입니다.' })
+        return
+      }
+
+      clearErrors('email')
+      setEmail(data.email)
+      navigate('/signup/password')
+    } catch (error) {
+      console.error(error)
+      setError('email', { message: '중복 확인 중 오류가 발생했습니다.' })
+    }
+  }
   return (
     <form onSubmit={handleSubmit(handleNext)}>
       <S.Container>
@@ -39,6 +58,10 @@ export default function StepEmail() {
             {errors.email && (
               <S.ErrorMessage>{errors.email.message}</S.ErrorMessage>
             )}
+            {isLoading && (
+              <S.LoadingMessage>이메일 확인 중...</S.LoadingMessage>
+            )}
+            {isError && <S.ErrorMessage>오류가 발생했습니다.</S.ErrorMessage>}
           </S.InputWrapper>
         </S.TopSection>
 
@@ -47,7 +70,7 @@ export default function StepEmail() {
             width="100%"
             bordertype={'기본'}
             type="submit"
-            disabled={!isValid}>
+            disabled={!isValid || isLoading}>
             다음
           </Button>
         </S.BottomSection>
