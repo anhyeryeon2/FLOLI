@@ -5,8 +5,9 @@ import { Button } from '@/components/Button/Button'
 import img from '@/assets/img/profile/default_profile.png'
 import Input from '@/components/Input/Input'
 import { useForm } from 'react-hook-form'
-import { useMutation } from '@tanstack/react-query'
-import { UserProfileEdit } from '@/apis/userInfoApi'
+import { useMutation, useQuery } from '@tanstack/react-query'
+import { userInfoGet, UserProfileEdit } from '@/apis/userInfoApi'
+import { useAuthStore } from '@/store/useAuthStore'
 
 type FormData = {
   nickname: string
@@ -20,19 +21,38 @@ interface EditProfile {
 }
 
 export function ProfileEdit() {
+  const { user } = useAuthStore()
+  const userId = user?.id
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [image, setImage] = useState<string | null>(null)
-  const {
-    register,
-    handleSubmit,
-    formState: { errors }
-  } = useForm<FormData>()
 
+  // get
+  const { data: userinfo } = useQuery({
+    queryKey: ['userInfo', user?.id],
+    queryFn: () => userInfoGet(user?.id),
+    enabled: !!user?.id
+  })
+  // edit
   const { mutate } = useMutation({
     mutationFn: ({ data, id }: { data: EditProfile; id: string }) =>
       UserProfileEdit(data, id)
   })
 
+  //Form
+  const {
+    register,
+    handleSubmit,
+    formState: { errors }
+  } = useForm<FormData>({
+    defaultValues: userinfo
+      ? {
+          nickname: userinfo[0].nickname,
+          introduction: userinfo[0].introduction
+        }
+      : {}
+  })
+
+  //File 관련
   function handleClick() {
     if (fileInputRef.current) {
       fileInputRef.current.click()
@@ -50,12 +70,20 @@ export function ProfileEdit() {
     }
   }
 
-  const onSubmit = (data: EditProfile) => {
+  //Submit
+  function onSubmit(data: EditProfile) {
+    if (!userId) {
+      console.error('유저 id 정보가 필요합니다')
+      return
+    }
+
     const editProfileData = {
       ...data,
       image: fileInputRef.current?.files
     }
-    mutate({ data: editProfileData, id: 'userID' })
+    mutate({ data: editProfileData, id: userId })
+    console.log('submit했음')
+    console.log(image)
   }
 
   return (
@@ -72,7 +100,7 @@ export function ProfileEdit() {
           ) : (
             <Profile
               className="profile-img"
-              size="12rem"
+              size="15rem"
               userId="userIdtest"
               imageUrl={img}
             />
@@ -81,6 +109,7 @@ export function ProfileEdit() {
           <Button
             bordertype="기본"
             width="16rem"
+            type="submit"
             onClick={handleClick}>
             프로필 사진 수정
           </Button>
@@ -101,7 +130,8 @@ export function ProfileEdit() {
           />
           <Button
             width="9rem"
-            bordertype="기본">
+            bordertype="기본"
+            type="submit">
             확인
           </Button>
           {errors.nickname && (
@@ -120,7 +150,8 @@ export function ProfileEdit() {
           />
           <Button
             width="9rem"
-            bordertype="기본">
+            bordertype="기본"
+            type="submit">
             확인
           </Button>
           {errors.introduction && (

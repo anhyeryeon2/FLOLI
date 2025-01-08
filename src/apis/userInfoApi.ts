@@ -3,7 +3,7 @@ import supabase, { supabaseUrl } from './supabase'
 interface EditProfile {
   image?: FileList | null
   nickname?: string
-  intro?: string
+  introduction?: string
 }
 
 export async function UserProfileEdit(editProfile: EditProfile, id: string) {
@@ -11,7 +11,9 @@ export async function UserProfileEdit(editProfile: EditProfile, id: string) {
 
   if (editProfile.image && editProfile.image.length > 0) {
     const imageFile = editProfile.image[0]
-    const imageName = imageFile.name.replaceAll('/', '')
+    const imageName = imageFile.name
+      .replace(/\s+/g, '_')
+      .replace(/[^a-zA-Z0-9_-]/g, '_')
     const { error: storageError } = await supabase.storage
       .from('avatar')
       .upload(imageName, imageFile)
@@ -25,8 +27,12 @@ export async function UserProfileEdit(editProfile: EditProfile, id: string) {
   }
 
   const { data, error } = await supabase
-    .from('profiles')
-    .update({ ...editProfile, image: imagePath || editProfile.image })
+    .from('userinfo')
+    .update({
+      nickname: editProfile.nickname,
+      introduction: editProfile.introduction,
+      profile_img: imagePath || editProfile.image
+    })
     .eq('id', id)
 
   if (error) {

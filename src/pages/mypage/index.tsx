@@ -27,7 +27,7 @@ export const Mypage = () => {
   if (isPending) return <Loading />
 
   if (!data || data.length === 0) {
-    return <S.NotFound>정보가 존재하지 않는 유저입니다.</S.NotFound>
+    return <S.NotFound>프로필 데이터가 존재하지 않습니다.</S.NotFound>
   }
 
   return (
