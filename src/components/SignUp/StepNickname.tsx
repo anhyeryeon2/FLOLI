@@ -83,7 +83,6 @@ export default function StepNickname() {
             <Input
               type="text"
               {...register('nickname')}
-              placeholder="닉네임"
             />
             {errors.nickname && (
               <S.ErrorMessage>{errors.nickname.message}</S.ErrorMessage>
