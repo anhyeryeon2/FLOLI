@@ -50,6 +50,7 @@ export const ContentWrapper = styled.div`
   width: 100%;
   padding: var(--spacing-4) var(--spacing-3) 0 var(--spacing-3);
   height: 10rem;
+  position: relative;
 `
 
 export const ProfileImage = styled.div`
@@ -70,6 +71,7 @@ export const TextWrapper = styled.div`
   display: flex;
   flex-direction: column;
   flex: 1;
+  position: relative;
 `
 
 export const Title = styled.h3`
@@ -112,4 +114,12 @@ export const OptionsIcon = styled(FaEllipsisH)`
   margin-bottom: var(--spacing-1);
   color: var(--color-gray);
   cursor: pointer;
+`
+export const ModalWrapper = styled.div`
+  display: flex;
+  font-size: var(--fs-xl);
+  padding: var(--spacing-4);
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 1rem;
 `

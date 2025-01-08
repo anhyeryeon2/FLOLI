@@ -95,6 +95,7 @@ export function PlayListCreate() {
         message: `플레이리스트 생성 실패하였습니다`,
         type: 'error'
       })
+      console.error(error)
     } finally {
       console.log('플레이리스트 생성 완료')
     }
