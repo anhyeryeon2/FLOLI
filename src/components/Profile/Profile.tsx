@@ -1,5 +1,6 @@
 import { ProfileButtonProps } from '@/types/profile'
 import * as S from './Profile.styles'
+import { Link } from 'react-router-dom'
 
 /* 사용예시1 
       <Profile
@@ -7,6 +8,7 @@ import * as S from './Profile.styles'
         altText="User Profile"
         userId= @ {userId값 넣어야 url 지정돼요}
         size="large"
+        disabledLink의 경우, Link로 활용하지 않고 싶은 곳에서 true로 설정 (가령, navbar같은 곳)
       />
 
    사용예시2
@@ -27,11 +29,13 @@ const Profile = ({
   userId,
   className,
   size = 'medium',
-  radius
+  radius,
+  disabledLink = false
 }: ProfileButtonProps) => {
   return (
     <S.ProfileButtonWrapper
-      to={`/profile/${userId}`}
+      as={disabledLink ? 'div' : Link}
+      to={disabledLink ? '#' : `/profile/${userId}`}
       size={size}
       className={className}
       radius={radius}>

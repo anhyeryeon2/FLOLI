@@ -11,6 +11,7 @@ export const ProfileButtonWrapper = styled(Link)<ProfileButtonWrapperProps>`
   background: none;
   border: none;
   display: inline-block;
+  border: 1px solid var(--color-border);
   border-radius: ${({ radius }) => radius || 'var(--radius-full)'};
   padding: 0;
   cursor: pointer;

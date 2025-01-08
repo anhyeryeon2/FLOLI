@@ -79,6 +79,7 @@ export default function Navbar() {
             altText="profile"
             userId={user?.id || ''}
             size="xsmall"
+            disabledLink={true}
           />
 
           <span>라이브러리</span>

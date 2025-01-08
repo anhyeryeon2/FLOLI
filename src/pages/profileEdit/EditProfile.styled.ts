@@ -13,6 +13,7 @@ export const ProfileImageContainer = styled.div`
   flex-direction: column;
   padding: var(--spacing-7);
   gap: var(--spacing-6);
+  position: relative;
 `
 export const ContentContainer = styled.form`
   padding: var(--spacing-5) 5rem var(--spacing-5) 5rem;
@@ -27,15 +28,18 @@ export const Label = styled.label`
 
 export const ContentBox = styled.div`
   display: flex;
-  gap: 2rem;
-  margin-bottom: var(--spacing-7);
+  flex-direction: column;
+  gap: var(--spacing-3);
+  margin-bottom: var(--spacing-6);
 `
 export const CompleteBox = styled.div`
   display: flex;
   justify-content: center;
+  margin-top: var(--spacing-7);
   gap: var(--spacing-7);
 `
 
 export const Errormsg = styled.div`
   color: var(--color-main1);
+  margin-left: var(--spacing-4);
 `

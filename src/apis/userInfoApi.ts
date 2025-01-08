@@ -11,9 +11,9 @@ export async function UserProfileEdit(editProfile: EditProfile, id: string) {
 
   if (editProfile.image && editProfile.image.length > 0) {
     const imageFile = editProfile.image[0]
-    const imageName = imageFile.name
-      .replace(/\s+/g, '_')
-      .replace(/[^a-zA-Z0-9_-]/g, '_')
+    const imageName =
+      imageFile.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '_') +
+      Math.random()
     const { error: storageError } = await supabase.storage
       .from('avatar')
       .upload(imageName, imageFile)

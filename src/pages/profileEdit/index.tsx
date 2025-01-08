@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as S from './EditProfile.styled'
 import Profile from '@/components/Profile/Profile'
 import { Button } from '@/components/Button/Button'
@@ -8,8 +8,11 @@ import { useForm } from 'react-hook-form'
 import { useMutation, useQuery } from '@tanstack/react-query'
 import { userInfoGet, UserProfileEdit } from '@/apis/userInfoApi'
 import { useAuthStore } from '@/store/useAuthStore'
+import { CiCirclePlus } from 'react-icons/ci'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 
 type FormData = {
+  image?: FileList | null
   nickname: string
   introduction: string
 }
@@ -21,21 +24,32 @@ interface EditProfile {
 }
 
 export function ProfileEdit() {
+  const { showToastMessage } = useToastMessageContext()
   const { user } = useAuthStore()
   const userId = user?.id
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [image, setImage] = useState<string | null>(null)
 
-  // get
+  // data get
   const { data: userinfo } = useQuery({
     queryKey: ['userInfo', user?.id],
     queryFn: () => userInfoGet(user?.id),
     enabled: !!user?.id
   })
-  // edit
+  // data edit
   const { mutate } = useMutation({
     mutationFn: ({ data, id }: { data: EditProfile; id: string }) =>
-      UserProfileEdit(data, id)
+      UserProfileEdit(data, id),
+    onSuccess: () =>
+      showToastMessage({
+        message: `수정되었습니다!! `,
+        type: 'success'
+      }),
+    onError: () =>
+      showToastMessage({
+        message: `수정에 실패하였습니다... `,
+        type: 'error'
+      })
   })
 
   //Form
@@ -46,6 +60,7 @@ export function ProfileEdit() {
   } = useForm<FormData>({
     defaultValues: userinfo
       ? {
+          image: userinfo[0].profile_img,
           nickname: userinfo[0].nickname,
           introduction: userinfo[0].introduction
         }
@@ -53,6 +68,12 @@ export function ProfileEdit() {
   })
 
   //File 관련
+  useEffect(() => {
+    if (userinfo?.[0]?.profile_img) {
+      setImage(userinfo[0].profile_img)
+    }
+  }, [userinfo])
+
   function handleClick() {
     if (fileInputRef.current) {
       fileInputRef.current.click()
@@ -73,7 +94,7 @@ export function ProfileEdit() {
   //Submit
   function onSubmit(data: EditProfile) {
     if (!userId) {
-      console.error('유저 id 정보가 필요합니다')
+      alert('유저 id 정보가 필요합니다')
       return
     }
 
@@ -82,8 +103,6 @@ export function ProfileEdit() {
       image: fileInputRef.current?.files
     }
     mutate({ data: editProfileData, id: userId })
-    console.log('submit했음')
-    console.log(image)
   }
 
   return (
@@ -106,13 +125,19 @@ export function ProfileEdit() {
             />
           )}
 
-          <Button
-            bordertype="기본"
-            width="16rem"
-            type="submit"
-            onClick={handleClick}>
-            프로필 사진 수정
-          </Button>
+          <CiCirclePlus
+            type="button"
+            onClick={handleClick}
+            size={50}
+            style={{
+              position: 'absolute',
+              bottom: '30',
+              right: '170',
+              backgroundColor: 'white',
+              borderRadius: '9999rem',
+              cursor: 'pointer'
+            }}
+          />
 
           <S.FileInput
             ref={fileInputRef}
@@ -125,15 +150,15 @@ export function ProfileEdit() {
         <S.ContentBox>
           <Input
             id="nickname"
-            {...register('nickname', { required: '닉네임을 입력력해주세요.' })}
+            {...register('nickname', {
+              required: '닉네임을 입력해주세요.',
+              maxLength: {
+                value: 8,
+                message: '닉네임은 8자 이하로 부탁드려요...'
+              }
+            })}
             placeholder="닉네임을 입력해주세요"
           />
-          <Button
-            width="9rem"
-            bordertype="기본"
-            type="submit">
-            확인
-          </Button>
           {errors.nickname && (
             <S.Errormsg>{errors.nickname.message}</S.Errormsg>
           )}
@@ -148,16 +173,18 @@ export function ProfileEdit() {
             })}
             placeholder="소개 글을 입력해주세요"
           />
-          <Button
-            width="9rem"
-            bordertype="기본"
-            type="submit">
-            확인
-          </Button>
           {errors.introduction && (
             <S.Errormsg>{errors.introduction.message}</S.Errormsg>
           )}
         </S.ContentBox>
+        <S.CompleteBox>
+          <Button
+            bordertype="기본"
+            width="9rem"
+            type="submit">
+            수정
+          </Button>
+        </S.CompleteBox>
       </S.ContentContainer>
     </>
   )

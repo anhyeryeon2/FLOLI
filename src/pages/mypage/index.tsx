@@ -39,6 +39,7 @@ export const Mypage = () => {
             size="8rem"
             userId="userIdtest"
             imageUrl={data[0].profile_img}
+            disabledLink={true}
           />
           <S.ProfileDetailBox>
             <S.UserName>{data[0].nickname}</S.UserName>
