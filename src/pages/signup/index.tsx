@@ -21,8 +21,7 @@ export function Signup() {
       password,
       options: {
         data: {
-          nickname,
-          profileImgPath: '/assets/img/profile/default_profile.webp'
+          nickname
         }
       }
     })

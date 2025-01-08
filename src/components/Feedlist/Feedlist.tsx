@@ -1,8 +1,8 @@
 import { FeedListProps } from '@/types/List'
-import * as S from './Feedlist.styles'
+import * as S from './Feedlist.style'
 import { FeedFooter } from './Footer'
 import img from '../../assets/img/profile/default_profile.png'
-import { useDateKoreanFormat } from '@/hooks/useDateKoreanFormat'
+import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 
 const FeedList = ({
   image,
@@ -13,11 +13,14 @@ const FeedList = ({
   comments,
   date,
   track,
-  key
+  key,
+  id
 }: FeedListProps) => {
-  let koreanDate = useDateKoreanFormat(date)
+  let koreanDate = dateKoreanFormat(date)
   return (
-    <S.CardContainer key={key}>
+    <S.CardContainer
+      key={key}
+      id={id}>
       <S.ImageWrapper>
         <img
           src={image}

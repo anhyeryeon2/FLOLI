@@ -1,29 +1,28 @@
 import styled from 'styled-components'
 
 export const HeaderWrapper = styled.div`
+  position: relative;
   display: flex;
   align-items: center;
-  padding: var(--spacing-3) var(--spacing-4);
+  justify-content: center;
+  padding: 0 var(--spacing-4);
   background-color: var(--color-white);
   position: sticky;
   top: 0;
   left: 0;
   right: 0;
   z-index: var(--header-index);
-  width: 100%;
   height: var(--header-height);
-  box-sizing: border-box;
 `
 
 export const Logo = styled.div`
-  font-size: 2.4rem;
-  font-weight: 700;
-  color: var(--color-black);
-  justify-self: left;
+  position: absolute;
+  top: 50%;
+  left: var(--layout-padding);
+  transform: translateY(-50%);
+  line-height: 0;
 `
 
-export const Content = styled.div`
-  justify-self: center;
-  font-size: 2.4rem;
-  margin: 0 auto;
+export const Content = styled.span`
+  font-size: 2rem;
 `

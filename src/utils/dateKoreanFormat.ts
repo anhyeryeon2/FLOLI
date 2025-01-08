@@ -1,4 +1,4 @@
-export const useDateKoreanFormat = (date: string): string => {
+export const dateKoreanFormat = (date: string): string => {
   const dateTypeFormat = date as unknown as Date
   const stringToDate = new Date(dateTypeFormat)
 

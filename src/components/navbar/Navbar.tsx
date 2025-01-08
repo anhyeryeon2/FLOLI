@@ -7,10 +7,12 @@ import {
   MdOutlineSubscriptions,
   MdSubscriptions
 } from 'react-icons/md'
-
 import * as S from './Navbar.styled'
+import { useAuthStore } from '@/store/useAuthStore'
+import Profile from '../Profile/Profile'
 
 export default function Navbar() {
+  const { user } = useAuthStore()
   const [active, setActive] = useState<string>('home')
 
   const handleClick = (icon: string) => {
@@ -48,9 +50,9 @@ export default function Navbar() {
           $isCenter>
           <S.Icon active={active === 'add'}>
             {active === 'add' ? (
-              <IoAddCircle size={48} />
+              <IoAddCircle size={40} />
             ) : (
-              <IoIosAddCircleOutline size={48} />
+              <IoIosAddCircleOutline size={40} />
             )}
           </S.Icon>
         </S.MenuItem>
@@ -69,7 +71,16 @@ export default function Navbar() {
         </S.MenuItem>
         {/* 유저 프로필 사진 */}
         <S.MenuItem to="/mypage">
-          <S.Icon>🧑</S.Icon>
+          <Profile
+            imageUrl={
+              user?.profile_img ||
+              'https://vpxgcvxodypztnxelmqx.supabase.co/storage/v1/object/public/avatar/default_profile.png'
+            }
+            altText="profile"
+            userId={user?.id || ''}
+            size="xsmall"
+          />
+
           <span>라이브러리</span>
         </S.MenuItem>
       </S.Menu>

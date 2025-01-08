@@ -1,8 +1,9 @@
 import { FaHeart } from 'react-icons/fa'
 import { FaEllipsisH } from 'react-icons/fa'
+import * as S from './Playlist.styles'
 import { PlayListFooter } from './Footer'
 import { PlayListProps } from '@/types/List'
-import * as S from './Playlist.styles'
+
 /**
  * @typedef {Object} PlayListProps
  * @property {string} image - 플레이리스트 이미지 URL

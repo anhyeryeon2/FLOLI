@@ -20,3 +20,9 @@ export interface IPlayListType {
   profile_img_path: string
   subsc_count: number
 }
+
+export interface IPlayListQueryType {
+  total_pages: number
+  total_items: number
+  page: number
+}

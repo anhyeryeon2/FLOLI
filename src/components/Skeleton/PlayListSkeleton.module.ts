@@ -7,21 +7,19 @@ pulse {
 `
 
 export const Container = styled.div`
-  width: 360px;
-
-  margin-left: auto;
-  margin-right: auto;
   border-radius: 20px;
+
+  width: 100%;
 `
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
+  width: 100%;
 `
 
 export const ItemContainer = styled.div`
-  height: 360px;
   border-radius: 0.75rem;
   background-color: rgba(243, 243, 243, 0.3);
   animation: ${pluse} 2s cubic-bezier(0.4, 0, 0.6, 1) infinite;
@@ -29,21 +27,20 @@ export const ItemContainer = styled.div`
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
-  position: relative;
+  height: calc(var(--max-width) * 9 / 16);
 `
 
 export const Thumbnail = styled.div`
   background-color: rgba(214, 214, 214, 0.5);
   border-radius: 0.75rem;
-  height: 250px;
-  width: 360px;
+  width: 100%;
 `
 
 export const SkeletonAvatar = styled.div`
-  width: 50px; /* 아바타 크기 */
-  height: 50px; /* 아바타 크기 */
-  border-radius: 50%; /* 원형 */
-  background-color: #d6d6d6; /* 스켈레톤 바탕색 */
+  width: 5rem;
+  height: 5rem;
+  border-radius: var(--radius-full);
+  background-color: rgba(243, 243, 243, 0.8);
 `
 
 export const ItemContiner = styled.div`
@@ -51,11 +48,11 @@ export const ItemContiner = styled.div`
   width: 100%;
   justify-content: space-around;
 `
+
 export const ItemAvatar = styled.div`
   display: flex;
   align-items: center;
-  justify-content: flex-end;
-  flex: 0 0 auto; /* 증가너비 감소너비 기본너비 */
+  justify-content: center;
   width: 100px;
 `
 
@@ -64,7 +61,6 @@ export const ItemContent = styled.div`
   width: 100%;
   flex-direction: column;
   align-items: center;
-  flex: 1;
 `
 
 export const ItemTop = styled.div`
@@ -72,13 +68,13 @@ export const ItemTop = styled.div`
   border-radius: 0.75rem;
   height: 40px;
   margin-bottom: 1.2rem;
-  width: 80%;
+  width: 100%;
 `
 
 export const ItemMid = styled.div`
   background-color: rgba(214, 214, 214, 0.5);
   height: 30px;
-  width: 80%;
+  width: 100%;
   margin-bottom: 1.2rem;
   border-radius: 0.75rem;
 `

@@ -1,10 +1,10 @@
-import * as S from './PlayList.module'
+import * as S from './PlayListSkeleton.module'
 
 const PlayListSkeleton = () => {
   return (
     <S.Container>
       <S.Wrapper>
-        {[...Array(2)].map((_, index) => (
+        {[...Array(3)].map((_, index) => (
           <S.ItemContainer key={index}>
             <S.Thumbnail />
             <S.ItemContiner>

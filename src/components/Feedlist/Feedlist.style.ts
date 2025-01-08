@@ -48,7 +48,6 @@ export const ContentWrapper = styled.div`
   align-items: flex-start;
   width: 100%;
   padding: var(--spacing-4) var(--spacing-3) 0 var(--spacing-3);
-  height: 10rem;
 `
 
 export const ProfileImage = styled.div`
