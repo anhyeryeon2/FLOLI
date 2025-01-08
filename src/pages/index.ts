@@ -1,4 +1,4 @@
-export { Login } from './Login/index.tsx'
+export { Login } from './login/index.tsx'
 
 export { Signup } from './signup/index.tsx'
 export { NotFound } from './notfound/index.tsx'
