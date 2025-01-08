@@ -18,15 +18,15 @@ const fetchUserSubscStatus = async (
 /**
  * @param {string} currentUserId - 현재 로그인한 유저 ID
  * @param {string} subscribedUserId - 현재 로그인한 유저가 구독한 유저 ID
- * @returns {object} data, error, isLoading
- * @example const { data, error, isLoading } = useFetchUserLike(userId, playlistId);
+ * @returns {object} data, error, isPending
+ * @example const { data, error, isPending } = useFetchUserSubscStatus(currentUserId, subscribedUserId);
  */
 const useFetchUserSubscStatus = (
   currentUserId: string,
   subscribedUserId: string
 ) => {
   return useQuery({
-    queryKey: ['userLikeStatus', currentUserId, subscribedUserId],
+    queryKey: ['userSubscStatus', currentUserId, subscribedUserId],
     queryFn: () => fetchUserSubscStatus(currentUserId, subscribedUserId),
     enabled: !!currentUserId && !!subscribedUserId
   })
