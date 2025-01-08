@@ -10,8 +10,10 @@ import {
 import * as S from './Navbar.styled'
 import { useAuthStore } from '@/store/useAuthStore'
 import Profile from '../Profile/Profile'
+import useUserInfo from '@/hooks/useUserInfo'
 
 export default function Navbar() {
+  const { userinfo } = useUserInfo()
   const { user } = useAuthStore()
   const [active, setActive] = useState<string>('home')
 
@@ -73,8 +75,9 @@ export default function Navbar() {
         <S.MenuItem to="/mypage">
           <Profile
             imageUrl={
-              user?.profile_img ||
-              'https://vpxgcvxodypztnxelmqx.supabase.co/storage/v1/object/public/avatar/default_profile.png'
+              userinfo
+                ? userinfo[0].profile_img
+                : 'https://vpxgcvxodypztnxelmqx.supabase.co/storage/v1/object/public/avatar/default_profile.png'
             }
             altText="profile"
             userId={user?.id || ''}

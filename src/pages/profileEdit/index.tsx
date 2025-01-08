@@ -5,11 +5,12 @@ import { Button } from '@/components/Button/Button'
 import img from '@/assets/img/profile/default_profile.png'
 import Input from '@/components/Input/Input'
 import { useForm } from 'react-hook-form'
-import { useMutation, useQuery } from '@tanstack/react-query'
-import { userInfoGet, UserProfileEdit } from '@/apis/userInfoApi'
+import { useMutation } from '@tanstack/react-query'
+import { UserProfileEdit } from '@/apis/userInfoApi'
 import { useAuthStore } from '@/store/useAuthStore'
 import { CiCirclePlus } from 'react-icons/ci'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import useUserInfo from '@/hooks/useUserInfo'
 
 type FormData = {
   image?: FileList | null
@@ -30,12 +31,8 @@ export function ProfileEdit() {
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [image, setImage] = useState<string | null>(null)
 
-  // data get
-  const { data: userinfo } = useQuery({
-    queryKey: ['userInfo', user?.id],
-    queryFn: () => userInfoGet(user?.id),
-    enabled: !!user?.id
-  })
+  // data get는 커스텀훅으로 처리
+  const { userinfo } = useUserInfo()
   // data edit
   const { mutate } = useMutation({
     mutationFn: ({ data, id }: { data: EditProfile; id: string }) =>
