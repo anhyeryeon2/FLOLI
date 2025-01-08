@@ -10,12 +10,14 @@ import { PlaylistIsPublic } from '@/components/playListCreate/PlayListIsPublic'
 import { RiImageAddLine } from 'react-icons/ri'
 import { useImageUpload } from '@/hooks/useImageUpload'
 import { useDebounce } from '@/hooks/useDebounce'
+import { useAuthStore } from '@/store/useAuthStore'
 
 export function PlayListCreate() {
   const [playlistTitle, setPlaylistTitle] = useState('')
   const [playlistDescription, setPlaylistDescription] = useState('')
   const [isPublic, setIsPublic] = useState(true)
   const { showToastMessage } = useToastMessageContext()
+  const user = useAuthStore(state => state.user)
 
   const {
     videoLink,
@@ -185,7 +187,7 @@ export function PlayListCreate() {
           </div>
           <S.ThumbnailInfo>
             <S.ThumbnailTitle>{debouncedTitle || ''}</S.ThumbnailTitle>
-            <S.ThumbnailMaker>//user.nickname 추가예정</S.ThumbnailMaker>
+            <S.ThumbnailMaker>{user?.nickname}</S.ThumbnailMaker>
           </S.ThumbnailInfo>
         </S.ThumbnailPreview>
       </S.Section>
