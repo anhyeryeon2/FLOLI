@@ -1,7 +1,7 @@
 import * as S from './SignUp.styles'
 import MainLogo from '@/assets/img/logo/floli.svg'
 import Input from '../Input/Input'
-import { Button } from '../button/Button'
+import { Button } from '../Button/Button'
 import { useSignupStore } from '@/store/signupStore'
 import { supabase } from '../../../supabaseConfig'
 import { useNavigate } from 'react-router-dom'
@@ -24,7 +24,7 @@ export default function StepNickname() {
       })
       navigate('/signup/email')
     }
-  }, [email, password, navigate])
+  }, [email, password, navigate, showToastMessage])
 
   const {
     register,
