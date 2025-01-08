@@ -104,12 +104,12 @@ export const StyledButton = styled.button`
   color: var(--color-white);
   background: var(--color-black);
   border-radius: var(--radius-full);
+  border: 1px solid var(--color-black);
 
   &.subsc-cancel {
     padding: 0.8rem 1rem;
     background: var(--color-white);
     color: var(--color-black);
-    border: 1px solid var(--color-black);
   }
 `
 
@@ -163,6 +163,15 @@ export const VideoListPanel = styled.div`
   background: var(--color-main2);
   border-radius: var(--radius-base);
 
+  .inner {
+    display: flex;
+    align-items: center;
+
+    & > svg {
+      flex: 0 0 auto;
+    }
+  }
+
   div {
     /* 말줄임표때문에 넣음 */
     min-width: 0;
@@ -193,7 +202,7 @@ export const VideoListPanel = styled.div`
 
     p {
       font-size: inherit;
-      flex: 1 1 auto;
+      flex: 0 1 auto;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
