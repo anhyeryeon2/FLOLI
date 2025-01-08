@@ -28,8 +28,8 @@ export const useAuthStore = create<AuthState>()(
       clearUser: () => set({ user: null })
     }),
     {
-      name: 'auth-storage', 
-      storage: createJSONStorage(() => localStorage) 
+      name: 'auth-storage',
+      storage: createJSONStorage(() => localStorage)
     }
   )
 )
