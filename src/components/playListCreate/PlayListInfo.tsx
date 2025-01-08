@@ -1,14 +1,14 @@
-import { PlaylistInfoProps } from '@/types/playListCreate'
+import { PlayListInfoProps } from '@/types/playListCreate'
 import * as S from '../../components/playListCreate/PlayListCreate.styles'
 import Input from '../Input/Input'
 import Textarea from '../Textarea/Textarea'
 
-export const PlaylistInfo = ({
+export const PlayListInfo = ({
   playlistTitle,
   setPlaylistTitle,
   playlistDescription,
   setPlaylistDescription
-}: PlaylistInfoProps) => {
+}: PlayListInfoProps) => {
   return (
     <>
       <S.Section>
