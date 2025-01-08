@@ -1,5 +1,5 @@
-import FeedList from '@/components/FeedList/Feedlist'
-import * as S from '@/components/FeedList/Feedlist.styles'
+import FeedList from '@/components/FeedList/FeedList'
+import * as S from '@/components/FeedList/FeedList.styles'
 const playLists = [
   {
     id: '1',

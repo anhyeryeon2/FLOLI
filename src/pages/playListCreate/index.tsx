@@ -5,8 +5,8 @@ import * as S from '../../components/playListCreate/PlayListCreate.styles'
 import { supabase } from '../../../supabaseConfig'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { useVideoLink } from '@/hooks/useVideoLink'
-import { PlaylistInfo } from '@/components/playListCreate/PlayListInfo'
-import { PlaylistIsPublic } from '@/components/playListCreate/PlayListIsPublic'
+import { PlayListInfo } from '@/components/playListCreate/PlayListInfo'
+import { PlayListIsPublic } from '@/components/playListCreate/PlayListIsPublic'
 import { RiImageAddLine } from 'react-icons/ri'
 import { useImageUpload } from '@/hooks/useImageUpload'
 import { useDebounce } from '@/hooks/useDebounce'
@@ -103,14 +103,14 @@ export function PlayListCreate() {
 
   return (
     <S.Container>
-      <PlaylistInfo
+      <PlayListInfo
         playlistTitle={playlistTitle}
         setPlaylistTitle={setPlaylistTitle}
         playlistDescription={playlistDescription}
         setPlaylistDescription={setPlaylistDescription}
       />
 
-      <PlaylistIsPublic
+      <PlayListIsPublic
         isPublic={isPublic}
         setIsPublic={setIsPublic}
       />
