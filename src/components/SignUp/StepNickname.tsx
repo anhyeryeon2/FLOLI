@@ -95,7 +95,7 @@ export default function StepNickname() {
             width="100%"
             bordertype={'기본'}
             disabled={!isValid || !watch('nickname')}>
-            다음
+            회원가입
           </Button>
         </S.BottomSection>
       </S.Container>
