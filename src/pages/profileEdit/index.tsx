@@ -11,18 +11,7 @@ import { useAuthStore } from '@/store/useAuthStore'
 import { CiCirclePlus } from 'react-icons/ci'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import useUserInfo from '@/hooks/useUserInfo'
-
-type FormData = {
-  image?: FileList | null
-  nickname: string
-  introduction: string
-}
-
-interface EditProfile {
-  image?: FileList | null
-  nickname?: string
-  intro?: string
-}
+import { FormData, EditProfile } from '@/types/profileEdit'
 
 export function ProfileEdit() {
   const { showToastMessage } = useToastMessageContext()
