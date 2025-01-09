@@ -11,6 +11,7 @@ import { useAuthStore } from '@/store/useAuthStore'
 
 export const Mypage = () => {
   const { user } = useAuthStore()
+  console.log(user)
 
   const navigate = useNavigate()
 

@@ -137,11 +137,7 @@ export function ProfileEdit() {
           <Input
             id="nickname"
             {...register('nickname', {
-              required: '닉네임을 입력해주세요.',
-              maxLength: {
-                value: 8,
-                message: '닉네임은 8자 이하로 부탁드려요...'
-              }
+              required: '닉네임을 입력해주세요.'
             })}
             placeholder="닉네임을 입력해주세요"
           />
