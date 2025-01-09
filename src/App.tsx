@@ -1,3 +1,5 @@
+import Router from './routes/Router'
+
 export default function App() {
-  return <h1>App.tsx</h1>
+  return <Router />
 }

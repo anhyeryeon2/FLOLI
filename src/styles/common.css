@@ -1,0 +1,112 @@
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 300;
+  src:
+    url('/fonts/Pretendard-Light.subset.woff2') format('woff2'),
+    url('/fonts/Pretendard-Light.subset.woff') format('woff');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 400;
+  src:
+    url('/fonts/Pretendard-Regular.subset.woff2') format('woff2'),
+    url('/fonts/Pretendard-Regular.subset.woff') format('woff');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 500;
+  src:
+    url('/fonts/Pretendard-Medium.subset.woff2') format('woff2'),
+    url('/fonts/Pretendard-Medium.subset.woff') format('woff');
+}
+@font-face {
+  font-family: 'Pretendard';
+  font-weight: 700;
+  src:
+    url('/fonts/Pretendard-Bold.subset.woff2') format('woff2'),
+    url('/fonts/Pretendard-Bold.subset.woff') format('woff');
+}
+
+:root {
+  /* max-width */
+  --max-width: 600px;
+
+  /* 요소 높이 값*/
+  --header-height: 4.8rem;
+  --navbar-height: 5.8rem;
+
+  /* 컨테이너 좌우 간격 */
+  --layout-padding: 1.2rem;
+
+  /* z-index */
+  --header-index: 100;
+  --navbar-index: 100;
+  --modal-index: 200;
+
+  --color-black: #131313;
+  --color-white: #ffffff;
+  --color-red: #ff0000;
+  /* primary */
+  --color-main1: #5f3dc4;
+  --color-main2: #e5dbff;
+  --color-main3: #845ef7;
+
+  /* supporting */
+  --color-skyblue-light: #e0faff;
+  --color-skyblue-light-dark: #93e9f9;
+  --color-coral: #ffb5b5;
+  --color-coral-dark: #ff7f7f;
+  --color-green: #3bbf0a;
+  --color-green-dark: #268d00;
+  --color-green-light: #a2e5be;
+  --color-green-light-dark: #62d793;
+  --color-green-muted: #ccdaaf;
+  --color-green-muted-dark: #b3c197;
+  --color-caramel: #e4bc84;
+  --color-caramel-dark: #cd9342;
+
+  /* Grayscale */
+  --color-gray: #777777;
+  --color-input: #a0a0a0;
+  --color-border: #bbb;
+
+  /* bg color */
+  --color-bg1: #f4f4f4;
+  --color-bg2: #d9d9d9;
+
+  /* font-size */
+  --fs-2xl: 3.2rem;
+  --fs-xl: 2rem;
+  --fs-l: 1.6rem;
+  --fs-m: 1.2rem;
+  --fs-s: 1rem;
+
+  /* box-shadow */
+  --shadow-s: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  --shadow-m: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  --shadow-l: 0px 4px 8px rgba(0, 0, 0, 0.15);
+  --shadow-xl: 4px 8px 16px rgba(0, 0, 0, 0.5);
+
+  /* Typography */
+  --ff_kor: 'Pretendard'; /* 한글 폰트*/
+  --ff_eng: 'Pretendard'; /* 영문, 숫자 폰트 */
+
+  --ls_base: -0.02em;
+
+  /* Spacing */
+  --spacing-1: 0.4rem; /* 4px */
+  --spacing-2: 0.8rem; /* 8px */
+  --spacing-3: 1rem; /* 10px */
+  --spacing-4: 1.2rem; /* 12px */
+  --spacing-5: 1.6rem; /* 16px */
+  --spacing-6: 2.4rem; /* 24px */
+  --spacing-7: 3rem; /* 24px */
+
+  /* Border Radius */
+  --radius-sm: 2px; /* 2px */
+  --radius-base: 4px; /* 4px */
+  --radius-md: 6px; /* 6px */
+  --radius-lg: 8px; /* 8px */
+  --radius-xl: 16px; /* 16px */
+  --radius-full: 9999px;
+}
