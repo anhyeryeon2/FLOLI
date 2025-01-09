@@ -10,11 +10,13 @@ import { NicknameForm, nicknameSchema } from '@/schema/signupSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { useEffect } from 'react'
+import { useModal } from '@/hooks/useModal'
 
 export default function StepNickname() {
   const { email, password } = useSignupStore()
   const navigate = useNavigate()
   const { showToastMessage } = useToastMessageContext()
+  const { open, ModalComponent } = useModal()
 
   useEffect(() => {
     if (!email || !password) {
@@ -35,7 +37,7 @@ export default function StepNickname() {
     resolver: zodResolver(nicknameSchema)
   })
 
-  const onSubmit = async (data: NicknameForm) => {
+  const handleSignup = async (data: NicknameForm) => {
     try {
       const { data: signUpData, error } = await supabase.auth.signUp({
         email,
@@ -64,17 +66,25 @@ export default function StepNickname() {
         })
         navigate('/')
       }
-    } catch (err) {
-      console.error(err)
+    } catch (error) {
+      console.error(error)
       showToastMessage({
         message: `오류가 발생했습니다. `,
         type: 'error'
       })
     }
   }
-
+  const showModal = (data: NicknameForm) => {
+    open({
+      title: '회원가입 하시겠습니까?',
+      description: `"${data.nickname}"으로 이용할 수 있습니다.`,
+      confirmText: '가입',
+      cancelText: '취소',
+      onConfirm: () => handleSignup(data)
+    })
+  }
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form onSubmit={handleSubmit(showModal)}>
       <S.Container>
         <S.TopSection>
           <S.Logo src={MainLogo} />
@@ -94,9 +104,11 @@ export default function StepNickname() {
           <Button
             width="100%"
             bordertype={'기본'}
+            type="submit"
             disabled={!isValid || !watch('nickname')}>
             회원가입
           </Button>
+          {ModalComponent}
         </S.BottomSection>
       </S.Container>
     </form>
