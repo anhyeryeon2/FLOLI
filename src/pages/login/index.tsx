@@ -61,7 +61,10 @@ export function Login() {
         const userData: UserData = {
           id: user.id,
           email: user.email || '',
-          nickname: user.user_metadata?.name || user.user_metadata?.user_name,
+          nickname:
+            user.user_metadata?.name ||
+            user.user_metadata?.user_name ||
+            user.user_metadata?.nickname,
           profile_img: user.user_metadata?.avatar_url || '',
           introduction: user.user_metadata?.introduction || '',
           subsc_count: user.user_metadata?.subsc_count || 0
