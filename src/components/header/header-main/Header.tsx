@@ -3,6 +3,7 @@ import * as S from './Header.styled'
 import MainLogo from '@/assets/img/logo/floli.svg'
 import { IoChevronBack } from 'react-icons/io5'
 import { useNavigate } from 'react-router-dom'
+import { useModalFullStore } from '@/store/useModalFullStore'
 
 type HeaderProps = {
   isBack?: boolean
@@ -10,10 +11,16 @@ type HeaderProps = {
 
 export default function Header({ isBack }: HeaderProps) {
   const navigate = useNavigate()
+  const setModalFull = useModalFullStore(state => state.setModalState)
+  const modalFull = useModalFullStore(state => state.state)
+  const setModalSearch = useModalFullStore(state => state.setModalSearchState)
   const handleClick = () => {
     navigate(-1)
   }
-
+  const handleModalFullOpen = () => {
+    setModalFull(true)
+    setModalSearch(true)
+  }
   return (
     <S.HeaderWrapper>
       {isBack ? (
@@ -26,7 +33,14 @@ export default function Header({ isBack }: HeaderProps) {
         <S.Logo src={MainLogo} />
       )}
       <S.SearchIcon>
-        <IoIosSearch size={24} />
+        {modalFull ? (
+          <input />
+        ) : (
+          <IoIosSearch
+            size={24}
+            onClick={handleModalFullOpen}
+          />
+        )}
       </S.SearchIcon>
     </S.HeaderWrapper>
   )

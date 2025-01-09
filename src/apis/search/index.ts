@@ -1,0 +1,25 @@
+import axiosInstance from '../axiosInstance'
+
+const ITEM_COUNT = 3
+
+export const getSearchPlayLists = async (
+  search_term: string,
+  page: number = 1,
+  item: number = ITEM_COUNT
+) => {
+  try {
+    const playListData = await axiosInstance.get('rpc/search-playlists', {
+      params: {
+        search_term: search_term,
+        page: page,
+        item: item
+      }
+    })
+    return playListData.data
+  } catch (error) {
+    if (error instanceof Error) {
+      throw error
+    }
+    throw new Error('알 수 없는 오류가 발생했습니다.')
+  }
+}
