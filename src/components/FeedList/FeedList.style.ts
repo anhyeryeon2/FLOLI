@@ -17,13 +17,12 @@ export const CardContainer = styled.div`
   justify-content: center;
   align-items: center;
   margin: auto;
-  max-width: 50rem;
-  min-width: 36rem;
+  width: 100%;
+  height: calc(var(--max-width) * 9 / 16);
 `
 
 export const ImageWrapper = styled.div`
   width: 100%;
-  height: 16rem;
   position: relative;
   overflow: hidden;
   img {
@@ -49,8 +48,6 @@ export const ContentWrapper = styled.div`
   align-items: flex-start;
   width: 100%;
   padding: var(--spacing-4) var(--spacing-3) 0 var(--spacing-3);
-  height: 10rem;
-  position: relative;
 `
 
 export const ProfileImage = styled.div`

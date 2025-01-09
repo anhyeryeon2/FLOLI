@@ -10,6 +10,8 @@ import { PlayListIsPublic } from '@/components/playListCreate/PlayListIsPublic'
 import { RiImageAddLine } from 'react-icons/ri'
 import { useImageUpload } from '@/hooks/useImageUpload'
 import { useDebounce } from '@/hooks/useDebounce'
+import { useNavigate } from 'react-router-dom'
+import { useModal } from '@/hooks/useModal'
 import { useAuthStore } from '@/store/useAuthStore'
 
 export function PlayListCreate() {
@@ -17,6 +19,18 @@ export function PlayListCreate() {
   const [playlistDescription, setPlaylistDescription] = useState('')
   const [isPublic, setIsPublic] = useState(true)
   const { showToastMessage } = useToastMessageContext()
+  const { open, ModalComponent } = useModal()
+  const navigate = useNavigate()
+
+  const showModal = () => {
+    open({
+      title: '플레이리스트를 생성하시겠습니까?',
+      description: '새로운 플레이리스트가 생성됩니다.',
+      confirmText: '확인',
+      cancelText: '취소',
+      onConfirm: handleCreatePlaylist
+    })
+  }
   const user = useAuthStore(state => state.user)
 
   const {
@@ -87,6 +101,7 @@ export function PlayListCreate() {
         message: '플레이리스트가 성공적으로 생성되었습니다',
         type: 'success'
       })
+      navigate('/')
 
       setPlaylistTitle('')
       setPlaylistDescription('')
@@ -176,7 +191,7 @@ export function PlayListCreate() {
               <input
                 type="file"
                 id="thumbnail-upload"
-                accept="image/*"
+                accept="image/"
                 onChange={handleThumbnailUpload}
                 style={{ display: 'none' }}
               />
@@ -194,9 +209,10 @@ export function PlayListCreate() {
         <Button
           bordertype="기본"
           width="100%"
-          onClick={handleCreatePlaylist}>
+          onClick={showModal}>
           플레이리스트 생성하기
         </Button>
+        {ModalComponent}
       </S.ButtonContainer>
     </S.Container>
   )
