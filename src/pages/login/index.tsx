@@ -1,7 +1,7 @@
 import { supabase } from '../../../supabaseConfig'
 import { useNavigate } from 'react-router-dom'
 import Input from '@/components/Input/Input'
-import { Button } from '@/components/button/Button'
+import { Button } from '@/components/Button/Button'
 import * as S from './login.styles'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -9,7 +9,7 @@ import { loginSchema, LoginFormInputs } from '@/schema/loginSchema'
 import MainLogo from '@/assets/img/logo/floli.svg'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { useAuthStore } from '@/store/useAuthStore'
-import { AuthResponse } from '@supabase/supabase-js'
+import { useEffect } from 'react'
 
 export function Login() {
   const { setUser } = useAuthStore()
@@ -21,49 +21,69 @@ export function Login() {
     formState: { errors, isSubmitting }
   } = useForm<LoginFormInputs>({ resolver: zodResolver(loginSchema) })
 
-  // Kakao 로그인 처리 함수
-  const handleKakaoLogin = async () => {
+  useEffect(() => {
+    const checkSession = async () => {
+      try {
+        const { data: sessionData } = await supabase.auth.getSession()
+
+        if (sessionData?.session?.user) {
+          const user = sessionData.session.user
+
+          setUser({
+            id: user.id,
+            email: user.email || '',
+            nickname:
+              user.user_metadata?.preferred_username ||
+              user.user_metadata?.name ||
+              '',
+            profile_img: user.user_metadata?.avatar_url || ''
+          })
+          if (sessionData.session) {
+            const { access_token, refresh_token } = sessionData.session
+            localStorage.setItem('accessToken', access_token)
+            localStorage.setItem('refreshToken', refresh_token)
+          }
+          showToastMessage({
+            message: '로그인 성공하였습니다 ',
+            type: 'success'
+          })
+          navigate('/')
+        } else {
+          console.log('No session found')
+        }
+      } catch (error) {
+        console.error('Session check error:', error)
+      }
+    }
+
+    checkSession()
+  }, [setUser])
+
+  const handleSocialLogin = async (provider: 'kakao' | 'google') => {
     try {
-      const { data: sessionData, error } = await supabase.auth.signInWithOAuth({
-        provider: 'kakao',
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: provider,
         options: {
-          redirectTo:
-            'https://vpxgcvxodypztnxelmqx.supabase.co/auth/v1/callback'
+          redirectTo: 'http://localhost:5173/login'
         }
       })
 
       if (error) {
         showToastMessage({
-          message: '카카오 로그인 실패하였습니다',
+          message: `${provider === 'kakao' ? '카카오' : '구글'} 로그인 실패하였습니다`,
           type: 'error'
         })
-        console.error('Kakao Login error:', error)
-        return
-      }
-      const { data: session } = await supabase.auth.getSession()
-      if (session?.session?.user) {
-        setUser({
-          id: session.session.user.id,
-          email: session.session.user.email || '',
-          nickname: session.session.user.user_metadata?.name || '',
-          profile_img: session.session.user.user_metadata?.avatar_url || ''
-        })
-        console.log('Zustand User State (Kakao):', session.session.user)
-
-        showToastMessage({
-          message: '카카오 로그인 성공하였습니다',
-          type: 'success'
-        })
-        navigate('/')
+        console.error(`${provider} Login error:`, error)
       }
     } catch (error) {
       showToastMessage({
-        message: '카카오 로그인 중 오류가 발생했습니다',
+        message: `${provider === 'kakao' ? '카카오' : '구글'} 로그인 중 오류가 발생했습니다`,
         type: 'error'
       })
-      console.error('Kakao Login error:', error)
+      console.error(`${provider} Login error:`, error)
     }
   }
+
   const handleLogin: SubmitHandler<LoginFormInputs> = async data => {
     const { email, password } = data
 
@@ -142,7 +162,15 @@ export function Login() {
           width="100%"
           fontSize="1.8rem"
           backgroundColor="var(--color-border)"
-          onClick={handleKakaoLogin}
+          onClick={() => handleSocialLogin('kakao')}
+          disabled={isSubmitting}
+          bordertype={'기본'}>
+          카카오로 로그인
+        </Button>
+        <Button
+          width="100%"
+          backgroundColor="var(--color-border)"
+          onClick={() => handleSocialLogin('google')}
           disabled={isSubmitting}
           bordertype={'기본'}>
           구글로 로그인
