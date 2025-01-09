@@ -1,18 +1,20 @@
 import { useState } from 'react'
-import { Button } from '@/components/Button/Button'
-import Input from '@/components/Input/Input'
-import * as S from '../../components/playListCreate/PlayListCreate.styles'
-import { supabase } from '../../../supabaseConfig'
+import { useNavigate } from 'react-router-dom'
+import { useAuthStore } from '@/store/useAuthStore'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { useVideoLink } from '@/hooks/useVideoLink'
+import { useModal } from '@/hooks/useModal'
+import { useImageUpload } from '@/hooks/useImageUpload'
+import { useDebounce } from '@/hooks/useDebounce'
+import axiosInstance from '@/apis/axiosInstance'
+import { CreatePlaylistPayload } from '@/types/playListCreate'
+
+import { Button } from '@/components/Button/Button'
+import Input from '@/components/Input/Input'
+import * as S from '@/components/playListCreate/PlayListCreate.styles'
 import { PlayListInfo } from '@/components/playListCreate/PlayListInfo'
 import { PlayListIsPublic } from '@/components/playListCreate/PlayListIsPublic'
 import { RiImageAddLine } from 'react-icons/ri'
-import { useImageUpload } from '@/hooks/useImageUpload'
-import { useDebounce } from '@/hooks/useDebounce'
-import { useNavigate } from 'react-router-dom'
-import { useModal } from '@/hooks/useModal'
-import { useAuthStore } from '@/store/useAuthStore'
 
 export function PlayListCreate() {
   const [playlistTitle, setPlaylistTitle] = useState('')
@@ -32,7 +34,6 @@ export function PlayListCreate() {
     })
   }
   const user = useAuthStore(state => state.user)
-
   const {
     videoLink,
     setVideoLink,
@@ -55,50 +56,33 @@ export function PlayListCreate() {
       })
     }
 
-    const { data: user, error: userError } =
-      await supabase.auth.getUser(accessToken)
-    if (userError || !user) {
-      return showToastMessage({
-        message: '사용자 정보를 불러오지 못했습니다.',
-        type: 'error'
-      })
-    }
     if (!playlistTitle.trim()) {
       return showToastMessage({
         message: '플레이리스트 제목을 입력해주세요.',
         type: 'error'
       })
     }
+
     if (videoList.length === 0) {
       return showToastMessage({
-        message: '영상을 1개이상 추가해주세요.',
+        message: '영상을 1개 이상 추가해주세요.',
         type: 'error'
       })
     }
+    const payload: CreatePlaylistPayload = {
+      user_id: user?.id || '',
+      title: playlistTitle,
+      description: playlistDescription || '',
+      thumbnail: thumbnail || videoList[0]?.thumbnail,
+      video_urls: videoList.map(video => video.link),
+      is_public: isPublic
+    }
+
     try {
-      const userId = user.user?.id
-      const { error } = await supabase.from('playlists').insert([
-        {
-          title: playlistTitle,
-          description: playlistDescription || '',
-          thumbnail: thumbnail || videoList[0]?.thumbnail,
-          video_url: videoList.map(video => video.link).join(',') || '',
-          is_public: isPublic,
-          likes_count: 0,
-          comments_count: 0,
-          user_id: userId,
-          video_count: videoList.length || 0,
-          created_at: new Date().toISOString(),
-          updated_at: new Date().toISOString()
-        }
-      ])
-
-      if (error) {
-        throw error
-      }
-
+      await axiosInstance.post('/rpc/create_playlist', payload)
+      console.log('➡️', payload.user_id)
       showToastMessage({
-        message: '플레이리스트가 성공적으로 생성되었습니다',
+        message: '플레이리스트가 성공적으로 생성되었습니다.',
         type: 'success'
       })
       navigate('/')
@@ -107,9 +91,10 @@ export function PlayListCreate() {
       setPlaylistDescription('')
       setVideoList([])
       resetThumbnail()
-    } catch {
+    } catch (error) {
+      console.error(error)
       showToastMessage({
-        message: `플레이리스트 생성 실패하였습니다`,
+        message: '플레이리스트 생성에 실패했습니다.',
         type: 'error'
       })
     }

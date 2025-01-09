@@ -61,12 +61,11 @@ export function Login() {
         const userData: UserData = {
           id: user.id,
           email: user.email || '',
-          nickname: user.user_metadata?.name || '',
+          nickname: user.user_metadata?.name || user.user_metadata?.user_name,
           profile_img: user.user_metadata?.avatar_url || '',
           introduction: user.user_metadata?.introduction || '',
           subsc_count: user.user_metadata?.subsc_count || 0
         }
-
         saveTokens(
           sessionData.session.access_token,
           sessionData.session.refresh_token
@@ -98,7 +97,6 @@ export function Login() {
       console.error(`${provider} Login error:`, error)
     }
   }
-
   useEffect(() => {
     if (user) {
       console.log('🟢  Zustand 상태:', user)
