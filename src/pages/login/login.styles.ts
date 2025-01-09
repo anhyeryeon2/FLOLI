@@ -31,7 +31,7 @@ export const Divider = styled.hr`
 `
 export const SignupText = styled.p`
   margin-top: var(--spacing-5);
-  font-size: var(--fs-m);
+  font-size: var(--fs-l);
   color: var(--color-gray);
   text-align: center;
 `
@@ -46,4 +46,14 @@ export const ErrorMessage = styled.p`
   font-size: var(--fs-s);
   color: red;
   margin-top: var(--spacing-2);
+`
+export const ButtonContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+`
+
+export const LoginLogo = styled.img`
+  width: 30px;
+  padding-right: 5px;
 `
