@@ -116,9 +116,9 @@ export const View = (): JSX.Element => {
 
   // 플리 제작한 유저 정보
   const {
-    data: userData,
-    error: userDataError,
-    isPending: isUserDataPending
+    data: creatorData,
+    error: creatorDataError,
+    isPending: isCreatorDataPending
   } = useFetchUserData(playlist?.user_id)
 
   // 좋아요 상태 가져오기
@@ -156,7 +156,7 @@ export const View = (): JSX.Element => {
     return <NotFound />
   }
 
-  if (isUserDataPending) {
+  if (isCreatorDataPending) {
     return <Loading />
   }
 
@@ -172,7 +172,7 @@ export const View = (): JSX.Element => {
     return <Loading />
   }
 
-  if (userDataError) {
+  if (creatorDataError) {
     return <NotFound />
   }
 
@@ -189,7 +189,7 @@ export const View = (): JSX.Element => {
   }
 
   const { title, description, created_at, video_count } = playlist
-  const { id: creator_id, nickname, profile_img, subsc_count } = userData
+  const { id: creator_id, nickname, profile_img, subsc_count } = creatorData
 
   const VideoTitle = '영상 제목 가나다라 마바사아'
   const commentCount = 172
@@ -307,8 +307,11 @@ export const View = (): JSX.Element => {
             댓글
             <span>{commentCount}</span>
           </div>
-          <CommentEditor />
-          <CommentList />
+          <CommentEditor
+            userId={currentUser!.id}
+            userImg={currentUser!.profile_img}
+          />
+          <CommentList playlistId={playlist_id!} />
         </S.CommentWrapper>
 
         <S.VideoListPanel onClick={openVideoList}>

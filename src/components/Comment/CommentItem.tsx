@@ -3,6 +3,12 @@ import Profile from '../Profile/Profile'
 import { useEffect, useRef, useState } from 'react'
 import { AiFillEdit } from 'react-icons/ai'
 import { MdDelete } from 'react-icons/md'
+import { useAuthStore } from '@/store/useAuthStore'
+import useFetchUserData from '@/hooks/useFetchUserData'
+import Loading from '../LoadingSpinner/Loading'
+import { NotFound } from '@/pages'
+import getTimeAgo from '@/utils/getTimeAgo'
+import LogoAsset from '@/assets/img/logo/floli_o.svg'
 
 type ContentTextProps = {
   text: string
@@ -10,11 +16,10 @@ type ContentTextProps = {
 
 type CommentItemProps = {
   commentId: string
-  userId: string
+  commentUserId: string
   content: string
   createAt: string
   updatedAt: string | null
-  nickname: string
 }
 
 // 댓글 내용 '자세히 보기' 버튼
@@ -27,7 +32,7 @@ const ContentText = ({ text }: ContentTextProps) => {
     if (textRef.current) {
       setIsOverflow(textRef.current.scrollHeight > textRef.current.clientHeight)
     }
-  }, [])
+  }, [text])
 
   return (
     <div onClick={() => setIsOpen(prev => !prev)}>
@@ -47,30 +52,55 @@ const ContentText = ({ text }: ContentTextProps) => {
 
 const CommentItem = ({
   commentId,
-  userId,
+  commentUserId,
   content,
   createAt,
-  updatedAt,
-  nickname
+  updatedAt
 }: CommentItemProps) => {
-  // todo: 지금 로그인한 유저의 Id
-  const nowUserId = 'klajlsdifjqwer'
+  const { user: currentUser } = useAuthStore()
+
+  const currentUserId = currentUser?.id
+
+  const {
+    data: commentUserData,
+    error: commentUserDataError,
+    isPending: iscommentUserDataPending
+  } = useFetchUserData(commentUserId)
+
+  if (iscommentUserDataPending) {
+    return <Loading />
+  }
+
+  if (commentUserDataError) {
+    return <NotFound />
+  }
+
+  const { nickname, profile_img } = commentUserData
 
   return (
     <S.Container id={commentId}>
       <Profile
         className="profile-img"
-        userId="userIdtest"
+        userId={commentUserId}
         size="3.2rem"
-        imageUrl="https://cdn.pixabay.com/photo/2018/05/27/22/31/dog-3434801_1280.jpg"
+        imageUrl={profile_img}
       />
       <div className="comment-box">
         <div className="comment-title">
           <span className="comment-user-nickname">{nickname}</span>
-          <span className="create-at">{updatedAt ? updatedAt : createAt}</span>
+          {commentUserId === currentUserId && (
+            <img
+              className="is-creator-nickname"
+              src={LogoAsset}
+              alt="플레이리스트 제작자 표시"
+            />
+          )}
+          <span className="create-at">
+            {updatedAt ? getTimeAgo(updatedAt) : getTimeAgo(createAt)}
+          </span>
         </div>
         <ContentText text={content} />
-        {userId === nowUserId && (
+        {commentUserId === currentUserId && (
           <S.CommentEditButtonBox>
             <button type="button">
               <span>수정</span>
