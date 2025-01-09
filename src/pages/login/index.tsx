@@ -141,6 +141,11 @@ export function Login() {
       )
     }
   }
+  useEffect(() => {
+    if (location.pathname === '/login') {
+      checkSession()
+    }
+  }, [location.pathname])
 
   return (
     <S.Container>
