@@ -14,9 +14,6 @@ export default function MyPageLikes() {
     queryFn: () => LikedPlayList(userId)
   })
 
-  console.log(userId)
-  console.log(playlistData)
-
   return (
     <S.LikedBox>
       {playlistData?.map(playlistData => (
