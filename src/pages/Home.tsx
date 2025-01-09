@@ -1,106 +1,74 @@
-import FeedList from '@/components/Feedlist/Feedlist'
-import * as S from '@/components/Feedlist/Feedlist.styles'
-const playLists = [
-  {
-    id: '1',
-    title: 'Relax and Unwind',
-    name: 'Chill Vibes',
-    description: 'Relaxing tracks for a calm evening.',
-    createdAt: '2025-01-01',
-    thumbnail: 'https://via.placeholder.com/150?text=Chill+Vibes',
-    profileImage: 'https://via.placeholder.com/50?text=User1',
-    likes: 128,
-    commentsCount: 2,
-    tracks: [
-      {
-        id: 101,
-        title: 'Ocean Waves',
-        artist: 'Nature Sounds',
-        duration: '3:45'
-      },
-      {
-        id: 102,
-        title: 'Peaceful Piano',
-        artist: 'Soothing Tunes',
-        duration: '4:12'
-      },
-      {
-        id: 103,
-        title: 'Evening Breeze',
-        artist: 'Ambient Flow',
-        duration: '5:20'
-      }
-    ]
-  },
-  {
-    id: '2',
-    title: 'High-Energy Workout',
-    name: 'Workout Beats',
-    description: 'High-energy tracks to fuel your workout.',
-    createdAt: '2025-01-02',
-    thumbnail: 'https://via.placeholder.com/150?text=Workout+Beats',
-    profileImage: 'https://via.placeholder.com/50?text=User2',
-    likes: 256,
-    commentsCount: 2,
-    tracks: [
-      {
-        id: 201,
-        title: 'Run Faster',
-        artist: 'Power Tracks',
-        duration: '2:58'
-      },
-      { id: 202, title: 'Push It', artist: 'Gym Masters', duration: '3:30' },
-      {
-        id: 203,
-        title: 'Cardio King',
-        artist: 'Beats on Fire',
-        duration: '4:15'
-      }
-    ]
-  },
-  {
-    id: '3',
-    title: 'Romantic Melodies',
-    name: 'Romantic Tunes',
-    description: 'Love songs to set the mood.',
-    createdAt: '2025-01-03',
-    thumbnail: 'https://via.placeholder.com/150?text=Romantic+Tunes',
-    profileImage: 'https://via.placeholder.com/50?text=User3',
-    likes: 342,
-    commentsCount: 2, // 댓글 수로 변경
-    tracks: [
-      { id: 301, title: 'Serenade', artist: 'Heart Strings', duration: '4:05' },
-      { id: 302, title: 'You and Me', artist: 'Love Notes', duration: '3:50' },
-      {
-        id: 303,
-        title: 'Forever Yours',
-        artist: 'Eternal Melodies',
-        duration: '5:10'
-      }
-    ]
-  }
-]
+import FeedList from '@/components/FeedList/FeedList'
+import * as S from '@/components/FeedList/FeedList.style'
+
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { getPlayList } from '@/apis/feed'
+import { IPlayListType } from '@/types/playList'
+import { useRef } from 'react'
+import PlayListSkeleton from '@/components/Skeleton/PlayListSkeleton'
+import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 
 export function Home() {
+  const observerElem = useRef<HTMLDivElement | null>(null)
+  const {
+    data,
+    isError,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage,
+    isLoading
+  } = useInfiniteQuery({
+    queryKey: ['playList'],
+    queryFn: ({ pageParam }) => getPlayList(pageParam as number),
+
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length + 1
+
+      return nextPage <= lastPage.length ? nextPage : undefined
+    },
+    select: data => {
+      return data.pages.flat()
+    },
+
+    initialPageParam: 1,
+
+    staleTime: 1000 * 60
+  })
+
+  useInfiniteScroll({
+    observerElem,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage
+  })
+
+  if (isLoading) {
+    return <PlayListSkeleton />
+  }
+
+  if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
+
   return (
-    <S.FeedConteiner>
-      {playLists.map(playList => (
-        <>
+    <>
+      <S.FeedConteiner>
+        {data?.map((playList: IPlayListType) => (
           <FeedList
             image={playList.thumbnail}
-            profileImage={playList.profileImage}
-            nickname={playList.name}
-            likes={playList.likes}
-            track={playList.tracks.length}
-            date={playList.createdAt}
+            profileImage={playList.profile_img_path}
+            nickname={playList.nickname}
+            likes={playList.likes_count}
+            track={playList.video_count}
+            date={playList.created_at}
             title={playList.title}
-            comments={playList.commentsCount}
-            key={playList.id}
+            comments={playList.comments_count}
+            key={playList.playlist_id}
+            id={playList.playlist_id}
           />
-        </>
-      ))}
-    </S.FeedConteiner>
+        ))}
+        <div ref={observerElem} />
+      </S.FeedConteiner>
+    </>
   )
 }
 
-export default playLists
+export default Home

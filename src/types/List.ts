@@ -8,6 +8,7 @@ export interface FeedListProps {
   date: string
   track: number
   key: string
+  id: string
 }
 
 export interface PlayListProps {

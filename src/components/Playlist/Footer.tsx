@@ -1,4 +1,4 @@
-import * as S from './Playlist.styles'
+import * as S from './PlayList.styles'
 import { FaHeart, FaLock, FaLockOpen } from 'react-icons/fa'
 import { BiConversation } from 'react-icons/bi'
 
