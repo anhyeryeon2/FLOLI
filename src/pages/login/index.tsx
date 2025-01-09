@@ -1,6 +1,5 @@
 import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useLocation } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, LoginFormInputs } from '@/schema/loginSchema'
@@ -20,7 +19,6 @@ type SocialProvider = 'kakao' | 'google'
 const REDIRECT_URL = 'http://localhost:5173/login'
 
 export function Login() {
-  const location = useLocation()
   const { setUser, user } = useAuthStore()
   const navigate = useNavigate()
   const { showToastMessage } = useToastMessageContext()
@@ -143,11 +141,6 @@ export function Login() {
       )
     }
   }
-  // useEffect(() => {
-  //   if (location.pathname === '/login') {
-  //     checkSession()
-  //   }
-  // }, [location.pathname])
 
   return (
     <S.Container>

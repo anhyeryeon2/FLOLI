@@ -80,7 +80,6 @@ export function PlayListCreate() {
 
     try {
       await axiosInstance.post('/rpc/create_playlist', payload)
-      console.log('➡️', payload.user_id)
       showToastMessage({
         message: '플레이리스트가 성공적으로 생성되었습니다.',
         type: 'success'
