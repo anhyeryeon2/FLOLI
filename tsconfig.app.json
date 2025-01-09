@@ -24,7 +24,8 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/styles/*": ["./src/styles/*"],
-      "@/components/*": ["./src/components/*"]
+      "@/components/*": ["./src/components/*"],
+      "@/supabase/*": ["./src/supabase/*"]
     }
   },
   "include": ["src", "vite-env.d.ts"]

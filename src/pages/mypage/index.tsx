@@ -1,5 +1,6 @@
 import { Button } from '@/components/Button/Button'
 import Profile from '@/components/Profile/Profile'
+import SignOutButton from '@/components/SignOut/SignOutButton'
 import * as S from '@/pages/mypage/Mypage.styled'
 
 export const Mypage = () => {
@@ -24,6 +25,7 @@ export const Mypage = () => {
             width="20rem">
             프로필 수정
           </Button>
+          <SignOutButton />
         </S.ButtonBox>
       </S.HeaderBox>
       <S.IntruductionBox>채널 소개글</S.IntruductionBox>

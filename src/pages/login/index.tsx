@@ -8,7 +8,7 @@ import { useAuthStore } from '@/store/useAuthStore'
 
 import Input from '@/components/Input/Input'
 import { Button } from '@/components/Button/Button'
-import { supabase } from '../../../supabaseConfig'
+import { supabase } from '@/supabase/supabaseConfig'
 import * as S from './login.styles'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import MainLogo from '@/assets/img/logo/floli.svg'
@@ -88,7 +88,7 @@ export function Login() {
         provider,
         options: { redirectTo: REDIRECT_URL }
       })
-
+      checkSession()
       if (error) {
         const providerName = provider === 'kakao' ? '카카오' : '구글'
         handleAuthError(`${providerName} 로그인 실패하였습니다`)
@@ -143,11 +143,11 @@ export function Login() {
       )
     }
   }
-  useEffect(() => {
-    if (location.pathname === '/login') {
-      checkSession()
-    }
-  }, [location.pathname])
+  // useEffect(() => {
+  //   if (location.pathname === '/login') {
+  //     checkSession()
+  //   }
+  // }, [location.pathname])
 
   return (
     <S.Container>
