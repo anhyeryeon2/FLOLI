@@ -1,5 +1,5 @@
-import FeedList from '@/components/FeedList/Feedlist'
-import * as S from '@/components/FeedList/Feedlist.style'
+import FeedList from '@/components/FeedList/FeedList'
+import * as S from '@/components/FeedList/FeedList.style'
 
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getPlayList } from '@/apis/feed'
