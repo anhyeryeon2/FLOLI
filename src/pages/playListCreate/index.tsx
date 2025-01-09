@@ -12,6 +12,7 @@ import { useImageUpload } from '@/hooks/useImageUpload'
 import { useDebounce } from '@/hooks/useDebounce'
 import { useNavigate } from 'react-router-dom'
 import { useModal } from '@/hooks/useModal'
+import { useAuthStore } from '@/store/useAuthStore'
 
 export function PlayListCreate() {
   const [playlistTitle, setPlaylistTitle] = useState('')
@@ -30,6 +31,7 @@ export function PlayListCreate() {
       onConfirm: handleCreatePlaylist
     })
   }
+  const user = useAuthStore(state => state.user)
 
   const {
     videoLink,
@@ -105,7 +107,7 @@ export function PlayListCreate() {
       setPlaylistDescription('')
       setVideoList([])
       resetThumbnail()
-    } catch (error) {
+    } catch {
       showToastMessage({
         message: `플레이리스트 생성 실패하였습니다`,
         type: 'error'
@@ -198,7 +200,7 @@ export function PlayListCreate() {
           </div>
           <S.ThumbnailInfo>
             <S.ThumbnailTitle>{debouncedTitle || ''}</S.ThumbnailTitle>
-            <S.ThumbnailMaker>//user.nickname 추가예정</S.ThumbnailMaker>
+            <S.ThumbnailMaker>{user?.nickname}</S.ThumbnailMaker>
           </S.ThumbnailInfo>
         </S.ThumbnailPreview>
       </S.Section>
