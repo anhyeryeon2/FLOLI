@@ -19,7 +19,7 @@ export function Home() {
     isLoading
   } = useInfiniteQuery({
     queryKey: ['playList'],
-    queryFn: ({ pageParam = 1 }) => getPlayList(pageParam as number),
+    queryFn: ({ pageParam }) => getPlayList(pageParam as number),
 
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1

@@ -13,7 +13,6 @@ export const getPlayList = async (
         item: item
       }
     })
-    console.log(456)
     return playListData.data
   } catch (error) {
     if (error instanceof Error) {

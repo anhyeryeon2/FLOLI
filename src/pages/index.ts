@@ -1,7 +1,7 @@
 export { Login } from './login/index.tsx'
 
 export { Signup } from './signup/index.tsx'
-export { NotFound } from './Notfound/index.tsx'
+export { NotFound } from './notfound/index.tsx'
 
 export { PlayListCreate } from './playListCreate/index.tsx'
 export { profileEdit } from './profileEdit/index.tsx'
