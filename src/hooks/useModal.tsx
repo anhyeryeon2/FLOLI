@@ -44,7 +44,7 @@ export function useModal() {
               }}
             />
           </S.Dimmed>,
-          document.getElementById('modal-root') as HTMLElement
+          document.getElementById('modal-container') as HTMLElement
         )
       : null
 
