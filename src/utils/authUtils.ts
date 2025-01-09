@@ -8,7 +8,9 @@ export async function refreshAccessToken() {
     return null
   }
 
-  const { data: sessionData, error } = await supabase.auth.refreshSession({ refresh_token: refreshToken })
+  const { data: sessionData, error } = await supabase.auth.refreshSession({
+    refresh_token: refreshToken
+  })
 
   if (error) {
     console.error('토큰 갱신 실패:', error)

@@ -1,10 +1,10 @@
-import { PlaylistIsPublicProps } from '@/types/playListCreate'
+import { PlayListIsPublicProps } from '@/types/playListCreate'
 import * as S from '../../components/playListCreate/PlayListCreate.styles'
 
-export const PlaylistIsPublic = ({
+export const PlayListIsPublic = ({
   isPublic,
   setIsPublic
-}: PlaylistIsPublicProps) => {
+}: PlayListIsPublicProps) => {
   return (
     <S.Section>
       <S.ToggleContainer>
