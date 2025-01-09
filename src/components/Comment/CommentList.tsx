@@ -1,11 +1,11 @@
 import * as S from '@/styles/components/comment/comment-List.style'
 import CommentItem from './CommentItem'
 import useFetchPlaylistComments from '@/hooks/useFetchPlaylistComments'
-import { ICommentItemProps, IFetchCommentsProps } from '@/types/comments'
+import { ICommentItemProps, CommentListProps } from '@/types/comments'
 import Loading from '../LoadingSpinner/Loading'
 import { NotFound } from '@/pages'
 
-const CommentList = ({ playlistId }: IFetchCommentsProps) => {
+const CommentList = ({ playlistId }: CommentListProps) => {
   const {
     data: commentsData,
     error,

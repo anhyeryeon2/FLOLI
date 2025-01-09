@@ -4,7 +4,8 @@ import axiosInstance from '@/apis/axiosInstance'
 const fetchPlaylistComments = async (playlistId: string) => {
   const res = await axiosInstance.get('/comments', {
     params: {
-      playlist_id: `eq.${playlistId}`
+      playlist_id: `eq.${playlistId}`,
+      order: 'updated_at.desc' // updated_at 기준 최신순으로 가져오기
     }
   })
 

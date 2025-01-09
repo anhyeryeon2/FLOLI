@@ -307,10 +307,7 @@ export const View = (): JSX.Element => {
             댓글
             <span>{commentCount}</span>
           </div>
-          <CommentEditor
-            userId={currentUser!.id}
-            userImg={currentUser!.profile_img}
-          />
+          <CommentEditor playlistId={playlist_id!} />
           <CommentList playlistId={playlist_id!} />
         </S.CommentWrapper>
 

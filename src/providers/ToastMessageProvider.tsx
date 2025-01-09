@@ -35,10 +35,12 @@ export const ToastMessageProvider = ({
   const showToastMessage = useCallback(
     ({
       message,
-      type
+      type,
+      delay = 3000
     }: {
       message: string
       type: ToastMessageProps['type']
+      delay?: number
     }) => {
       const id = Math.random().toString(36).substring(7)
       if (
@@ -52,7 +54,7 @@ export const ToastMessageProvider = ({
       const timeoutId = setTimeout(() => {
         removeToastMessage(id)
         timeoutIds.current.delete(timeoutId)
-      }, 3000)
+      }, delay)
       timeoutIds.current.add(timeoutId)
     },
 

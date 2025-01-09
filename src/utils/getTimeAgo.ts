@@ -3,6 +3,9 @@ const getTimeAgo = (date: string): string => {
   const past = new Date(date)
   const diffInSeconds = Math.floor((now.getTime() - past.getTime()) / 1000)
 
+  if (diffInSeconds < 0) return '방금 전'
+  if (diffInSeconds < 60) return '방금 전'
+
   const minutes = Math.floor(diffInSeconds / 60)
   if (minutes < 60) return `${minutes}분 전`
 

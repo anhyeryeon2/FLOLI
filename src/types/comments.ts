@@ -1,6 +1,7 @@
 export interface IFetchCommentsProps {
   userId: string
   playlistId: string
+  content: string
 }
 
 export interface ICommentItemProps {
@@ -10,4 +11,12 @@ export interface ICommentItemProps {
   created_at: string
   updated_at?: string | null
   nickname: string
+}
+
+export type CommentListProps = {
+  playlistId: string
+}
+
+export type CommentEditorProps = {
+  playlistId: string
 }
