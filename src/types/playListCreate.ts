@@ -1,11 +1,11 @@
-export interface PlaylistInfoProps {
+export interface PlayListInfoProps {
   playlistTitle: string
   setPlaylistTitle: (value: string) => void
   playlistDescription: string
   setPlaylistDescription: (value: string) => void
 }
 
-export interface PlaylistIsPublicProps {
+export interface PlayListIsPublicProps {
   isPublic: boolean
   setIsPublic: (value: boolean) => void
 }

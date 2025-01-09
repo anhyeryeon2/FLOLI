@@ -1,5 +1,5 @@
 import { FeedListProps } from '@/types/List'
-import * as S from './FeedList.style'
+import * as S from './FeedList.styles'
 import { FeedFooter } from './Footer'
 import Modal from '../Modal/Modal'
 import { RiUserUnfollowLine } from 'react-icons/ri'

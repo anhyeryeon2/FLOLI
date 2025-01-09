@@ -6,13 +6,15 @@ import {
   MyPlayLists,
   NotFound,
   PlayListCreate,
-  Signup,
   Subscriptions,
   UserProfile,
   View
 } from '@/pages'
 import { Home } from '@/pages/Home'
 import { ROUTER_PATH } from '@/constants/constant'
+import StepEmail from '@/components/SignUp/StepEmail'
+import StepPassword from '@/components/SignUp/StepPassword'
+import StepNickname from '@/components/SignUp/StepNickname'
 
 const router = createBrowserRouter([
   {
@@ -27,10 +29,6 @@ const router = createBrowserRouter([
       {
         path: ROUTER_PATH.LOGIN,
         element: <Login />
-      },
-      {
-        path: ROUTER_PATH.SIGNUP,
-        element: <Signup />
       },
       {
         path: ROUTER_PATH.MYPAGE,
@@ -59,6 +57,18 @@ const router = createBrowserRouter([
       {
         path: ROUTER_PATH.PLAYLISTCREATE,
         element: <PlayListCreate />
+      },
+      {
+        path: ROUTER_PATH.SIGNUP_EMAIL,
+        element: <StepEmail />
+      },
+      {
+        path: ROUTER_PATH.SIGNUP_PASSWORD,
+        element: <StepPassword />
+      },
+      {
+        path: ROUTER_PATH.SIGNUP_NICKNAME,
+        element: <StepNickname />
       }
     ]
   }
