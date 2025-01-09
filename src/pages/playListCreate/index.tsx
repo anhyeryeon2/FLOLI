@@ -5,17 +5,33 @@ import * as S from '../../components/playListCreate/PlayListCreate.styles'
 import { supabase } from '../../../supabaseConfig'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { useVideoLink } from '@/hooks/useVideoLink'
-import { PlaylistInfo } from '@/components/playListCreate/PlayListInfo'
-import { PlaylistIsPublic } from '@/components/playListCreate/PlayListIsPublic'
+import { PlayListInfo } from '@/components/playListCreate/PlayListInfo'
+import { PlayListIsPublic } from '@/components/playListCreate/PlayListIsPublic'
 import { RiImageAddLine } from 'react-icons/ri'
 import { useImageUpload } from '@/hooks/useImageUpload'
 import { useDebounce } from '@/hooks/useDebounce'
+import { useNavigate } from 'react-router-dom'
+import { useModal } from '@/hooks/useModal'
+import { useAuthStore } from '@/store/useAuthStore'
 
 export function PlayListCreate() {
   const [playlistTitle, setPlaylistTitle] = useState('')
   const [playlistDescription, setPlaylistDescription] = useState('')
   const [isPublic, setIsPublic] = useState(true)
   const { showToastMessage } = useToastMessageContext()
+  const { open, ModalComponent } = useModal()
+  const navigate = useNavigate()
+
+  const showModal = () => {
+    open({
+      title: '플레이리스트를 생성하시겠습니까?',
+      description: '새로운 플레이리스트가 생성됩니다.',
+      confirmText: '확인',
+      cancelText: '취소',
+      onConfirm: handleCreatePlaylist
+    })
+  }
+  const user = useAuthStore(state => state.user)
 
   const {
     videoLink,
@@ -85,32 +101,30 @@ export function PlayListCreate() {
         message: '플레이리스트가 성공적으로 생성되었습니다',
         type: 'success'
       })
+      navigate('/')
 
       setPlaylistTitle('')
       setPlaylistDescription('')
       setVideoList([])
       resetThumbnail()
-    } catch (error) {
+    } catch {
       showToastMessage({
         message: `플레이리스트 생성 실패하였습니다`,
         type: 'error'
       })
-      console.error(error)
-    } finally {
-      console.log('플레이리스트 생성 완료')
     }
   }
 
   return (
     <S.Container>
-      <PlaylistInfo
+      <PlayListInfo
         playlistTitle={playlistTitle}
         setPlaylistTitle={setPlaylistTitle}
         playlistDescription={playlistDescription}
         setPlaylistDescription={setPlaylistDescription}
       />
 
-      <PlaylistIsPublic
+      <PlayListIsPublic
         isPublic={isPublic}
         setIsPublic={setIsPublic}
       />
@@ -177,7 +191,7 @@ export function PlayListCreate() {
               <input
                 type="file"
                 id="thumbnail-upload"
-                accept="image/*"
+                accept="image/"
                 onChange={handleThumbnailUpload}
                 style={{ display: 'none' }}
               />
@@ -186,7 +200,7 @@ export function PlayListCreate() {
           </div>
           <S.ThumbnailInfo>
             <S.ThumbnailTitle>{debouncedTitle || ''}</S.ThumbnailTitle>
-            <S.ThumbnailMaker>//user.nickname 추가예정</S.ThumbnailMaker>
+            <S.ThumbnailMaker>{user?.nickname}</S.ThumbnailMaker>
           </S.ThumbnailInfo>
         </S.ThumbnailPreview>
       </S.Section>
@@ -195,9 +209,10 @@ export function PlayListCreate() {
         <Button
           bordertype="기본"
           width="100%"
-          onClick={handleCreatePlaylist}>
+          onClick={showModal}>
           플레이리스트 생성하기
         </Button>
+        {ModalComponent}
       </S.ButtonContainer>
     </S.Container>
   )
