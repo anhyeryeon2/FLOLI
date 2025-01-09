@@ -20,10 +20,17 @@ const Container = styled.div`
 
 const Layout = () => {
   const location = useLocation()
-  const noHeaderPaths = [ROUTER_PATH.LOGIN, ROUTER_PATH.SIGNUP]
+  const noHeaderPaths = [
+    ROUTER_PATH.LOGIN,
+    ROUTER_PATH.SIGNUP_EMAIL,
+    ROUTER_PATH.SIGNUP_PASSWORD,
+    ROUTER_PATH.SIGNUP_NICKNAME
+  ]
   const noNavbarPaths = [
     ROUTER_PATH.LOGIN,
-    ROUTER_PATH.SIGNUP,
+    ROUTER_PATH.SIGNUP_EMAIL,
+    ROUTER_PATH.SIGNUP_PASSWORD,
+    ROUTER_PATH.SIGNUP_NICKNAME,
     ROUTER_PATH.VIEW
   ]
   const backHeaderPaths = ROUTER_PATH_REGEX.VIEW.test(location.pathname)
