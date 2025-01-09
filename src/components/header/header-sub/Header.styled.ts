@@ -1,3 +1,4 @@
+import { FaSearch } from 'react-icons/fa'
 import styled from 'styled-components'
 
 export const HeaderWrapper = styled.div`
@@ -25,4 +26,23 @@ export const Logo = styled.div`
 
 export const Content = styled.span`
   font-size: 2rem;
+`
+
+export const HeaderInput = styled.input`
+  width: 80%;
+  padding: 5px 20px 5px 5px;
+  border: 1px solid #ccc;
+  border-radius: var(--radius-xl);
+  outline: none;
+  &:focus {
+    border-color: #007bff;
+  }
+`
+
+export const SearchIcon = styled(FaSearch)`
+  position: absolute;
+  top: 50%;
+  right: 80px;
+  transform: translateY(-50%);
+  color: #888;
 `
