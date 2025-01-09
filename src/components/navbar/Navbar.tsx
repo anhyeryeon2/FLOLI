@@ -72,18 +72,35 @@ export default function Navbar() {
           <span>내 플리</span>
         </S.MenuItem>
         {/* 유저 프로필 사진 */}
-        <S.MenuItem to="/mypage">
-          <Profile
-            imageUrl={
-              userinfo
-                ? userinfo[0].profile_img
-                : 'https://vpxgcvxodypztnxelmqx.supabase.co/storage/v1/object/public/avatar/default_profile.png'
-            }
-            altText="profile"
-            userId={user?.id || ''}
-            size="xsmall"
-            disabledLink={true}
-          />
+        <S.MenuItem
+          onClick={() => handleClick('mypage')}
+          to="/mypage">
+          {active === 'mypage' ? (
+            <Profile
+              imageUrl={
+                userinfo
+                  ? userinfo[0].profile_img
+                  : 'https://vpxgcvxodypztnxelmqx.supabase.co/storage/v1/object/public/avatar/default_profile.png'
+              }
+              altText="profile"
+              userId={user?.id || ''}
+              size="xsmall"
+              border="2px solid var(--color-black)"
+              disabledLink={true}
+            />
+          ) : (
+            <Profile
+              imageUrl={
+                userinfo
+                  ? userinfo[0].profile_img
+                  : 'https://vpxgcvxodypztnxelmqx.supabase.co/storage/v1/object/public/avatar/default_profile.png'
+              }
+              altText="profile"
+              userId={user?.id || ''}
+              size="xsmall"
+              disabledLink={true}
+            />
+          )}
 
           <span>라이브러리</span>
         </S.MenuItem>

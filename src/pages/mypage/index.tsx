@@ -8,10 +8,13 @@ import { useQuery } from '@tanstack/react-query'
 import { userInfoGet } from '@/apis/userInfoApi'
 import Loading from '@/components/LoadingSpinner/Loading'
 import { useAuthStore } from '@/store/useAuthStore'
+import { useState } from 'react'
+import MyPageLikes from '@/components/MyPageType/MyPageLikes'
 
 export const Mypage = () => {
+  const [type, setType] = useState('like')
+
   const { user } = useAuthStore()
-  console.log(user)
 
   const navigate = useNavigate()
 
@@ -58,10 +61,12 @@ export const Mypage = () => {
       </S.HeaderBox>
       <S.IntruductionBox>{data[0].introduction}</S.IntruductionBox>
       <S.SeparatingBox>
-        <S.ShowTypes>저장된 플리</S.ShowTypes>
-        <S.ShowTypes>좋아요</S.ShowTypes>
+        <S.ShowTypes onClick={() => setType('like')}>좋아요</S.ShowTypes>
+        <S.ShowTypes onClick={() => setType('save')}>저장된 플리</S.ShowTypes>
       </S.SeparatingBox>
-      <S.PlayListsBox></S.PlayListsBox>
+      <S.PlayListsBox>
+        {type === 'like' ? <MyPageLikes /> : 'nothing'}
+      </S.PlayListsBox>
     </S.Container>
   )
 }

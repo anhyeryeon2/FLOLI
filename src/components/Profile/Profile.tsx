@@ -30,6 +30,7 @@ const Profile = ({
   className,
   size = 'medium',
   radius,
+  border,
   disabledLink = false
 }: ProfileButtonProps) => {
   return (
@@ -38,7 +39,8 @@ const Profile = ({
       to={disabledLink ? '#' : `/profile/${userId}`}
       size={size}
       className={className}
-      radius={radius}>
+      radius={radius}
+      border={border}>
       <S.ProfileImage
         src={imageUrl}
         alt={altText}

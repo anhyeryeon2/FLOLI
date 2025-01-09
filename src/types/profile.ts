@@ -8,4 +8,5 @@ export interface ProfileButtonProps {
   className?: string
   radius?: string
   disabledLink?: boolean
+  border?: string
 }

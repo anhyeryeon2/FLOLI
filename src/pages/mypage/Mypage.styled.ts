@@ -70,7 +70,7 @@ export const ShowTypes = styled.button`
 export const PlayListsBox = styled.div`
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-5);
+  margin: var(--space-3);
 `
 
 export const NotFound = styled.div`
