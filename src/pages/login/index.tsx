@@ -12,6 +12,8 @@ import { useAuthStore } from '@/store/useAuthStore'
 
 export function Login() {
   const { setUser } = useAuthStore()
+  const user = useAuthStore(state => state.user)
+
   const navigate = useNavigate()
   const { showToastMessage } = useToastMessageContext()
   const {
@@ -41,24 +43,45 @@ export function Login() {
         localStorage.setItem('accessToken', access_token)
         localStorage.setItem('refreshToken', refresh_token)
       }
-      if (sessionData?.user) {
-        setUser({
-          id: sessionData.user.id,
-          email: sessionData.user.email || '',
-          nickname: sessionData.user.user_metadata?.nickname,
-          profile_img: sessionData.user.user_metadata?.profile_img
-        })
-        console.log(' Zustand User State:', sessionData.user)
-      }
 
-      showToastMessage({
-        message: '로그인 성공하였습니다 ',
-        type: 'success'
-      })
-      navigate('/')
+      try {
+        const { data: userInfo, error: userInfoError } = await supabase
+          .from('userinfo')
+          .select('id, email, nickname, profile_img, introduction, subsc_count')
+          .eq('id', sessionData.user.id)
+          .single()
+
+        if (userInfoError) {
+          showToastMessage({
+            message: `유저 정보를 가져오는 데 실패했습니다.`,
+            type: 'error'
+          })
+          return
+        }
+
+        setUser({
+          id: userInfo.id,
+          email: userInfo.email,
+          nickname: userInfo.nickname,
+          profile_img: userInfo.profile_img,
+          introduction: userInfo.introduction,
+          subsc_count: userInfo.subsc_count
+        })
+        showToastMessage({
+          message: '로그인 성공하였습니다.',
+          type: 'success'
+        })
+        console.log('🟢현재 Zustand 상태:', user)
+        navigate('/')
+      } catch (err) {
+        console.error(err)
+        showToastMessage({
+          message: '알 수 없는 오류가 발생했습니다.',
+          type: 'error'
+        })
+      }
     }
   }
-
   return (
     <S.Container>
       <S.Logo src={MainLogo} />

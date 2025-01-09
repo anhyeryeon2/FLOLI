@@ -6,6 +6,8 @@ interface User {
   email: string
   nickname: string
   profile_img: string
+  introduction: string | null
+  subsc_count: number
 }
 
 interface AuthState {
@@ -18,13 +20,14 @@ export const useAuthStore = create<AuthState>()(
   persist(
     set => ({
       user: null,
-      setUser: user =>
-        set({
-          user: {
-            ...user,
-            profile_img: user.profile_img
-          }
-        }),
+      // 전체 User 객체를 설정하는 함수
+      setUser: user => set({ user }),
+
+      // 특정 필드를 업데이트하는 함수
+      updateUser: (updates: Partial<User>) =>
+        set(state => ({
+          user: state.user ? { ...state.user, ...updates } : null
+        })),
       clearUser: () => set({ user: null })
     }),
     {
