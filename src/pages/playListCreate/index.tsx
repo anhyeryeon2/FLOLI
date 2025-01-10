@@ -26,15 +26,6 @@ export function PlayListCreate() {
   const navigate = useNavigate()
   const queryClient = useQueryClient()
 
-  const showModal = () => {
-    open({
-      title: '플레이리스트를 생성하시겠습니까?',
-      description: '새로운 플레이리스트가 생성됩니다.',
-      confirmText: '확인',
-      cancelText: '취소',
-      onConfirm: handleCreatePlaylist
-    })
-  }
   const user = useAuthStore(state => state.user)
   const {
     videoLink,
@@ -45,6 +36,22 @@ export function PlayListCreate() {
     handleRemoveVideo
   } = useVideoLink()
   const { thumbnail, handleThumbnailUpload, resetThumbnail } = useImageUpload()
+
+  const showModal = () => {
+    open({
+      title: '플레이리스트를 생성하시겠습니까?',
+      description: '새로운 플레이리스트가 생성됩니다.',
+      confirmText: '확인',
+      cancelText: '취소',
+      onConfirm: handleCreatePlaylist
+    })
+  }
+  const handleToastError = (message: string) => {
+    showToastMessage({
+      message,
+      type: 'error'
+    })
+  }
 
   const debouncedTitle = useDebounce(playlistTitle, 300)
 
@@ -68,10 +75,7 @@ export function PlayListCreate() {
     },
     onError: error => {
       console.error(error)
-      showToastMessage({
-        message: '플레이리스트 생성에 실패했습니다.',
-        type: 'error'
-      })
+      handleToastError('플레이리스트 생성에 실패했습니다')
     }
   })
 
@@ -79,24 +83,16 @@ export function PlayListCreate() {
     const accessToken = localStorage.getItem('accessToken')
 
     if (!accessToken) {
-      return showToastMessage({
-        message: '로그인이 필요합니다.',
-        type: 'error'
-      })
+      handleToastError('로그인이 필요합니다.')
+      navigate('/login')
     }
 
     if (!playlistTitle.trim()) {
-      return showToastMessage({
-        message: '플레이리스트 제목을 입력해주세요.',
-        type: 'error'
-      })
+      handleToastError('플레이리스트 제목을 입력해주세요.')
     }
 
     if (videoList.length === 0) {
-      return showToastMessage({
-        message: '영상을 1개 이상 추가해주세요.',
-        type: 'error'
-      })
+      handleToastError('영상을 추가해주세요 ')
     }
     const payload: CreatePlaylistPayload = {
       user_id: user?.id || '',

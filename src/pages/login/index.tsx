@@ -40,7 +40,7 @@ export function Login() {
     navigate('/')
   }
 
-  const handleAuthError = (message: string) => {
+  const handleToastError = (message: string) => {
     showToastMessage({
       message,
       type: 'error'
@@ -76,7 +76,7 @@ export function Login() {
         handleAuthSuccess(userData)
       }
     } catch (error) {
-      handleAuthError('세션 확인 중 문제가 발생했습니다. 다시 시도해주세요.')
+      handleToastError('세션 확인 중 문제가 발생했습니다. 다시 시도해주세요.')
       localStorage.clear()
       navigate('/login')
     }
@@ -92,14 +92,14 @@ export function Login() {
       checkSession()
       if (error) {
         const providerName = provider === 'kakao' ? '카카오' : '구글'
-        handleAuthError(`${providerName} 로그인 실패하였습니다`)
+        handleToastError(`${providerName} 로그인 실패하였습니다`)
         console.error(`${provider} Login error:`, error)
       } else {
         await checkSession()
       }
     } catch (error) {
       const providerName = provider === 'kakao' ? '카카오' : '구글'
-      handleAuthError(`${providerName} 로그인 중 오류가 발생했습니다`)
+      handleToastError(`${providerName} 로그인 중 오류가 발생했습니다`)
       console.error(`${provider} Login error:`, error)
     } finally {
       setSocialLoading(false)
@@ -141,7 +141,7 @@ export function Login() {
         handleAuthSuccess(userInfo)
       }
     } catch (error) {
-      handleAuthError(
+      handleToastError(
         error instanceof Error
           ? error.message
           : '알 수 없는 오류가 발생했습니다.'

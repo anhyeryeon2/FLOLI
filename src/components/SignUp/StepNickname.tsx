@@ -19,10 +19,7 @@ export default function StepNickname() {
 
   useEffect(() => {
     if (!email || !password) {
-      showToastMessage({
-        message: `이메일과 비밀번호 정보가 없습니다. `,
-        type: 'error'
-      })
+      handleToastError('이메일과 비밀번호 정보가 없습니다.')
       navigate('/signup/email')
     }
   }, [email, password, navigate, showToastMessage])
@@ -30,6 +27,13 @@ export default function StepNickname() {
   useEffect(() => {
     setIsValid(nickname.trim().length > 0)
   }, [nickname])
+
+  const handleToastError = (message: string) => {
+    showToastMessage({
+      message,
+      type: 'error'
+    })
+  }
 
   const handleSignup = async () => {
     try {
@@ -44,10 +48,7 @@ export default function StepNickname() {
       })
 
       if (error) {
-        showToastMessage({
-          message: `회원가입 요청에 실패하였습니다 `,
-          type: 'error'
-        })
+        handleToastError('회원가입 요청에 실패하였습니다')
         return
       }
 
@@ -60,10 +61,7 @@ export default function StepNickname() {
         navigate('/login')
       }
     } catch (error) {
-      showToastMessage({
-        message: `오류가 발생했습니다. `,
-        type: 'error'
-      })
+      handleToastError('회원가입 요청에 실패하였습니다. 다시 시도해주세요')
     }
   }
   const showModal = () => {
