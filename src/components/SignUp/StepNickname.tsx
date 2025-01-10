@@ -3,78 +3,82 @@ import MainLogo from '@/assets/img/logo/floli.svg'
 import Input from '../Input/Input'
 import { Button } from '../Button/Button'
 import { useSignupStore } from '@/store/signupStore'
-import { supabase } from '../../../supabaseConfig'
+import { supabase } from '@/supabase/supabaseConfig'
 import { useNavigate } from 'react-router-dom'
-import { useForm } from 'react-hook-form'
-import { NicknameForm, nicknameSchema } from '@/schema/signupSchema'
-import { zodResolver } from '@hookform/resolvers/zod'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
+import { useModal } from '@/hooks/useModal'
 
 export default function StepNickname() {
-  const { email, password } = useSignupStore()
   const navigate = useNavigate()
+  const { email, password } = useSignupStore()
+  const [nickname, setNickname] = useState('')
+  const [isValid, setIsValid] = useState(false)
   const { showToastMessage } = useToastMessageContext()
+  const { open, ModalComponent } = useModal()
 
   useEffect(() => {
     if (!email || !password) {
-      showToastMessage({
-        message: `이메일과 비밀번호 정보가 없습니다. `,
-        type: 'error'
-      })
+      handleToastError('이메일과 비밀번호 정보가 없습니다.')
       navigate('/signup/email')
     }
   }, [email, password, navigate, showToastMessage])
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isValid },
-    watch
-  } = useForm<NicknameForm>({
-    resolver: zodResolver(nicknameSchema)
-  })
+  useEffect(() => {
+    setIsValid(nickname.trim().length > 0)
+  }, [nickname])
 
-  const onSubmit = async (data: NicknameForm) => {
+  const handleToastError = (message: string) => {
+    showToastMessage({
+      message,
+      type: 'error'
+    })
+  }
+
+  const handleSignup = async () => {
     try {
       const { data: signUpData, error } = await supabase.auth.signUp({
         email,
         password,
         options: {
           data: {
-            nickname: data.nickname
+            nickname
           }
         }
       })
 
       if (error) {
-        console.error('Supabase signUp Error:', error)
-        showToastMessage({
-          message: `회원가입 요청에 실패하였습니다 `,
-          type: 'error'
-        })
+        handleToastError('회원가입 요청에 실패하였습니다')
         return
       }
 
       if (signUpData.user) {
-        console.log('회원가입 성공:', signUpData.user)
+        await supabase.auth.signOut()
         showToastMessage({
           message: '회원가입 성공하였습니다 ',
           type: 'success'
         })
-        navigate('/')
+        navigate('/login')
       }
-    } catch (err) {
-      console.error(err)
-      showToastMessage({
-        message: `오류가 발생했습니다. `,
-        type: 'error'
-      })
+    } catch (error) {
+      handleToastError('회원가입 요청에 실패하였습니다. 다시 시도해주세요')
     }
   }
-
+  const showModal = () => {
+    open({
+      title: '회원가입 하시겠습니까?',
+      description: `"${nickname}"으로 이용할 수 있습니다.`,
+      confirmText: '가입',
+      cancelText: '취소',
+      onConfirm: () => handleSignup()
+    })
+  }
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
+    <form
+      onSubmit={e => {
+        e.preventDefault()
+        showModal()
+      }}>
       <S.Container>
         <S.TopSection>
           <S.Logo src={MainLogo} />
@@ -82,11 +86,10 @@ export default function StepNickname() {
           <S.InputWrapper>
             <Input
               type="text"
-              {...register('nickname')}
+              value={nickname}
+              onChange={e => setNickname(e.target.value)}
+              placeholder="닉네임을 입력하세요"
             />
-            {errors.nickname && (
-              <S.ErrorMessage>{errors.nickname.message}</S.ErrorMessage>
-            )}
           </S.InputWrapper>
         </S.TopSection>
 
@@ -94,9 +97,11 @@ export default function StepNickname() {
           <Button
             width="100%"
             bordertype={'기본'}
-            disabled={!isValid || !watch('nickname')}>
+            type="submit"
+            disabled={!isValid}>
             회원가입
           </Button>
+          {ModalComponent}
         </S.BottomSection>
       </S.Container>
     </form>

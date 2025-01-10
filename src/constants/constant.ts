@@ -2,6 +2,7 @@ export const ROUTER_PATH = {
   HOME: '/',
   VIEW: '/view/:id',
   MYPAGE: '/mypage',
+  ProfileEdit: '/mypage/profile-edit',
   LOGIN: '/login',
   SUBSCRIPTIONS: '/subscriptions',
   MYPLAYLISTS: '/my-playlists',
