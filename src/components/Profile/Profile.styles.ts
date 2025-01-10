@@ -5,12 +5,14 @@ import styled from 'styled-components'
 interface ProfileButtonWrapperProps {
   size?: ProfileButtonSize
   radius?: string
+  border?: string
 }
 
 export const ProfileButtonWrapper = styled(Link)<ProfileButtonWrapperProps>`
   background: none;
   border: none;
   display: inline-block;
+  border: ${({ border }) => border || '1px solid var(--color-border)'};
   border-radius: ${({ radius }) => radius || 'var(--radius-full)'};
   padding: 0;
   cursor: pointer;
