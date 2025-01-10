@@ -4,8 +4,7 @@ import { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useModalFullStore } from '@/store/useModalFullStore'
 import { useSearchTermStore } from '@/store/useSearchTermStore'
-
-//컨텐츠 내용과 이벤트는 props로 넣어주세요!
+import { useDebounce } from '@/hooks/useDebounce'
 
 interface HeaderSubProps {
   children?: ReactNode
@@ -20,7 +19,6 @@ export default function HeaderSub({ children, onClick }: HeaderSubProps) {
   const handleClick = () => {
     navigate(-1)
   }
-
   return (
     <S.HeaderWrapper>
       <S.Logo onClick={onClick ? onClick : handleClick}>

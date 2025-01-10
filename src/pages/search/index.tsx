@@ -12,6 +12,7 @@ export const SearchPage = () => {
   const location = useLocation()
 
   const searchTerm = location.state
+
   const observerElem = useRef<HTMLDivElement | null>(null)
   const {
     data,

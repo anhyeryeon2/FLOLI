@@ -19,6 +19,7 @@ import {
 } from '@/store/useSearchTermStore'
 import Loading from '../LoadingSpinner/Loading'
 import { IPlayList } from '@/types/playList'
+import { useDebounce } from '@/hooks/useDebounce'
 
 const Container = styled.div`
   max-width: var(--max-width);
@@ -74,14 +75,16 @@ const Layout = () => {
     }
   }
 
+  const debouncedTitle = useDebounce(searchTerm, 300)
+
   const {
     data: searchs,
     isError,
     isLoading
   } = useQuery<IPlayList[]>({
-    queryKey: ['searchPlayList', searchTerm],
-    queryFn: () => getSearch(searchTerm),
-    enabled: !!searchTerm,
+    queryKey: ['searchPlayList', debouncedTitle],
+    queryFn: () => getSearch(debouncedTitle),
+    enabled: !!debouncedTitle,
     staleTime: 1000 * 60
   })
 
