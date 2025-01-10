@@ -1,4 +1,4 @@
-import { supabase, supabaseUrl } from '../../supabaseConfig'
+import { supabase, supabaseUrl } from '@/supabase/supabaseConfig'
 
 interface EditProfile {
   image?: FileList | null
