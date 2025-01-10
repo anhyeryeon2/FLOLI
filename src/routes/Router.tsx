@@ -70,7 +70,8 @@ const router = createBrowserRouter([
       {
         path: ROUTER_PATH.SIGNUP_NICKNAME,
         element: <StepNickname />
-      }
+      },
+      { path: ROUTER_PATH.ProfileEdit, element: <ProfileEdit /> }
     ]
   }
 ])
