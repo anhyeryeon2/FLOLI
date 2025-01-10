@@ -1,4 +1,4 @@
-import * as S from '@/styles/components/comment/comment-editor.style'
+import * as S from './CommentEditor.style'
 import Profile from '../Profile/Profile'
 import { LuSendHorizontal } from 'react-icons/lu'
 import { ChangeEvent, useState } from 'react'

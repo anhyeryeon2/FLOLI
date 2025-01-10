@@ -1,8 +1,8 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import axiosInstance from '@/apis/axiosInstance'
-import { IFetchCommentsProps } from '@/types/comments'
+import { ISubmitCommentProps } from '@/types/comments'
 
-const submitComment = async (props: IFetchCommentsProps) => {
+const submitComment = async (props: ISubmitCommentProps) => {
   const res = await axiosInstance.post('/comments', {
     user_id: props.userId,
     playlist_id: props.playlistId,

@@ -3,7 +3,7 @@ import CommentEditor from '@/components/Comment/CommentEditor'
 import CommentList from '@/components/Comment/CommentList'
 import Profile from '@/components/Profile/Profile'
 import ViewVideoList from '@/components/ViewVideoList/ViewVideoList'
-import * as S from '@/styles/pages/view/view.style'
+import * as S from './view.style'
 import { IViewProps } from '@/types/View'
 import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
@@ -19,7 +19,7 @@ import { RiPlayList2Fill } from 'react-icons/ri'
 import { useParams } from 'react-router-dom'
 import useFetchUserData from '@/hooks/useFetchUserData'
 import useFetchUserLikeStatus from '@/hooks/useFetchUserLikeStatus' // 좋아요 상태 가져오는 훅
-import { NotFound } from '../notfound'
+import { NotFound } from '../notFound'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { formatKoreanUnit } from '@/utils/formatKoreanUnit'
 import copyToClipboard from '@/utils/copyToClipboard'
@@ -30,6 +30,7 @@ import useToggleLike from '@/hooks/useToggleLike'
 import useToggleSubsc from '@/hooks/useToggleSubsc'
 import useToggleBookmark from '@/hooks/useToggleBookmark'
 import useFetchUserBookmarkStatus from '@/hooks/useFetchUserBookmarkStatus'
+import { useVideoLink } from '@/hooks/useVideoLink'
 
 // todo: util에 등록된걸로 바꾸기
 const dateKoreanFormat = (date: string): string => {
@@ -79,6 +80,8 @@ export const View = (): JSX.Element => {
 
   const [isVideoListOpen, setIsVideoListOpen] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
+
+  const { videoLink, setVideoLink, videoList, setVideoList } = useVideoLink()
 
   const { mutate: toggleLikeMutate, isPending: isToggleLikePending } =
     useToggleLike()
@@ -188,7 +191,7 @@ export const View = (): JSX.Element => {
     return <NotFound />
   }
 
-  const { title, description, created_at, video_count } = playlist
+  const { title, description, created_at, video_count, video_url } = playlist
   const { id: creator_id, nickname, profile_img, subsc_count } = creatorData
 
   const VideoTitle = '영상 제목 가나다라 마바사아'

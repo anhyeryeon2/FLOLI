@@ -1,4 +1,4 @@
-import * as S from '@/styles/components/comment/comment-item.style'
+import * as S from './CommentItem.style'
 import Profile from '../Profile/Profile'
 import { useEffect, useRef, useState } from 'react'
 import { AiFillEdit } from 'react-icons/ai'

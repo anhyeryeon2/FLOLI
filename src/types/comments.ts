@@ -1,4 +1,9 @@
 export interface IFetchCommentsProps {
+  playlistId: string
+  pageParam?: number
+}
+
+export interface ISubmitCommentProps {
   userId: string
   playlistId: string
   content: string

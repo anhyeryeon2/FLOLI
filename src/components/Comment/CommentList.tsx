@@ -1,16 +1,30 @@
-import * as S from '@/styles/components/Comment/Comment-list.style'
+import * as S from './CommentList.style'
 import CommentItem from './CommentItem'
 import useFetchPlaylistComments from '@/hooks/useFetchPlaylistComments'
 import { ICommentItemProps, CommentListProps } from '@/types/comments'
 import Loading from '../LoadingSpinner/Loading'
 import { NotFound } from '@/pages'
+import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useRef } from 'react'
 
 const CommentList = ({ playlistId }: CommentListProps) => {
   const {
     data: commentsData,
-    error,
-    isPending
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    error
   } = useFetchPlaylistComments(playlistId)
+
+  const observerElem = useRef(null)
+
+  useInfiniteScroll({
+    observerElem,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage
+  })
 
   if (isPending) {
     return <Loading />
@@ -23,7 +37,7 @@ const CommentList = ({ playlistId }: CommentListProps) => {
 
   return (
     <S.Container>
-      {commentsData.map((data: ICommentItemProps) => (
+      {commentsData?.pages.flat().map((data: ICommentItemProps) => (
         <CommentItem
           key={data.comment_id}
           commentId={data.comment_id}
@@ -34,6 +48,7 @@ const CommentList = ({ playlistId }: CommentListProps) => {
           playlistId={playlistId}
         />
       ))}
+      <div ref={observerElem}>{isFetchingNextPage && <div>asdfasdf</div>}</div>
     </S.Container>
   )
 }

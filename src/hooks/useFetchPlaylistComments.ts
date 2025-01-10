@@ -1,32 +1,45 @@
-import { useQuery } from '@tanstack/react-query'
+import { useInfiniteQuery } from '@tanstack/react-query'
 import axiosInstance from '@/apis/axiosInstance'
+import { IFetchCommentsProps } from '@/types/comments'
 
-const fetchPlaylistComments = async (playlistId: string) => {
+const fetchPlaylistComments = async ({
+  playlistId,
+  pageParam = 0
+}: IFetchCommentsProps) => {
+  const limit = 3
+  const offset = pageParam * limit
+
   const res = await axiosInstance.get('/comments', {
     params: {
       playlist_id: `eq.${playlistId}`,
-      order: 'updated_at.desc' // updated_at 기준 최신순으로 가져오기
+      order: 'updated_at.desc',
+      limit: limit,
+      offset: offset
     }
   })
 
   if (!res.data) {
     // 댓글이 없는 경우
-    return null
+    return { data: [], nextPage: undefined }
   }
 
   return res.data
 }
 
 /**
- * @param {string} userId - 유저 ID
  * @param {string} playlistId - 플레이리스트 ID
- * @returns {object} data, error, isPending
- * @example const { data, error, isPending } = useFetchPlaylistComments(playlistId);
+ * @example const { data, fetchNextPage, hasNextPage, isFetchingNextPage } = useFetchPlaylistComments(playlistId);
  */
 const useFetchPlaylistComments = (playlistId: string) => {
-  return useQuery({
+  return useInfiniteQuery({
     queryKey: ['playlistComments', playlistId],
-    queryFn: () => fetchPlaylistComments(playlistId),
+    queryFn: ({ pageParam = 0 }) =>
+      fetchPlaylistComments({ pageParam, playlistId }),
+    initialPageParam: 0,
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length
+      return lastPage.length === 3 ? nextPage : undefined
+    },
     enabled: !!playlistId
   })
 }
