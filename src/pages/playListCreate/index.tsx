@@ -8,6 +8,7 @@ import { useImageUpload } from '@/hooks/useImageUpload'
 import { useDebounce } from '@/hooks/useDebounce'
 import axiosInstance from '@/apis/axiosInstance'
 import { CreatePlaylistPayload } from '@/types/playListCreate'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { Button } from '@/components/Button/Button'
 import Input from '@/components/Input/Input'
@@ -23,6 +24,7 @@ export function PlayListCreate() {
   const { showToastMessage } = useToastMessageContext()
   const { open, ModalComponent } = useModal()
   const navigate = useNavigate()
+  const queryClient = useQueryClient()
 
   const showModal = () => {
     open({
@@ -45,6 +47,33 @@ export function PlayListCreate() {
   const { thumbnail, handleThumbnailUpload, resetThumbnail } = useImageUpload()
 
   const debouncedTitle = useDebounce(playlistTitle, 300)
+
+  const createPlayListMutation = useMutation({
+    mutationFn: async (payload: CreatePlaylistPayload) => {
+      const response = await axiosInstance.post('/rpc/create_playlist', payload)
+      return response.data
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['playlists'] })
+      showToastMessage({
+        message: '플레이리스트가 성공적으로 생성되었습니다.',
+        type: 'success'
+      })
+
+      setPlaylistTitle('')
+      setPlaylistDescription('')
+      setVideoList([])
+      resetThumbnail()
+      navigate('/')
+    },
+    onError: error => {
+      console.error(error)
+      showToastMessage({
+        message: '플레이리스트 생성에 실패했습니다.',
+        type: 'error'
+      })
+    }
+  })
 
   const handleCreatePlaylist = async () => {
     const accessToken = localStorage.getItem('accessToken')
@@ -77,26 +106,7 @@ export function PlayListCreate() {
       video_urls: videoList.map(video => video.link),
       is_public: isPublic
     }
-
-    try {
-      await axiosInstance.post('/rpc/create_playlist', payload)
-      showToastMessage({
-        message: '플레이리스트가 성공적으로 생성되었습니다.',
-        type: 'success'
-      })
-      navigate('/')
-
-      setPlaylistTitle('')
-      setPlaylistDescription('')
-      setVideoList([])
-      resetThumbnail()
-    } catch (error) {
-      console.error(error)
-      showToastMessage({
-        message: '플레이리스트 생성에 실패했습니다.',
-        type: 'error'
-      })
-    }
+    createPlayListMutation.mutate(payload)
   }
 
   return (

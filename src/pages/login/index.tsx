@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -7,6 +7,7 @@ import { useAuthStore } from '@/store/useAuthStore'
 
 import Input from '@/components/Input/Input'
 import { Button } from '@/components/Button/Button'
+import Loading from '@/components/LoadingSpinner/Loading'
 import { supabase } from '@/supabase/supabaseConfig'
 import * as S from './login.styles'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
@@ -22,6 +23,7 @@ export function Login() {
   const { setUser, user } = useAuthStore()
   const navigate = useNavigate()
   const { showToastMessage } = useToastMessageContext()
+  const [socialLoading, setSocialLoading] = useState(false)
 
   const {
     register,
@@ -81,6 +83,7 @@ export function Login() {
   }
 
   const handleSocialLogin = async (provider: SocialProvider) => {
+    setSocialLoading(true)
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
@@ -91,11 +94,15 @@ export function Login() {
         const providerName = provider === 'kakao' ? '카카오' : '구글'
         handleAuthError(`${providerName} 로그인 실패하였습니다`)
         console.error(`${provider} Login error:`, error)
+      } else {
+        await checkSession()
       }
     } catch (error) {
       const providerName = provider === 'kakao' ? '카카오' : '구글'
       handleAuthError(`${providerName} 로그인 중 오류가 발생했습니다`)
       console.error(`${provider} Login error:`, error)
+    } finally {
+      setSocialLoading(false)
     }
   }
   useEffect(() => {
@@ -171,15 +178,18 @@ export function Login() {
             <S.ErrorMessage>{errors.password.message}</S.ErrorMessage>
           )}
         </S.InputWrapper>
-
-        <Button
-          width="100%"
-          fontSize="1.8rem"
-          disabled={isSubmitting}
-          bordertype={'기본'}
-          type="submit">
-          {isSubmitting ? '로그인 중...' : '로그인'}
-        </Button>
+        {socialLoading ? (
+          <Loading />
+        ) : (
+          <Button
+            width="100%"
+            fontSize="1.8rem"
+            disabled={isSubmitting || socialLoading}
+            bordertype={'기본'}
+            type="submit">
+            로그인
+          </Button>
+        )}
 
         <S.Divider />
         <S.ButtonContainer>
@@ -188,7 +198,7 @@ export function Login() {
             color="var(--color-black)"
             backgroundColor="var(--color-main2)"
             onClick={() => handleSocialLogin('google')}
-            disabled={isSubmitting}
+            disabled={isSubmitting || socialLoading}
             bordertype={'기본'}>
             <S.LoginLogo src={GoogleLogo} />
             구글 로그인
