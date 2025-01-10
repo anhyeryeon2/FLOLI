@@ -31,6 +31,7 @@ const CommentList = ({ playlistId }: CommentListProps) => {
           content={data.content}
           createAt={data.created_at}
           updatedAt={data.updated_at ? data.updated_at : null}
+          playlistId={playlistId}
         />
       ))}
     </S.Container>

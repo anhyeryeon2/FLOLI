@@ -9,6 +9,9 @@ import Loading from '../LoadingSpinner/Loading'
 import { NotFound } from '@/pages'
 import getTimeAgo from '@/utils/getTimeAgo'
 import LogoAsset from '@/assets/img/logo/floli_o.svg'
+import useDeleteComment from '@/hooks/useDeleteComment'
+import { useModal } from '@/hooks/useModal'
+import CommentModifier from './CommentModifier'
 
 type ContentTextProps = {
   text: string
@@ -20,6 +23,7 @@ type CommentItemProps = {
   content: string
   createAt: string
   updatedAt: string | null
+  playlistId: string
 }
 
 // 댓글 내용 '자세히 보기' 버튼
@@ -55,17 +59,23 @@ const CommentItem = ({
   commentUserId,
   content,
   createAt,
-  updatedAt
+  updatedAt,
+  playlistId
 }: CommentItemProps) => {
-  const { user: currentUser } = useAuthStore()
+  const [isModifier, setIsModifier] = useState(false)
 
+  const { user: currentUser } = useAuthStore()
   const currentUserId = currentUser?.id
+
+  const { open, ModalComponent } = useModal()
 
   const {
     data: commentUserData,
     error: commentUserDataError,
     isPending: iscommentUserDataPending
   } = useFetchUserData(commentUserId)
+
+  const { mutate: deleteCommentMutate, isPending, error } = useDeleteComment()
 
   if (iscommentUserDataPending) {
     return <Loading />
@@ -76,6 +86,26 @@ const CommentItem = ({
   }
 
   const { nickname, profile_img } = commentUserData
+
+  const showModal = () => {
+    open({
+      title: '댓글을 삭제하시겠습니까?',
+      confirmText: '삭제',
+      cancelText: '취소',
+      onConfirm: () => {
+        const props = { commentId, playlistId }
+        deleteCommentMutate(props)
+      }
+    })
+  }
+
+  const handleModifyClick = () => {
+    setIsModifier(true)
+  }
+
+  const handleDeleteClick = () => {
+    showModal()
+  }
 
   return (
     <S.Container id={commentId}>
@@ -96,23 +126,42 @@ const CommentItem = ({
             />
           )}
           <span className="create-at">
-            {updatedAt ? getTimeAgo(updatedAt) : getTimeAgo(createAt)}
+            {updatedAt !== createAt
+              ? `${getTimeAgo(updatedAt!)} (수정됨)`
+              : getTimeAgo(createAt)}
           </span>
         </div>
-        <ContentText text={content} />
-        {commentUserId === currentUserId && (
-          <S.CommentEditButtonBox>
-            <button type="button">
-              <span>수정</span>
-              <AiFillEdit />
-            </button>
-            <button type="button">
-              <span>삭제</span>
-              <MdDelete />
-            </button>
-          </S.CommentEditButtonBox>
+        {isModifier ? (
+          <CommentModifier
+            commentId={commentId}
+            playlistId={playlistId}
+            text={content}
+            setIsModifier={setIsModifier}
+          />
+        ) : (
+          <ContentText text={content} />
         )}
+        {commentUserId === currentUserId &&
+          (isModifier ? (
+            <div></div>
+          ) : (
+            <S.CommentEditButtonBox>
+              <button
+                type="button"
+                onClick={handleModifyClick}>
+                <span>수정</span>
+                <AiFillEdit />
+              </button>
+              <button
+                type="button"
+                onClick={handleDeleteClick}>
+                <span>삭제</span>
+                <MdDelete />
+              </button>
+            </S.CommentEditButtonBox>
+          ))}
       </div>
+      {ModalComponent}
     </S.Container>
   )
 }

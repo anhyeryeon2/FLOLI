@@ -2,7 +2,7 @@ import styled, { keyframes } from 'styled-components'
 
 export const slideUp = keyframes`
   from {
-    transform: translateY(100%);
+    transform: translateY(20%);
     opacity: 0;
   }
   to {
@@ -32,7 +32,7 @@ export const ModalContainer = styled.div`
   text-align: center;
   padding: var(--spacing-6) var(--spacing-6);
   box-shadow: var(--shadow-l);
-  animation: ${slideUp} 0.4s ease-out;
+  animation: ${slideUp} 0.2s ease-out;
   box-sizing: border-box;
 `
 
@@ -47,12 +47,12 @@ export const Title = styled.h2`
 export const Description = styled.p`
   font-size: var(--fs-l);
   color: var(--color-gray);
-  margin-bottom: var(--spacing-6);
 `
 export const ButtonContainer = styled.div`
   display: flex;
   justify-content: center;
   gap: var(--spacing-5);
+  margin-top: var(--spacing-6);
 `
 
 export const Button = styled.button<{ $type: 'confirm' | 'cancel' }>`

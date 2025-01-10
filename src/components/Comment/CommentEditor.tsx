@@ -6,10 +6,13 @@ import useSubmitComment from '@/hooks/useSubmitComment'
 import { useAuthStore } from '@/store/useAuthStore'
 import { CommentEditorProps } from '@/types/comments'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { useModal } from '@/hooks/useModal'
 
 const CommentEditor = ({ playlistId }: CommentEditorProps) => {
   const { user: currentUser } = useAuthStore()
   const { id: currentUserId, profile_img } = currentUser!
+
+  const { open, ModalComponent } = useModal()
 
   const { showToastMessage } = useToastMessageContext()
 
@@ -19,6 +22,39 @@ const CommentEditor = ({ playlistId }: CommentEditorProps) => {
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentContent(e.target.value)
+  }
+
+  const showModal = () => {
+    open({
+      title: '댓글을 작성하시겠습니까?',
+      confirmText: '작성',
+      cancelText: '취소',
+      onConfirm: () => {
+        const props = {
+          userId: currentUserId,
+          playlistId,
+          content: commentContent
+        }
+        submitComment(props, {
+          onSuccess: () => {
+            showToastMessage({
+              message: '댓글이 작성되었습니다.',
+              type: 'success'
+            })
+            setCommentContent('')
+          },
+          onError: err => {
+            console.error('댓글 전송 오류:', err)
+            showToastMessage({
+              message:
+                '댓글 작성에 오류가 발생하였습니다. 새로고침 후에도 오류가 지속될 경우 관리자에 문의 부탁드립니다.',
+              type: 'error',
+              delay: 10000
+            })
+          }
+        })
+      }
+    })
   }
 
   const handleSubmit = async () => {
@@ -32,25 +68,7 @@ const CommentEditor = ({ playlistId }: CommentEditorProps) => {
       return false
     }
 
-    const props = { userId: currentUserId, playlistId, content: commentContent }
-    submitComment(props, {
-      onSuccess: () => {
-        showToastMessage({
-          message: '댓글이 작성되었습니다.',
-          type: 'success'
-        })
-        setCommentContent('')
-      },
-      onError: err => {
-        console.error('댓글 전송 오류:', err)
-        showToastMessage({
-          message:
-            '댓글 작성에 오류가 발생하였습니다. 새로고침 후에도 오류가 지속될 경우 관리자에 문의 부탁드립니다.',
-          type: 'error',
-          delay: 10000
-        })
-      }
-    })
+    showModal()
   }
 
   return (
@@ -70,9 +88,11 @@ const CommentEditor = ({ playlistId }: CommentEditorProps) => {
       />
       <S.CommentSendButton
         type="button"
+        disabled={isPending}
         onClick={handleSubmit}>
         <LuSendHorizontal size="18" />
       </S.CommentSendButton>
+      {ModalComponent}
     </S.Container>
   )
 }

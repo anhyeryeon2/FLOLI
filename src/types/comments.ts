@@ -20,3 +20,21 @@ export type CommentListProps = {
 export type CommentEditorProps = {
   playlistId: string
 }
+
+export type DeleteCommentProps = {
+  commentId: string
+  playlistId: string
+}
+
+export type CommentModifierProps = {
+  commentId: string
+  playlistId: string
+  text: string
+  setIsModifier: React.Dispatch<React.SetStateAction<boolean>>
+}
+
+export type ModifyCommentProps = {
+  commentId: string
+  playlistId: string
+  content: string
+}
