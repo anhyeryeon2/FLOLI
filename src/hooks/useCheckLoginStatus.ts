@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { supabase } from '../../supabaseConfig'
+import { supabase } from '@/supabase/supabaseConfig'
 
 export function useCheckLoginStatus() {
   useEffect(() => {

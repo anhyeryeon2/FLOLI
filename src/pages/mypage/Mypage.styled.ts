@@ -28,6 +28,9 @@ export const SubscribeCount = styled.div`
 `
 
 export const ButtonBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3);
   padding: var(--spacing-5);
 `
 

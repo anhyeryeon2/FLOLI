@@ -9,6 +9,9 @@ export const StyledButton = styled.button<{
   $bordertype: '구독' | '기본'
   type: string
 }>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: ${props => props.$padding || 'var(--spacing-3) var(--spacing-6)'};
   color: ${props => props.$color || 'var(--color-white)'};
   border-radius: ${({ $bordertype }) =>
