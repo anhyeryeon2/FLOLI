@@ -1,4 +1,4 @@
-import { supabase } from '../../supabaseConfig'
+import { supabase } from '@/supabase/supabaseConfig'
 
 export async function refreshAccessToken() {
   const refreshToken = localStorage.getItem('refreshToken')

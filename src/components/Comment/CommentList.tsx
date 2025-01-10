@@ -1,4 +1,4 @@
-import * as S from '@/styles/components/comment/comment-List.style'
+import * as S from '@/styles/components/Comment/Comment-list.style'
 import CommentItem from './CommentItem'
 import useFetchPlaylistComments from '@/hooks/useFetchPlaylistComments'
 import { ICommentItemProps, CommentListProps } from '@/types/comments'
