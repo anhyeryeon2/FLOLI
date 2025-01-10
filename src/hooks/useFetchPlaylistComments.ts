@@ -2,11 +2,12 @@ import { useInfiniteQuery } from '@tanstack/react-query'
 import axiosInstance from '@/apis/axiosInstance'
 import { IFetchCommentsProps } from '@/types/comments'
 
+const limit = 10
+
 const fetchPlaylistComments = async ({
   playlistId,
   pageParam = 0
 }: IFetchCommentsProps) => {
-  const limit = 3
   const offset = pageParam * limit
 
   const res = await axiosInstance.get('/comments', {
@@ -38,7 +39,7 @@ const useFetchPlaylistComments = (playlistId: string) => {
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length
-      return lastPage.length === 3 ? nextPage : undefined
+      return lastPage.length === limit ? nextPage : undefined
     },
     enabled: !!playlistId
   })
