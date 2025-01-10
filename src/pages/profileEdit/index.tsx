@@ -88,6 +88,7 @@ export function ProfileEdit() {
       ...data,
       image: fileInputRef.current?.files
     }
+
     mutate({ data: editProfileData, id: userId })
     updateUser(editProfileData)
   }

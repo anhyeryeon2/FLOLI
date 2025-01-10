@@ -44,17 +44,19 @@ export default function MyPageLikes() {
   return (
     <S.LikedBox>
       {playlistData?.map(playlistData => (
-        <PlayList
-          image={playlistData.thumbnail}
-          title={playlistData.title}
-          date={playlistData.created_at}
-          likes={playlistData.likes_count}
-          comments={playlistData.comments_count}
-          optionIcon="heart"
-          nickname={playlistData.nickname}
-          key={playlistData.playlist_id}
-          onOptionClick={handleDelete}
-        />
+        <S.ItemList>
+          <PlayList
+            image={playlistData.thumbnail}
+            title={playlistData.title}
+            date={playlistData.created_at}
+            likes={playlistData.likes_count}
+            comments={playlistData.comments_count}
+            optionIcon="heart"
+            nickname={playlistData.nickname}
+            key={playlistData.playlist_id}
+            onOptionClick={handleDelete}
+          />
+        </S.ItemList>
       ))}
     </S.LikedBox>
   )
