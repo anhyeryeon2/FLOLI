@@ -24,7 +24,8 @@ const PlayList = ({
   comments,
   isLocked,
   optionIcon,
-  nickname
+  nickname,
+  onOptionClick
 }: PlayListProps) => {
   return (
     <S.CardContainer>
@@ -44,7 +45,7 @@ const PlayList = ({
           nickname={nickname}
         />
       </S.TextWrapper>
-      <S.Options>
+      <S.Options onClick={onOptionClick}>
         {optionIcon === 'heart' && <FaHeart />}
         {optionIcon === 'bookmark' && <S.PlayListSaveIcon />}
         {optionIcon === 'option' && <FaEllipsisH />}
