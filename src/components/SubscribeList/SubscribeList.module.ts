@@ -8,10 +8,8 @@ export const SubscribeContainer = styled.div`
 
 export const SubscribeListContainer = styled.div`
   display: flex;
-  justify-content: space-around;
   overflow-x: hidden;
   align-items: center;
-  margin-left: auto;
   margin-right: auto;
   flex-grow: 1;
   margin-left: 4rem;

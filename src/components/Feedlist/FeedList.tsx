@@ -31,46 +31,48 @@ const FeedList = ({
 
   return (
     <>
-      <S.CardContainer key={key}>
-        <S.ImageWrapper key={key}>
-          <img
-            src={image}
-            alt={title}
-          />
-          {track > 0 && <S.TrackTag>Track: {track}</S.TrackTag>}
-        </S.ImageWrapper>
-        <S.ContentWrapper>
-          <S.ProfileImage>
+      <S.FeedConteiner>
+        <S.CardContainer key={key}>
+          <S.ImageWrapper key={key}>
             <img
-              src={profileImage}
-              alt="Profile"
+              src={image}
+              alt={title}
             />
-          </S.ProfileImage>
-          <S.TextWrapper>
-            <S.Title>{title}</S.Title>
-            <S.nickname>{nickname}</S.nickname>
-            <FeedFooter
-              likes={likes}
-              comments={comments}
-              date={date}
-              onClick={handleOptionsPopup}
-            />
-          </S.TextWrapper>
-        </S.ContentWrapper>
-      </S.CardContainer>
-      <Modal
-        id="testmodal"
-        isOpen={isOpen}
-        closeModal={handleOptionsPopState}
-        className="feedoption"
-        isBg={true}>
-        {options.map(value => (
-          <S.ModalWrapper key={value.id}>
-            <span>{value.icon}</span>
-            <span>{value.name}</span>
-          </S.ModalWrapper>
-        ))}
-      </Modal>
+            {track > 0 && <S.TrackTag>Track: {track}</S.TrackTag>}
+          </S.ImageWrapper>
+          <S.ContentWrapper>
+            <S.ProfileImage>
+              <img
+                src={profileImage}
+                alt="Profile"
+              />
+            </S.ProfileImage>
+            <S.TextWrapper>
+              <S.Title>{title}</S.Title>
+              <S.nickname>{nickname}</S.nickname>
+              <FeedFooter
+                likes={likes}
+                comments={comments}
+                date={date}
+                onClick={handleOptionsPopup}
+              />
+            </S.TextWrapper>
+          </S.ContentWrapper>
+        </S.CardContainer>
+        <Modal
+          id="testmodal"
+          isOpen={isOpen}
+          closeModal={handleOptionsPopState}
+          className="feedoption"
+          isBg={true}>
+          {options.map(value => (
+            <S.ModalWrapper key={value.id}>
+              <span>{value.icon}</span>
+              <span>{value.name}</span>
+            </S.ModalWrapper>
+          ))}
+        </Modal>
+      </S.FeedConteiner>
     </>
   )
 }

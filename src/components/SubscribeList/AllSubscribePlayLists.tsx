@@ -1,36 +1,30 @@
 import FeedList from '@/components/FeedList/FeedList'
-
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { getPlayList } from '@/apis/feed'
-import { IPlayListType } from '@/types/playList'
-import { useRef } from 'react'
 import PlayListSkeleton from '@/components/Skeleton/PlayListSkeleton'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { getSubscribeAllPlayLists } from '@/apis/subscribe/playList/index'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useRef } from 'react'
 
-export function Home() {
+const AllSubscribePlayLists = () => {
   const observerElem = useRef<HTMLDivElement | null>(null)
-  const {
-    data,
-    isError,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading
-  } = useInfiniteQuery({
-    queryKey: ['playList'],
-    queryFn: ({ pageParam }) => getPlayList(pageParam as number),
 
+  const {
+    data: allPlayLists,
+    isError,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage
+  } = useInfiniteQuery({
+    queryKey: ['allSubscribePlayList'],
+    queryFn: ({ pageParam }) =>
+      getSubscribeAllPlayLists(undefined, pageParam as number),
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1
-
       return nextPage <= lastPage.length ? nextPage : undefined
     },
-    select: data => {
-      return data.pages.flat()
-    },
-
+    select: data => data.pages.flat(),
     initialPageParam: 1,
-
     staleTime: 1000 * 60
   })
 
@@ -41,15 +35,13 @@ export function Home() {
     fetchNextPage
   })
 
-  if (isLoading || isFetchingNextPage) {
-    return <PlayListSkeleton />
-  }
+  if (isLoading || isFetchingNextPage) return <PlayListSkeleton />
 
-  if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
+  if (isError) return <div>불러오다가 에러가 발생했습니다.</div>
 
   return (
     <>
-      {data?.map((playList: IPlayListType) => (
+      {allPlayLists?.map(playList => (
         <FeedList
           image={playList.thumbnail}
           profileImage={playList.profile_img_path}
@@ -68,4 +60,4 @@ export function Home() {
   )
 }
 
-export default Home
+export default AllSubscribePlayLists
