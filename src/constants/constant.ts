@@ -10,7 +10,8 @@ export const ROUTER_PATH = {
 
   SIGNUP_EMAIL: '/signup/email',
   SIGNUP_PASSWORD: '/signup/password',
-  SIGNUP_NICKNAME: '/signup/nickname'
+  SIGNUP_NICKNAME: '/signup/nickname',
+  SEARCH_PLAYLIST: '/search'
 }
 
 // 유동 경로를 위한 정규 표현식

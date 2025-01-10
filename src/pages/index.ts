@@ -13,3 +13,5 @@ export { MyPlayLists } from './myPlayList/index.tsx'
 export { Subscriptions } from './subscriptions/index.tsx'
 
 export { View } from './view/index.tsx'
+
+export { SearchPage } from './search/index.tsx'
