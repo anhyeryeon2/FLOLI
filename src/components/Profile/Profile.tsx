@@ -35,7 +35,6 @@ const Profile = ({
 }: ProfileButtonProps) => {
   return (
     <S.ProfileButtonWrapper
-      as={disabledLink ? 'div' : Link}
       to={disabledLink ? '#' : `/profile/${userId}`}
       size={size}
       className={className}
