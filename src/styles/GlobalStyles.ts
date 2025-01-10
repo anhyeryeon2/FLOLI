@@ -6,6 +6,8 @@ export const GlobalStyle = createGlobalStyle`
   #root {
     background: gray;
   }
+ 
+
 
   /*
     hidden

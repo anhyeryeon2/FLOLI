@@ -4,11 +4,14 @@ export const ROUTER_PATH = {
   MYPAGE: '/mypage',
   ProfileEdit: '/mypage/profile-edit',
   LOGIN: '/login',
-  SIGNUP: '/signup',
   SUBSCRIPTIONS: '/subscriptions',
   MYPLAYLISTS: '/my-playlists',
   USERPROFILE: '/profile/:userId',
-  PLAYLISTCREATE: '/playlist/create'
+  PLAYLISTCREATE: '/playlist/create',
+
+  SIGNUP_EMAIL: '/signup/email',
+  SIGNUP_PASSWORD: '/signup/password',
+  SIGNUP_NICKNAME: '/signup/nickname'
 }
 
 // 유동 경로를 위한 정규 표현식

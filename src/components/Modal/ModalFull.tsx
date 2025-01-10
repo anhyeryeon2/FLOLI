@@ -15,7 +15,6 @@ const ModalFull = ({
   closeModal
 }: IModalDefaultProps) => {
   const modalRoot = document.getElementById('modal-container')
-
   const navigate = useNavigate()
   const { pathname } = useLocation()
 
@@ -52,6 +51,7 @@ const ModalFull = ({
       id={id}>
       <S.ModalContainer onClick={handleClick}>
         <HeaderSub onClick={handleModalClose}>{pageTitle}</HeaderSub>
+
         <S.ModalContent>{children}</S.ModalContent>
       </S.ModalContainer>
     </S.ModalOverlay>,
