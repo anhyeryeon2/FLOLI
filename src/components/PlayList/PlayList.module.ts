@@ -8,7 +8,6 @@ pulse {
 
 export const Container = styled.div`
   width: 360px;
-
   margin-left: auto;
   margin-right: auto;
   border-radius: 20px;

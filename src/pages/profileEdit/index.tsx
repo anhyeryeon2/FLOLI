@@ -15,7 +15,7 @@ import { FormData, EditProfile } from '@/types/profileEdit'
 
 export function ProfileEdit() {
   const { showToastMessage } = useToastMessageContext()
-  const { user } = useAuthStore()
+  const { user, updateUser } = useAuthStore()
   const userId = user?.id
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [image, setImage] = useState<string | null>(null)
@@ -89,8 +89,9 @@ export function ProfileEdit() {
       image: fileInputRef.current?.files
     }
     mutate({ data: editProfileData, id: userId })
+    updateUser(editProfileData)
   }
-
+  console.log(user)
   return (
     <>
       <S.ContentContainer onSubmit={handleSubmit(onSubmit)}>
