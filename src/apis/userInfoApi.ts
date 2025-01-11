@@ -1,17 +1,22 @@
 import { supabase, supabaseUrl } from '../supabase/supabaseConfig'
 
 interface EditProfile {
-  image?: FileList | null
   nickname?: string
   introduction?: string
 }
 
 //수정용 함수
-export async function UserProfileEdit(editProfile: EditProfile, id: string) {
+export async function UserProfileEdit(
+  editProfile: EditProfile,
+  image: string | FileList | null,
+  id: string
+) {
   let imagePath = null
 
-  if (editProfile.image && editProfile.image.length > 0) {
-    const imageFile = editProfile.image[0]
+  if (typeof image === 'string') {
+    imagePath = image
+  } else if (image && image.length > 0) {
+    const imageFile = image[0]
     const imageName =
       imageFile.name.replace(/\s+/g, '_').replace(/[^a-zA-Z0-9_-]/g, '_') +
       Math.random()
@@ -22,7 +27,6 @@ export async function UserProfileEdit(editProfile: EditProfile, id: string) {
 
     if (storageError) {
       console.error(storageError)
-      throw new Error('프로필필 업로드에 실패했습니다!')
     }
 
     imagePath = `${supabaseUrl}/storage/v1/object/public/avatar/${imageName}`
@@ -33,13 +37,12 @@ export async function UserProfileEdit(editProfile: EditProfile, id: string) {
     .update({
       nickname: editProfile.nickname,
       introduction: editProfile.introduction,
-      profile_img: imagePath || editProfile.image
+      profile_img: imagePath || image
     })
     .eq('id', id)
 
   if (error) {
     console.error(error)
-    throw new Error('프로필 업데이트에 실패했습니다!')
   }
 
   return data

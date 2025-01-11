@@ -5,7 +5,7 @@ interface User {
   id: string
   email: string
   nickname: string
-  profile_img: string
+  profile_img: string | FileList | undefined | null
   introduction?: string | null
   subsc_count?: number
 }

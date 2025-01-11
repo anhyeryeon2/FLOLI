@@ -24,8 +24,15 @@ export function ProfileEdit() {
   const { userinfo } = useUserInfo()
   // data edit
   const { mutate } = useMutation({
-    mutationFn: ({ data, id }: { data: EditProfile; id: string }) =>
-      UserProfileEdit(data, id),
+    mutationFn: ({
+      data,
+      image,
+      id
+    }: {
+      data: EditProfile
+      image: string | FileList | null
+      id: string
+    }) => UserProfileEdit(data, image, id),
     onSuccess: () =>
       showToastMessage({
         message: `수정되었습니다!! `,
@@ -46,7 +53,6 @@ export function ProfileEdit() {
   } = useForm<FormData>({
     defaultValues: userinfo
       ? {
-          image: userinfo[0].profile_img,
           nickname: userinfo[0].nickname,
           introduction: userinfo[0].introduction
         }
@@ -84,15 +90,19 @@ export function ProfileEdit() {
       return
     }
 
+    const newImage =
+      fileInputRef.current?.files && fileInputRef.current.files.length > 0
+        ? fileInputRef.current.files
+        : image
+
     const editProfileData = {
-      ...data,
-      image: fileInputRef.current?.files
+      ...data
     }
 
-    mutate({ data: editProfileData, id: userId })
-    updateUser(editProfileData)
+    mutate({ data: editProfileData, image: newImage, id: userId })
+    updateUser({ ...data, profile_img: newImage, id: userId })
   }
-  console.log(user)
+
   return (
     <>
       <S.ContentContainer onSubmit={handleSubmit(onSubmit)}>
