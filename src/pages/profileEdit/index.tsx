@@ -113,6 +113,7 @@ export function ProfileEdit() {
               size="15rem"
               userId="userIdtest"
               imageUrl={image}
+              disabledLink={true}
             />
           ) : (
             <Profile
@@ -120,6 +121,7 @@ export function ProfileEdit() {
               size="15rem"
               userId="userIdtest"
               imageUrl={img}
+              disabledLink={true}
             />
           )}
 

@@ -98,7 +98,7 @@ export default function Navbar() {
               altText="profile"
               userId={user?.id || ''}
               size="xsmall"
-              disabledLink={true}
+              to="/mypage"
             />
           )}
 
