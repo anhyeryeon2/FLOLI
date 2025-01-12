@@ -16,3 +16,11 @@ export interface VideoItem {
   link: string
   channel: string
 }
+export interface CreatePlaylistPayload {
+  user_id: string | number
+  title: string
+  description: string
+  thumbnail: string
+  video_urls: string[]
+  is_public: boolean
+}
