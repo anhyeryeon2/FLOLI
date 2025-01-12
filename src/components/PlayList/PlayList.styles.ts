@@ -7,7 +7,6 @@ export const CardContainer = styled.div`
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-s);
   max-width: 50rem;
-  margin: auto;
 `
 
 export const ImageWrapper = styled.div`
@@ -70,4 +69,12 @@ export const Icon = styled.span`
 
 export const PlayListSaveIcon = styled(MdOutlinePlaylistAdd)`
   font-size: var(--fs-xl);
+`
+export const ModalWrapper = styled.div`
+  display: flex;
+  font-size: var(--fs-xl);
+  padding: var(--spacing-4);
+  gap: 2rem;
+  align-items: center;
+  margin-bottom: 1rem;
 `

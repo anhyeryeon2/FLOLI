@@ -5,27 +5,27 @@ import PlayList from '@/components/PlayList/PlayList'
 import styled from 'styled-components'
 import Loading from '@/components/LoadingSpinner/Loading'
 import { IPlayListType } from '@/types/playList'
+import { useToast } from '@/hooks/useToast'
 
 export const MyPlayLists = () => {
   const user = useAuthStore(state => state.user)
   const [playlists, setPlaylists] = useState<IPlayListType[]>([])
   const [loading, setLoading] = useState(true)
+  const { handleToastError, handleToastSuccess } = useToast()
 
   useEffect(() => {
     async function fetchMyPlaylists() {
       if (!user?.id) return
       try {
-        const { data, error } = await supabase
-          .from('playlists')
-          .select('*')
-          .eq('user_id', user.id)
-          .order('created_at', { ascending: false })
+        const { data, error } = await supabase.rpc('get_my_playlists', {
+          p_user_id: user.id
+        })
 
         if (error) throw error
 
         setPlaylists(data || [])
       } catch (err) {
-        console.error('Error fetching playlists:', err)
+        handleToastError('내 플레이리스트를 불러오는데 실패했습니다')
       } finally {
         setLoading(false)
       }
@@ -33,6 +33,22 @@ export const MyPlayLists = () => {
 
     fetchMyPlaylists()
   }, [user?.id])
+
+  const handleDeletePlayList = async (deletedId: string) => {
+    try {
+      const { error } = await supabase.rpc('delete_playlist', {
+        p_playlist_id: deletedId
+      })
+
+      if (error) throw error
+      setPlaylists(prev =>
+        prev.filter(playlist => playlist.playlist_id !== deletedId)
+      )
+      handleToastSuccess('플레이리스트가 삭제되었습니다.')
+    } catch (error) {
+      handleToastError('플레이리스트 삭제에 실패했습니다.')
+    }
+  }
 
   if (loading)
     return (
@@ -56,9 +72,10 @@ export const MyPlayLists = () => {
           date={new Date(playlist.created_at).toLocaleDateString()}
           likes={playlist.likes_count}
           comments={playlist.comments_count}
-          isLocked={playlist.is_public === false}
+          isLocked={playlist.is_public}
           optionIcon="option"
-          nickname={playlist.description} // 설명을 닉네임처럼 표시 (필요시 수정 가능)
+          playlistId={playlist.playlist_id}
+          onDelete={handleDeletePlayList}
         />
       ))}
     </PlayListsContainer>
