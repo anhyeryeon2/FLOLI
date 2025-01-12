@@ -42,3 +42,23 @@ export const SubscribeAllList = styled.button`
   flex-shrink: 0; /* 크기가 줄어들지 않도록 설정 */
   flex-basis: 14%;
 `
+
+export const ModalfullContent = styled.div`
+  display: flex;
+  font-size: var(--fs-xl);
+  gap: 10rem;
+  position: relative;
+  padding: var(--spacing-3);
+  align-items: center;
+`
+
+export const ModalfullClickContent = styled.div`
+  position: absolute;
+  right: 0;
+  cursor: pointer;
+`
+
+export const SubscribeAllLength = styled.p`
+  margin-left: 1.5rem;
+  margin-bottom: 2rem;
+`

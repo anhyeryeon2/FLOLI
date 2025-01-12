@@ -2,7 +2,7 @@ import { IoChevronBack } from 'react-icons/io5'
 import * as S from './Header.styled'
 import { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useModalFullStore } from '@/store/useModalFullStore'
+import { useSearchModalFullStore } from '@/store/useSearchModalFullStore'
 
 //컨텐츠 내용과 이벤트는 props로 넣어주세요!
 
@@ -13,7 +13,7 @@ interface HeaderSubProps {
 
 export default function HeaderSub({ children, onClick }: HeaderSubProps) {
   const navigate = useNavigate()
-  const modalSearchState = useModalFullStore(state => state.searchState)
+  const modalSearchState = useSearchModalFullStore(state => state.searchState)
 
   const handleClick = () => {
     navigate(-1)

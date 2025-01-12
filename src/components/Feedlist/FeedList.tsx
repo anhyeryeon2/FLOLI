@@ -6,6 +6,7 @@ import { RiUserUnfollowLine } from 'react-icons/ri'
 import { MdPlaylistAdd } from 'react-icons/md'
 import { useState } from 'react'
 import { FaShareAlt } from 'react-icons/fa'
+import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 
 const FeedList = ({
   image,
@@ -28,7 +29,7 @@ const FeedList = ({
   const handleOptionsPopup = () => setIsOpen(true)
 
   const handleOptionsPopState = () => setIsOpen(false)
-
+  let koreanDate = dateKoreanFormat(date)
   return (
     <>
       <S.FeedConteiner>
@@ -53,7 +54,7 @@ const FeedList = ({
               <FeedFooter
                 likes={likes}
                 comments={comments}
-                date={date}
+                date={koreanDate}
                 onClick={handleOptionsPopup}
               />
             </S.TextWrapper>

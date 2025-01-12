@@ -15,14 +15,11 @@ const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async config => {
     const INITIAL_TOKEN = 'accessToken'
-    // const INITIAL_REFRESH_TOKEN = 'refreshToken'
     const getToken = getAuthStorage(INITIAL_TOKEN)
-    // const getTokenfresh = getAuthStorage(INITIAL_REFRESH_TOKEN)
     const token = getToken
 
     if (token !== null) {
       config.headers.Authorization = `Bearer ${token}`
-      // config.headers['Refresh-Token'] = `Bearer ${getTokenfresh}`
     }
     return config
   },

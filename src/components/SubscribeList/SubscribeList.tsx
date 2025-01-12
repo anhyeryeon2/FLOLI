@@ -5,6 +5,8 @@ import { getSubscribe } from '@/apis/subscribe'
 import { useQuery } from '@tanstack/react-query'
 import { SubscribeType } from '@/types/subscribe'
 import Loading from '../LoadingSpinner/Loading'
+import { useState } from 'react'
+import SubscriptionListModal from './SubscriptionListModal'
 
 interface Props {
   setUserId: React.Dispatch<SetStateAction<string>>
@@ -13,6 +15,7 @@ interface Props {
 const SubscribeList = ({ setUserId }: Props) => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
 
+  const [isOpen, setIsOpen] = useState(false)
   const {
     data: subscribeList,
     isError,
@@ -30,6 +33,10 @@ const SubscribeList = ({ setUserId }: Props) => {
     setUserId(userId)
   }
 
+  const handleSubscribeListOpen = () => {
+    setIsOpen(true)
+  }
+
   if (isLoading) <Loading />
   if (isError) <div>구독자 목록을 가져오지 못했습니다.</div>
 
@@ -45,7 +52,7 @@ const SubscribeList = ({ setUserId }: Props) => {
         {subscribeList?.map(subscribe => (
           <S.SubscribeListItem
             key={subscribe.user_id}
-            onClick={() => handleSubscribeClick(subscribe.user_id)}>
+            onClick={() => handleSubscribeClick(subscribe.subscriber_id)}>
             <S.SubscribeItem>
               <S.SubscribeAvatar
                 src={subscribe.user_profile_image}
@@ -55,7 +62,14 @@ const SubscribeList = ({ setUserId }: Props) => {
           </S.SubscribeListItem>
         ))}
       </S.SubscribeListContainer>
-      <S.SubscribeAllList>전체</S.SubscribeAllList>
+      <S.SubscribeAllList onClick={handleSubscribeListOpen}>
+        전체
+      </S.SubscribeAllList>
+      <SubscriptionListModal
+        isOpen={isOpen}
+        subscribeList={subscribeList}
+        setIsOpen={setIsOpen}
+      />
     </S.SubscribeContainer>
   )
 }
