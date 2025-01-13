@@ -308,7 +308,7 @@ export const View = (): JSX.Element => {
               />
               <h3 className="creator-name">{nickname}</h3>
               <span className="subsc-count">
-                {formatKoreanUnit(subsc_count + 1)}
+                {formatKoreanUnit(subsc_count)}
               </span>
             </div>
             {currentUser!.id !== playlist?.user_id &&
@@ -345,7 +345,7 @@ export const View = (): JSX.Element => {
                   color="var(--color-main1)"
                 />
               )}
-              <span>{formatKoreanUnit(likeCount + 1)}</span>
+              <span>{formatKoreanUnit(likeCount)}</span>
             </button>
             <button
               type="button"
