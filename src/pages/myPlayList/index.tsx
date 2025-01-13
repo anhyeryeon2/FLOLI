@@ -61,7 +61,9 @@ export const MyPlayLists = () => {
         (old: IPlayListType[] | undefined) =>
           old?.filter(playlist => playlist.playlist_id !== deletedId)
       )
+      queryClient.invalidateQueries({ queryKey: ['playList'] })
       handleToastSuccess('플레이리스트가 삭제되었습니다.')
+      navigate('/', { state: { refetch: true } })
     },
     onError: () => {
       handleToastError('플레이리스트 삭제에 실패했습니다.')
