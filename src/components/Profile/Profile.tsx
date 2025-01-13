@@ -31,11 +31,12 @@ const Profile = ({
   size = 'medium',
   radius,
   border,
-  disabledLink = false
+  disabledLink = false,
+  to
 }: ProfileButtonProps) => {
   return (
     <S.ProfileButtonWrapper
-      to={disabledLink ? '#' : `/profile/${userId}`}
+      to={disabledLink ? '#' : to || `/profile/${userId}`}
       size={size}
       className={className}
       radius={radius}
