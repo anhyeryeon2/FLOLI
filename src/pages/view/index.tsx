@@ -16,7 +16,7 @@ import {
 } from 'react-icons/fa'
 import { IoIosArrowUp } from 'react-icons/io'
 import { RiPlayList2Fill } from 'react-icons/ri'
-import { useParams } from 'react-router-dom'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import useFetchUserData from '@/hooks/useFetchUserData'
 import useFetchUserLikeStatus from '@/hooks/useFetchUserLikeStatus' // 좋아요 상태 가져오는 훅
 import { NotFound } from '../notFound'
@@ -30,7 +30,9 @@ import useToggleLike from '@/hooks/useToggleLike'
 import useToggleSubsc from '@/hooks/useToggleSubsc'
 import useToggleBookmark from '@/hooks/useToggleBookmark'
 import useFetchUserBookmarkStatus from '@/hooks/useFetchUserBookmarkStatus'
-import { useVideoLink } from '@/hooks/useVideoLink'
+import ViewVideoContent from '@/components/ViewVideoContent/ViewVideoContent'
+import useFetchVideoList from '@/hooks/useFetchVideoList'
+import { LAST_VIDEO_TITLE } from '@/constants/constant'
 
 // todo: util에 등록된걸로 바꾸기
 const dateKoreanFormat = (date: string): string => {
@@ -76,12 +78,21 @@ const DescriptionText = ({ description }: Pick<IViewProps, 'description'>) => {
 }
 
 export const View = (): JSX.Element => {
+  // const videoContentRef = useRef(null)
+
   const { user: currentUser } = useAuthStore()
 
   const [isVideoListOpen, setIsVideoListOpen] = useState(false)
   const [likeCount, setLikeCount] = useState(0)
 
-  const { videoLink, setVideoLink, videoList, setVideoList } = useVideoLink()
+  const [videoContentId, setVideoContentId] = useState('')
+  const [videoContentIndex, setVideoContentIndex] = useState(0)
+  const [videoContentTitle, setVideoContentTitle] = useState('')
+  const [nextVideoContentTitle, setNextVideoContentTitle] = useState('')
+  // const [playlistModalHeight, setPlaylistModalHeight] = useState(0)
+
+  const navigate = useNavigate()
+  const { pathname, search } = useLocation()
 
   const { mutate: toggleLikeMutate, isPending: isToggleLikePending } =
     useToggleLike()
@@ -151,6 +162,27 @@ export const View = (): JSX.Element => {
     isPending: isBookmarkPending
   } = useFetchUserBookmarkStatus(currentUser!.id, playlist_id!)
 
+  // 영상 목록 데이터 가져오기
+  const {
+    data: videoData,
+    error: videoDataError,
+    isPending: isVideoDataPending
+  } = useFetchVideoList(playlist?.video_url.split(','))
+
+  // 첫 영상 보여주기
+  useEffect(() => {
+    if (videoData && videoData.length > 0) {
+      setVideoContentId(videoData[0]?.video_id)
+      setVideoContentIndex(0)
+      setVideoContentTitle(videoData[0]?.title)
+      setNextVideoContentTitle(videoData[1]?.title || LAST_VIDEO_TITLE)
+    }
+  }, [videoData])
+
+  // useEffect(() => {
+  //   setPlaylistModalHeight(videoContentRef.current?.offsetHeight)
+  // }, [videoContentRef])
+
   if (isPending) {
     return <Loading />
   }
@@ -175,6 +207,10 @@ export const View = (): JSX.Element => {
     return <Loading />
   }
 
+  if (isVideoDataPending) {
+    return <Loading />
+  }
+
   if (creatorDataError) {
     return <NotFound />
   }
@@ -191,10 +227,15 @@ export const View = (): JSX.Element => {
     return <NotFound />
   }
 
-  const { title, description, created_at, video_count, video_url } = playlist
+  if (videoDataError) {
+    return <NotFound />
+  }
+
+  const { title, description, created_at, video_count } = playlist
   const { id: creator_id, nickname, profile_img, subsc_count } = creatorData
 
-  const VideoTitle = '영상 제목 가나다라 마바사아'
+  console.log('@@', creatorData)
+
   const commentCount = 172
 
   const handleShareClick = () => {
@@ -224,14 +265,34 @@ export const View = (): JSX.Element => {
   }
 
   const openVideoList = () => setIsVideoListOpen(true)
-  const closeVideoList = () => setIsVideoListOpen(false)
+  const closeVideoList = () => {
+    const params = new URLSearchParams(search)
+    params.delete('modal')
+    navigate(`${pathname}?${params.toString()}`)
+    setIsVideoListOpen(false)
+  }
+
+  const handleVideoSelect = (
+    videoId: string,
+    index: number,
+    title: string,
+    nextTitle: string
+  ) => {
+    setVideoContentId(videoId)
+    setVideoContentIndex(index)
+    setVideoContentTitle(title)
+    setNextVideoContentTitle(nextTitle)
+  }
 
   return (
     <>
       <S.Container>
-        {/* todo: 영상 들어가는 영역 - sticky 넣기 */}
+        <ViewVideoContent
+          // ref={videoContentRef}
+          videoId={videoContentId}
+        />
         <S.VideoInfoWrapper>
-          <h2>{VideoTitle}</h2>
+          <h2>{videoContentTitle}</h2>
           <h1>{title}</h1>
           <div className="info-box">
             <span className="create-at">{dateKoreanFormat(created_at)}</span>
@@ -247,7 +308,7 @@ export const View = (): JSX.Element => {
               />
               <h3 className="creator-name">{nickname}</h3>
               <span className="subsc-count">
-                {formatKoreanUnit(subsc_count)}
+                {formatKoreanUnit(subsc_count + 1)}
               </span>
             </div>
             {currentUser!.id !== playlist?.user_id &&
@@ -284,7 +345,7 @@ export const View = (): JSX.Element => {
                   color="var(--color-main1)"
                 />
               )}
-              <span>{formatKoreanUnit(likeCount)}</span>
+              <span>{formatKoreanUnit(likeCount + 1)}</span>
             </button>
             <button
               type="button"
@@ -318,14 +379,13 @@ export const View = (): JSX.Element => {
           <div className="inner">
             <RiPlayList2Fill size="22" />
             <div className="playList-info-wrapper">
-              <p className="next-video-title">
-                다음 영상 제목 들어가기다음 영상 제목 들어가기 다음 영상 제목
-                들어가기
-              </p>
+              <p className="next-video-title">{nextVideoContentTitle}</p>
               <div className="playList-info">
                 <p>{title}</p>
                 <span>&nbsp;|&nbsp;</span>
-                <span>2/{video_count}</span>
+                <span>
+                  {videoContentIndex + 1}/{video_count}
+                </span>
               </div>
             </div>
           </div>
@@ -337,12 +397,16 @@ export const View = (): JSX.Element => {
         </S.VideoListPanel>
         <S.StyledModal
           id="videoList"
+          // height={`${playlistModalHeight}px`}
           isOpen={isVideoListOpen}
           closeModal={closeVideoList}>
           <ViewVideoList
             closeModal={closeVideoList}
             trackCount={video_count}
             playListTitle={title}
+            videoData={videoData}
+            selectVideo={handleVideoSelect}
+            videoContentIndex={videoContentIndex}
           />
         </S.StyledModal>
       </S.Container>

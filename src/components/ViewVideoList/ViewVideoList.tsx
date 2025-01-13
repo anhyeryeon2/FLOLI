@@ -1,63 +1,54 @@
 import { IoIosArrowDown } from 'react-icons/io'
 import * as S from './ViewVideoList.style'
-import { IViewProps } from '@/types/View'
-import { IModalDefaultProps } from '@/types/modal'
 import DetailPlayList from '@/components/DetailPlayList/DetailPlayList'
+import { LAST_VIDEO_TITLE } from '@/constants/constant'
 
-type Combined = IViewProps & IModalDefaultProps
+interface IViewVideoListProps {
+  closeModal: () => void
+  playListTitle: string
+  trackCount: number
+  videoData: videoDataType[]
+  selectVideo: (
+    video_id: string,
+    index: number,
+    title: string,
+    nextTitle: string
+  ) => void
+  videoContentIndex: number
+}
 
-const testArr = [
-  {
-    image:
-      'https://cdn.pixabay.com/photo/2023/07/21/21/05/bus-8142339_1280.jpg',
-    title:
-      '이건 영상입니다이건 영상입니다이건 영상입니다이건 영상입니다이건 영상입니다이건 영상입니다',
-    nickname:
-      '영상 제작자 이름영상 제작자 이름영상 제작자 이름영상 제작자 이름영상 제작자 이름영상 제작자 이름영상 제작자 이름영상 제작자 이름'
-  },
-  {
-    image:
-      'https://cdn.pixabay.com/photo/2023/07/21/21/05/bus-8142339_1280.jpg',
-    title: '영상 제목~~',
-    nickname: '영상 제작자 이름~~'
-  },
-  {
-    image:
-      'https://cdn.pixabay.com/photo/2023/07/21/21/05/bus-8142339_1280.jpg',
-    title: '여기엔 영상 제목이 들어갑니다',
-    nickname: '여기엔 영상 제작 채널 이름'
-  },
-  {
-    image:
-      'https://cdn.pixabay.com/photo/2023/07/21/21/05/bus-8142339_1280.jpg',
-    title: '여기엔 영상 제목이 들어갑니다2',
-    nickname: '여기엔 영상 제작 채널 이름'
-  },
-  {
-    image:
-      'https://cdn.pixabay.com/photo/2023/07/21/21/05/bus-8142339_1280.jpg',
-    title: '여기엔 영상 제목이 들어갑니다3',
-    nickname: '여기엔 영상 제작 채널 이름'
-  },
-  {
-    image:
-      'https://cdn.pixabay.com/photo/2023/07/21/21/05/bus-8142339_1280.jpg',
-    title: '여기엔 영상 제목이 들어갑니다4',
-    nickname: '여기엔 영상 제작 채널 이름'
-  }
-]
+type videoDataType = {
+  title: string
+  author_name: string
+  thumbnail_url: string
+  video_id: string
+}
 
 const ViewVideoList = ({
   closeModal,
   playListTitle,
-  trackCount
-}: Pick<Combined, 'closeModal' | 'playListTitle' | 'trackCount'>) => {
+  trackCount,
+  videoData,
+  selectVideo,
+  videoContentIndex
+}: IViewVideoListProps) => {
+  const handleClick = (
+    video_id: string,
+    index: number,
+    title: string,
+    nextTitle: string
+  ) => {
+    selectVideo(video_id, index, title, nextTitle)
+  }
+
   return (
     <S.Container>
       <S.TitleWrapper>
         <div className="title-box">
           <h2>{playListTitle}</h2>
-          <span>2/{trackCount}</span>
+          <span>
+            {videoContentIndex + 1}/{trackCount}
+          </span>
         </div>
         <button
           type="button"
@@ -67,14 +58,23 @@ const ViewVideoList = ({
       </S.TitleWrapper>
 
       <div className="detail-play-List">
-        {testArr.map(data => (
-          <DetailPlayList
-            key={data.title}
-            image={data.image}
-            title={data.title}
-            nickname={data.nickname}
-          />
-        ))}
+        {videoData?.map((data: videoDataType, index: number) => {
+          const nextTitle =
+            index + 1 < videoData.length
+              ? videoData[index + 1].title
+              : LAST_VIDEO_TITLE
+          return (
+            <DetailPlayList
+              key={data.video_id}
+              image={data.thumbnail_url}
+              title={data.title}
+              nickname={data.author_name}
+              onClick={() =>
+                handleClick(data.video_id, index, data.title, nextTitle)
+              }
+            />
+          )
+        })}
       </div>
     </S.Container>
   )

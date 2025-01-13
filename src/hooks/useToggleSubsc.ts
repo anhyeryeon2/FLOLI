@@ -16,6 +16,9 @@ const useToggleSubsc = () => {
           variables.subscribedUserId
         ]
       })
+      // queryClient.invalidateQueries({
+      //   queryKey: ['user', variables.subscribedUserId]
+      // })
     }
   })
 }

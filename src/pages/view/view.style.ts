@@ -6,7 +6,7 @@ export const Container = styled.div`
 `
 
 export const VideoInfoWrapper = styled.div`
-  padding: 0 var(--layout-padding);
+  padding: var(--layout-padding) var(--layout-padding) 0;
 
   h2 {
     font-size: 1.8rem;
@@ -14,7 +14,7 @@ export const VideoInfoWrapper = styled.div`
   }
 
   h1 {
-    margin-top: 1rem;
+    margin-top: 2rem;
     font-size: var(--fs-l);
     font-weight: 500;
   }
@@ -220,10 +220,14 @@ export const VideoListPanel = styled.div`
 `
 
 export const StyledModal = styled(Modal)`
-  // 영상 영역까지만 보이도록
-  top: calc(56.25vw + var(--header-height));
+  /* todo: 338px 고정 대신 반응형 값으로 변경해야함... */
+  height: calc(100% - var(--header-height) - 338px);
 
   & > div {
     height: 100%;
+  }
+
+  @media screen and (max-width: 600px) {
+    height: calc(100% - 56.25vw - var(--header-height));
   }
 `
