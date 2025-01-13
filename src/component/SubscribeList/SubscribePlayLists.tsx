@@ -1,5 +1,5 @@
-import FeedList from '@/components/FeedList/FeedList'
-import PlayListSkeleton from '@/components/Skeleton/PlayListSkeleton'
+import FeedList from '@/component/FeedList/FeedList'
+import PlayListSkeleton from '@/component/Skeleton/PlayListSkeleton'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getSubscribePlayLists } from '@/apis/subscribe/subscribePlayList/index'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
