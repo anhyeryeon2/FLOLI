@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { supabase } from '../../supabaseConfig'
+import { supabase } from '@/supabase/supabaseConfig'
 
 const checkEmailExists = async (email: string): Promise<boolean> => {
   const { data, error } = await supabase
