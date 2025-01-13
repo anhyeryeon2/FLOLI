@@ -16,7 +16,8 @@ const PlayList = ({
   nickname,
   playlistId,
   isLocked: initialIsLocked,
-  onDelete
+  onDelete,
+  onClick
 }: PlayListProps) => {
   const {
     isOpen,
@@ -28,7 +29,7 @@ const PlayList = ({
 
   return (
     <>
-      <S.CardContainer>
+      <S.CardContainer onClick={onClick}>
         <S.ImageWrapper>
           <img
             src={image}

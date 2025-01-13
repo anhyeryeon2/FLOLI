@@ -1,11 +1,13 @@
 import { useAuthStore } from '../../store/useAuthStore'
 import { supabase } from '@/supabase/supabaseConfig'
-import PlayList from '@/components/PlayList/PlayList'
-import Loading from '@/components/LoadingSpinner/Loading'
-import { IPlayListType } from '@/types/playList'
 import { useToast } from '@/hooks/useToast'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
+import { useNavigate } from 'react-router-dom'
+
+import PlayList from '@/components/PlayList/PlayList'
+import Loading from '@/components/LoadingSpinner/Loading'
 import * as S from '@/components/MyPlayList/MyPlayList.styles'
+import { IPlayListType } from '@/types/playList'
 
 const fetchMyPlaylists = async (userId: string): Promise<IPlayListType[]> => {
   const { data, error } = await supabase.rpc('get_my_playlists', {
@@ -26,6 +28,7 @@ export const MyPlayLists = () => {
   const user = useAuthStore(state => state.user)
   const { handleToastError, handleToastSuccess } = useToast()
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
 
   const {
     data: playlists = [],
@@ -72,6 +75,9 @@ export const MyPlayLists = () => {
   if (isLoading) {
     return <Loading />
   }
+  const handleDetailPage = (playlistId: string) => {
+    navigate(`/view/${playlistId}`)
+  }
 
   return (
     <S.PlayListsContainer>
@@ -92,6 +98,7 @@ export const MyPlayLists = () => {
               optionIcon="option"
               playlistId={playlist.playlist_id}
               onDelete={handleDeletePlayList}
+              onClick={() => handleDetailPage(playlist.playlist_id)}
             />
           ))}
         </S.PlayListWrapper>

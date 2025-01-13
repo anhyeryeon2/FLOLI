@@ -44,7 +44,7 @@ export const usePlaylistOptions = (
   }
 
   const handleShareLink = () => {
-    const shareUrl = `${window.location.origin}/playlist/${playlistId}`
+    const shareUrl = `${window.location.origin}/view/${playlistId}`
     navigator.clipboard.writeText(shareUrl)
     handleToastSuccess('플레이리스트 링크가 클립보드에 복사되었습니다.')
     setIsOpen(false)

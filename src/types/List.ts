@@ -22,4 +22,5 @@ export interface PlayListProps {
   nickname?: string
   playlistId?: string
   onDelete?: (id: string) => void
+  onClick?: () => void
 }
