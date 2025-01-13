@@ -1,4 +1,4 @@
-import { supabase } from '../../../../supabaseConfig'
+import { supabase } from '../../../supabase/supabaseConfig'
 import axiosInstance from '../../axiosInstance'
 
 const getCurrentUser = async () => {

@@ -1,18 +1,10 @@
 import axiosInstance from '../axiosInstance'
 
-const ITEM_COUNT = 3
-
-export const getSearchPlayLists = async (
-  search_term: string,
-  page: number = 1,
-  item: number = ITEM_COUNT
-) => {
+export const getSearch = async (search_term: string) => {
   try {
-    const playListData = await axiosInstance.get('rpc/search-playlists', {
+    const playListData = await axiosInstance.get('rpc/search_playlists', {
       params: {
-        search_term: search_term,
-        page: page,
-        item: item
+        search_term: search_term
       }
     })
     return playListData.data

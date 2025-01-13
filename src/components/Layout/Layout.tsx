@@ -1,26 +1,25 @@
-import { Outlet, useLocation } from 'react-router-dom'
+import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
+import { useQuery } from '@tanstack/react-query'
 import Header from '../header/header-main/Header'
 import Navbar from '../navbar/Navbar'
 import { ROUTER_PATH, ROUTER_PATH_REGEX } from '@/constants/constant'
 import HeaderSub from '../header/header-sub/HeaderSub'
 import ModalFull from '../Modal/ModalFull'
 import { useSearchModalFullStore } from '@/store/useSearchModalFullStore'
+
 import { CiTimer } from 'react-icons/ci'
 import * as S from './Layout.module'
 import { GoArrowUpLeft } from 'react-icons/go'
+import { getSearch } from '@/apis/search'
 
-const mock = [
-  { id: 1, name: '제목1' },
-  { id: 2, name: '제목2' },
-  { id: 3, name: '제목3' },
-  { id: 4, name: '제목4' },
-  { id: 5, name: '제목5' },
-  { id: 6, name: '제목6' }
-]
-
-const queryClient = new QueryClient()
+import {
+  useSearchTermListStore,
+  useSearchTermStore
+} from '@/store/useSearchTermStore'
+import Loading from '../LoadingSpinner/Loading'
+import { IPlayList } from '@/types/playList'
+import { useDebounce } from '@/hooks/useDebounce'
 
 const Container = styled.div`
   max-width: var(--max-width);
@@ -59,10 +58,11 @@ const Layout = () => {
 
   const modalFullOpen = useSearchModalFullStore(state => state.state)
   const setModalFull = useSearchModalFullStore(state => state.setModalState)
-  const setModalSearchState = useSearchModalFullStore(
-    state => state.setModalSearchState
-  )
-
+  const searchTerm = useSearchTermStore(state => state.searchTerm)
+  const setSearchTerm = useSearchTermStore(state => state.setSearchTerm)
+  const addSearchTerm = useSearchTermListStore(state => state.addSearchTerm)
+  const searchTermList = useSearchTermListStore(state => state.searchTermList)
+  const navigate = useNavigate()
   const renderHeader = () => {
     if (isSubHeaderPaths) {
       return <HeaderSub />
@@ -74,12 +74,40 @@ const Layout = () => {
       return <Header />
     }
   }
+
+  const debouncedTitle = useDebounce(searchTerm, 300)
+
+  const {
+    data: searchs,
+    isError,
+    isLoading
+  } = useQuery<IPlayList[]>({
+    queryKey: ['searchPlayList', debouncedTitle],
+    queryFn: () => getSearch(debouncedTitle),
+    enabled: !!debouncedTitle,
+    staleTime: 1000 * 60
+  })
+
   const handleMoalFullClose = () => {
-    setModalSearchState(false)
+    // setModalSearchState(false)
     setModalFull(false)
+    setSearchTerm('')
   }
+
+  const handleSearchClick = (term?: string) => {
+    setModalFull(false) // 모달 닫기
+    const searchValue = term || searchTerm // term이 있을 경우 사용, 아니면 searchTerm 사용
+    setSearchTerm(searchValue) // 선택된 검색어 설정
+    addSearchTerm(searchValue) // 최근 검색어 목록에 추가
+    navigate(`/search?search=${searchValue}`, { state: searchValue }) // navigate로 검색어와 함께 이동
+  }
+
+  if (isLoading) <Loading />
+
+  if (isError) <div>에러가 났습니다. 다시 시도 해주세요</div>
+
   return (
-    <QueryClientProvider client={queryClient}>
+    <>
       <Container className={!isNoNavbarPaths ? 'is-navbar' : ''}>
         {renderHeader()}
         <Outlet />
@@ -89,17 +117,33 @@ const Layout = () => {
         id={'2'}
         closeModal={handleMoalFullClose}
         isOpen={modalFullOpen}>
-        {mock.map(mock => (
-          <S.ModalfullContent key={mock.id}>
-            <CiTimer />
-            {mock.name}
-            <S.ModalfullClickContent>
-              <GoArrowUpLeft />
-            </S.ModalfullClickContent>
-          </S.ModalfullContent>
-        ))}
+        {searchTerm.length > 0
+          ? searchs?.map((search: IPlayList) => (
+              <S.ModalfullContent
+                key={search.playlist_id}
+                onClick={() => handleSearchClick()}>
+                <CiTimer />
+                <S.ModalSpan>{search.title}</S.ModalSpan>
+                <S.ModalfullClickContent>
+                  <GoArrowUpLeft />
+                </S.ModalfullClickContent>
+              </S.ModalfullContent>
+            ))
+          : searchTermList &&
+            searchTermList?.map(search => (
+              <S.ModalfullContent
+                key={search.id}
+                onClick={() => handleSearchClick(search.term)}>
+                <CiTimer />
+                <S.ModalSpan>{search.term}</S.ModalSpan>
+                <S.ModalfullClickContent>
+                  <GoArrowUpLeft />
+                </S.ModalfullClickContent>
+              </S.ModalfullContent>
+            ))}
       </ModalFull>
-    </QueryClientProvider>
+    </>
   )
 }
+
 export default Layout

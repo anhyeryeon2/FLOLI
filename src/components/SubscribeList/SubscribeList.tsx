@@ -1,4 +1,4 @@
-import { SetStateAction, useRef } from 'react'
+import { SetStateAction, useRef, useEffect } from 'react'
 import * as S from './SubscribeList.module'
 import { useDragScroll } from '@/hooks/useDragScroll'
 import { getSubscribe } from '@/apis/subscribe'
@@ -7,14 +7,16 @@ import { SubscribeType } from '@/types/subscribe'
 import Loading from '../LoadingSpinner/Loading'
 import { useState } from 'react'
 import SubscriptionListModal from './SubscriptionListModal'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 
 interface Props {
   setUserId: React.Dispatch<SetStateAction<string>>
+  setSubcribeDetail: React.Dispatch<SetStateAction<boolean>>
 }
 
-const SubscribeList = ({ setUserId }: Props) => {
+const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
-
+  const { showToastMessage } = useToastMessageContext()
   const [isOpen, setIsOpen] = useState(false)
   const {
     data: subscribeList,
@@ -30,6 +32,7 @@ const SubscribeList = ({ setUserId }: Props) => {
     useDragScroll(scrollRef)
 
   const handleSubscribeClick = (userId: string) => {
+    setSubcribeDetail(true)
     setUserId(userId)
   }
 
@@ -37,8 +40,16 @@ const SubscribeList = ({ setUserId }: Props) => {
     setIsOpen(true)
   }
 
+  useEffect(() => {
+    if (isError) {
+      showToastMessage({
+        message: '에러가 발생하여 구독자 정보를 가져오지 못하였습니다..',
+        type: 'error'
+      })
+    }
+  }, [isError, showToastMessage])
+
   if (isLoading) <Loading />
-  if (isError) <div>구독자 목록을 가져오지 못했습니다.</div>
 
   return (
     <S.SubscribeContainer>
@@ -52,7 +63,7 @@ const SubscribeList = ({ setUserId }: Props) => {
         {subscribeList?.map(subscribe => (
           <S.SubscribeListItem
             key={subscribe.user_id}
-            onClick={() => handleSubscribeClick(subscribe.subscriber_id)}>
+            onClick={() => handleSubscribeClick(subscribe.subscribed_user_id)}>
             <S.SubscribeItem>
               <S.SubscribeAvatar
                 src={subscribe.user_profile_image}

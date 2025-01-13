@@ -1,5 +1,5 @@
 import axiosInstance from '../../axiosInstance'
-import { supabase } from '../../../../supabaseConfig'
+import { supabase } from '../../../supabase/supabaseConfig'
 
 const ITEM_COUNT = 3
 

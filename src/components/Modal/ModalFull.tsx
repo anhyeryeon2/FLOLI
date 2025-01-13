@@ -31,7 +31,10 @@ const ModalFull = ({
 
   useEffect(() => {
     if (isOpen) {
-      navigate(`${pathname}?modal=${id}`)
+      const currentURL = `${pathname}?modal=${id}`
+      if (window.location.search !== `?modal=${id}`) {
+        navigate(currentURL)
+      }
 
       window.addEventListener('popstate', handlePopState)
 
@@ -39,7 +42,7 @@ const ModalFull = ({
         window.removeEventListener('popstate', handlePopState)
       }
     }
-  }, [isOpen, navigate, pathname, id, handlePopState])
+  }, [isOpen, pathname, id, handlePopState, navigate])
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation()
 
@@ -51,7 +54,6 @@ const ModalFull = ({
       id={id}>
       <S.ModalContainer onClick={handleClick}>
         <HeaderSub onClick={handleModalClose}>{pageTitle}</HeaderSub>
-
         <S.ModalContent>{children}</S.ModalContent>
       </S.ModalContainer>
     </S.ModalOverlay>,

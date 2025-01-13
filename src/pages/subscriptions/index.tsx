@@ -5,11 +5,14 @@ import { useState } from 'react'
 
 export function Subscriptions() {
   const [userId, setUserId] = useState<string>('')
-
+  const [subscribeDetail, setSubcribeDetail] = useState(false)
   return (
     <>
-      <SubscribeList setUserId={setUserId} />
-      {!userId ? (
+      <SubscribeList
+        setUserId={setUserId}
+        setSubcribeDetail={setSubcribeDetail}
+      />
+      {!userId && !subscribeDetail ? (
         <AllSubscribePlayLists />
       ) : (
         <SubscribePlayLists userId={userId} />

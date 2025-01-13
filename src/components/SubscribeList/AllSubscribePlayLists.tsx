@@ -3,10 +3,12 @@ import PlayListSkeleton from '@/components/Skeleton/PlayListSkeleton'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getSubscribeAllPlayLists } from '@/apis/subscribe/playList/index'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
-import { useRef } from 'react'
+import { useRef, useEffect } from 'react'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 
 const AllSubscribePlayLists = () => {
   const observerElem = useRef<HTMLDivElement | null>(null)
+  const { showToastMessage } = useToastMessageContext()
 
   const {
     data: allPlayLists,
@@ -34,10 +36,15 @@ const AllSubscribePlayLists = () => {
     isFetchingNextPage,
     fetchNextPage
   })
-
+  useEffect(() => {
+    if (isError) {
+      showToastMessage({
+        message: '에러가 발생하여 구독자 정보를 가져오지 못하였습니다..',
+        type: 'error'
+      })
+    }
+  }, [isError, showToastMessage])
   if (isLoading || isFetchingNextPage) return <PlayListSkeleton />
-
-  if (isError) return <div>불러오다가 에러가 발생했습니다.</div>
 
   return (
     <>

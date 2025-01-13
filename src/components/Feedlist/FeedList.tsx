@@ -6,7 +6,6 @@ import { RiUserUnfollowLine } from 'react-icons/ri'
 import { MdPlaylistAdd } from 'react-icons/md'
 import { useState } from 'react'
 import { FaShareAlt } from 'react-icons/fa'
-import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 
 const FeedList = ({
   image,
@@ -29,51 +28,49 @@ const FeedList = ({
   const handleOptionsPopup = () => setIsOpen(true)
 
   const handleOptionsPopState = () => setIsOpen(false)
-  let koreanDate = dateKoreanFormat(date)
+
   return (
     <>
-      <S.FeedConteiner>
-        <S.CardContainer key={key}>
-          <S.ImageWrapper key={key}>
+      <S.CardContainer key={key}>
+        <S.ImageWrapper key={key}>
+          <img
+            src={image}
+            alt={title}
+          />
+          {track > 0 && <S.TrackTag>Track: {track}</S.TrackTag>}
+        </S.ImageWrapper>
+        <S.ContentWrapper>
+          <S.ProfileImage>
             <img
-              src={image}
-              alt={title}
+              src={profileImage}
+              alt="Profile"
             />
-            {track > 0 && <S.TrackTag>Track: {track}</S.TrackTag>}
-          </S.ImageWrapper>
-          <S.ContentWrapper>
-            <S.ProfileImage>
-              <img
-                src={profileImage}
-                alt="Profile"
-              />
-            </S.ProfileImage>
-            <S.TextWrapper>
-              <S.Title>{title}</S.Title>
-              <S.nickname>{nickname}</S.nickname>
-              <FeedFooter
-                likes={likes}
-                comments={comments}
-                date={koreanDate}
-                onClick={handleOptionsPopup}
-              />
-            </S.TextWrapper>
-          </S.ContentWrapper>
-        </S.CardContainer>
-        <Modal
-          id="testmodal"
-          isOpen={isOpen}
-          closeModal={handleOptionsPopState}
-          className="feedoption"
-          isBg={true}>
-          {options.map(value => (
-            <S.ModalWrapper key={value.id}>
-              <span>{value.icon}</span>
-              <span>{value.name}</span>
-            </S.ModalWrapper>
-          ))}
-        </Modal>
-      </S.FeedConteiner>
+          </S.ProfileImage>
+          <S.TextWrapper>
+            <S.Title>{title}</S.Title>
+            <S.nickname>{nickname}</S.nickname>
+            <FeedFooter
+              likes={likes}
+              comments={comments}
+              date={date}
+              onClick={handleOptionsPopup}
+            />
+          </S.TextWrapper>
+        </S.ContentWrapper>
+      </S.CardContainer>
+      <Modal
+        id="testmodal"
+        isOpen={isOpen}
+        closeModal={handleOptionsPopState}
+        className="feedoption"
+        isBg={true}>
+        {options.map(value => (
+          <S.ModalWrapper key={value.id}>
+            <span>{value.icon}</span>
+            <span>{value.name}</span>
+          </S.ModalWrapper>
+        ))}
+      </Modal>
     </>
   )
 }
