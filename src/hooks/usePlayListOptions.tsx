@@ -2,7 +2,6 @@ import { useState } from 'react'
 import { supabase } from '@/supabase/supabaseConfig'
 import { FaLock, FaLockOpen, FaShareAlt } from 'react-icons/fa'
 import { RiDeleteBin6Line } from 'react-icons/ri'
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { useToast } from '@/hooks/useToast'
 
 type Option = {
