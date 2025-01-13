@@ -2,9 +2,8 @@ import { IoChevronBack } from 'react-icons/io5'
 import * as S from './Header.styled'
 import { ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useModalFullStore } from '@/store/useModalFullStore'
 import { useSearchTermStore } from '@/store/useSearchTermStore'
-import { useDebounce } from '@/hooks/useDebounce'
+import { useSearchModalFullStore } from '@/store/useSearchModalFullStore'
 
 interface HeaderSubProps {
   children?: ReactNode
@@ -13,7 +12,7 @@ interface HeaderSubProps {
 
 export default function HeaderSub({ children, onClick }: HeaderSubProps) {
   const navigate = useNavigate()
-  const modalSearchState = useModalFullStore(state => state.searchState)
+  const modalSearchState = useSearchModalFullStore(state => state.searchState)
   const setSearchTerm = useSearchTermStore(state => state.setSearchTerm)
 
   const handleClick = () => {

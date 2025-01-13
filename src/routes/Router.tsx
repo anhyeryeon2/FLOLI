@@ -75,10 +75,8 @@ const router = createBrowserRouter([
       {
         path: ROUTER_PATH.SEARCH_PLAYLIST,
         element: <SearchPage />
-      }
-
+      },
       { path: ROUTER_PATH.ProfileEdit, element: <ProfileEdit /> }
-
     ]
   }
 ])

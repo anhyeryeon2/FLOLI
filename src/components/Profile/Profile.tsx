@@ -1,6 +1,5 @@
 import { ProfileButtonProps } from '@/types/profile'
 import * as S from './Profile.styles'
-import { Link } from 'react-router-dom'
 
 /* 사용예시1 
       <Profile

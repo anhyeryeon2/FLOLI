@@ -42,7 +42,7 @@ const ModalFull = ({
         window.removeEventListener('popstate', handlePopState)
       }
     }
-  }, [isOpen, pathname, id, handlePopState])
+  }, [isOpen, pathname, id, handlePopState, navigate])
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation()
 

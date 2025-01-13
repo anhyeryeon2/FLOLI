@@ -1,36 +1,37 @@
 import FeedList from '@/components/FeedList/FeedList'
-
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { getPlayList } from '@/apis/feed'
-import { IPlayListType } from '@/types/playList'
-import { useRef } from 'react'
 import PlayListSkeleton from '@/components/Skeleton/PlayListSkeleton'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { getSubscribePlayLists } from '@/apis/subscribe/subscribePlayList/index'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useRef, useEffect } from 'react'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 
-export function Home() {
+interface Props {
+  userId: string
+}
+
+const SubscribePlayLists = ({ userId }: Props) => {
   const observerElem = useRef<HTMLDivElement | null>(null)
+  const { showToastMessage } = useToastMessageContext()
+
   const {
-    data,
+    data: subscribePlayLists,
     isError,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
     isLoading
   } = useInfiniteQuery({
-    queryKey: ['playList'],
-    queryFn: ({ pageParam }) => getPlayList(pageParam as number),
-
+    queryKey: ['subscribePlayList', userId],
+    queryFn: ({ pageParam }) =>
+      getSubscribePlayLists(userId, pageParam as number),
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1
-
       return nextPage <= lastPage.length ? nextPage : undefined
     },
-    select: data => {
-      return data.pages.flat()
-    },
-
+    select: data => data.pages.flat(),
+    enabled: !!userId,
     initialPageParam: 1,
-
     staleTime: 1000 * 60
   })
 
@@ -41,14 +42,20 @@ export function Home() {
     fetchNextPage
   })
 
-  if (isLoading || isFetchingNextPage) {
-    return <PlayListSkeleton />
-  }
+  useEffect(() => {
+    if (isError) {
+      showToastMessage({
+        message: '에러가 발생하여 구독자 정보를 가져오지 못하였습니다..',
+        type: 'error'
+      })
+    }
+  }, [isError, showToastMessage])
 
-  if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
+  if (isLoading || isFetchingNextPage) return <PlayListSkeleton />
+
   return (
     <>
-      {data?.map((playList: IPlayListType) => (
+      {subscribePlayLists?.map(playList => (
         <FeedList
           image={playList.thumbnail}
           profileImage={playList.profile_img_path}
@@ -67,4 +74,4 @@ export function Home() {
   )
 }
 
-export default Home
+export default SubscribePlayLists

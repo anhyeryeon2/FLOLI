@@ -6,7 +6,7 @@ import Navbar from '../navbar/Navbar'
 import { ROUTER_PATH, ROUTER_PATH_REGEX } from '@/constants/constant'
 import HeaderSub from '../header/header-sub/HeaderSub'
 import ModalFull from '../Modal/ModalFull'
-import { useModalFullStore } from '@/store/useModalFullStore'
+import { useSearchModalFullStore } from '@/store/useSearchModalFullStore'
 
 import { CiTimer } from 'react-icons/ci'
 import * as S from './Layout.module'
@@ -56,8 +56,8 @@ const Layout = () => {
 
   const isSubHeaderPaths = ''
 
-  const modalFullOpen = useModalFullStore(state => state.state)
-  const setModalFull = useModalFullStore(state => state.setModalState)
+  const modalFullOpen = useSearchModalFullStore(state => state.state)
+  const setModalFull = useSearchModalFullStore(state => state.setModalState)
   const searchTerm = useSearchTermStore(state => state.searchTerm)
   const setSearchTerm = useSearchTermStore(state => state.setSearchTerm)
   const addSearchTerm = useSearchTermListStore(state => state.addSearchTerm)
@@ -89,6 +89,7 @@ const Layout = () => {
   })
 
   const handleMoalFullClose = () => {
+    // setModalSearchState(false)
     setModalFull(false)
     setSearchTerm('')
   }
