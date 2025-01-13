@@ -1,8 +1,8 @@
 import { useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import ConfirmModal from '@/components/ConfirmModal/ConfirmModal'
+import ConfirmModal from '@/component/ConfirmModal/ConfirmModal'
 import { ConfirmModalProps } from '@/types/modal'
-import * as S from '@/components/ConfirmModal/ConfirmModal.styles'
+import * as S from '@/component/ConfirmModal/ConfirmModal.styles'
 
 export function useModal() {
   const [isOpen, setIsOpen] = useState(false)

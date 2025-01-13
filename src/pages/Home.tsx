@@ -1,14 +1,14 @@
-import FeedList from '@/components/FeedList/FeedList'
-import * as S from '@/components/FeedList/FeedList.style'
-
+import FeedList from '@/component/FeedList/FeedList'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getPlayList } from '@/apis/feed'
 import { IPlayListType } from '@/types/playList'
-import { useRef } from 'react'
-import PlayListSkeleton from '@/components/Skeleton/PlayListSkeleton'
+import { useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
+import PlayListSkeleton from '@/component/Skeleton/PlayListSkeleton'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 
 export function Home() {
+  const location = useLocation()
   const observerElem = useRef<HTMLDivElement | null>(null)
   const {
     data,
@@ -16,7 +16,8 @@ export function Home() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isLoading
+    isLoading,
+    refetch
   } = useInfiniteQuery({
     queryKey: ['playList'],
     queryFn: ({ pageParam }) => getPlayList(pageParam as number),
@@ -35,6 +36,12 @@ export function Home() {
     staleTime: 1000 * 60
   })
 
+  useEffect(() => {
+    if (location.state?.refetch) {
+      refetch()
+    }
+  }, [location.state, refetch])
+
   useInfiniteScroll({
     observerElem,
     hasNextPage,
@@ -42,31 +49,28 @@ export function Home() {
     fetchNextPage
   })
 
-  if (isLoading) {
+  if (isLoading || isFetchingNextPage) {
     return <PlayListSkeleton />
   }
 
   if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
-
   return (
     <>
-      <S.FeedConteiner>
-        {data?.map((playList: IPlayListType) => (
-          <FeedList
-            image={playList.thumbnail}
-            profileImage={playList.profile_img_path}
-            nickname={playList.nickname}
-            likes={playList.likes_count}
-            track={playList.video_count}
-            date={playList.created_at}
-            title={playList.title}
-            comments={playList.comments_count}
-            key={playList.playlist_id}
-            id={playList.playlist_id}
-          />
-        ))}
-        <div ref={observerElem} />
-      </S.FeedConteiner>
+      {data?.map((playList: IPlayListType) => (
+        <FeedList
+          image={playList.thumbnail}
+          profileImage={playList.profile_img_path}
+          nickname={playList.nickname}
+          likes={playList.likes_count}
+          track={playList.video_count}
+          date={playList.created_at}
+          title={playList.title}
+          comments={playList.comments_count}
+          key={playList.playlist_id}
+          id={playList.playlist_id}
+        />
+      ))}
+      <div ref={observerElem} />
     </>
   )
 }
