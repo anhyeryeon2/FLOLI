@@ -33,5 +33,5 @@ export default function SignOutButton() {
 }
 const StyledButton = styled.button`
   color: var(--color-input);
-  font-size: var(--fs-m);
+  font-size: var(--fs-l);
 `

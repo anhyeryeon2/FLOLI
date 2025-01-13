@@ -3,11 +3,13 @@ import FeedList from '@/components/FeedList/FeedList'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getPlayList } from '@/apis/feed'
 import { IPlayListType } from '@/types/playList'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
+import { useLocation } from 'react-router-dom'
 import PlayListSkeleton from '@/components/Skeleton/PlayListSkeleton'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 
 export function Home() {
+  const location = useLocation()
   const observerElem = useRef<HTMLDivElement | null>(null)
   const {
     data,
@@ -15,7 +17,8 @@ export function Home() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isLoading
+    isLoading,
+    refetch
   } = useInfiniteQuery({
     queryKey: ['playList'],
     queryFn: ({ pageParam }) => getPlayList(pageParam as number),
@@ -33,6 +36,12 @@ export function Home() {
 
     staleTime: 1000 * 60
   })
+
+  useEffect(() => {
+    if (location.state?.refetch) {
+      refetch()
+    }
+  }, [location.state, refetch])
 
   useInfiniteScroll({
     observerElem,

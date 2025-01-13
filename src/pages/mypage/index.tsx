@@ -10,6 +10,7 @@ import Loading from '@/components/LoadingSpinner/Loading'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useState } from 'react'
 import MyPageLikes from '@/components/MyPageType/MyPageLikes'
+import SignOutButton from '@/components/SignOut/SignOutButton'
 import MyPageSave from '@/components/MyPageType/MyPageSave'
 
 export const Mypage = () => {
@@ -60,6 +61,7 @@ export const Mypage = () => {
               onClick={handleEditProfileClick}>
               프로필 수정
             </Button>
+            <SignOutButton />
           </S.ButtonBox>
         </S.HeaderBox>
         <S.IntruductionBox>{data[0].introduction}</S.IntruductionBox>

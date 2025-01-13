@@ -71,7 +71,7 @@ export function PlayListCreate() {
       setPlaylistDescription('')
       setVideoList([])
       resetThumbnail()
-      navigate('/')
+      navigate('/', { state: { refetch: true } })
     },
     onError: error => {
       console.error(error)
