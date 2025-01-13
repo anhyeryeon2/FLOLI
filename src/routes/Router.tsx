@@ -6,6 +6,7 @@ import {
   MyPlayLists,
   NotFound,
   PlayListCreate,
+  SearchPage,
   Subscriptions,
   UserProfile,
   View,
@@ -71,7 +72,13 @@ const router = createBrowserRouter([
         path: ROUTER_PATH.SIGNUP_NICKNAME,
         element: <StepNickname />
       },
+      {
+        path: ROUTER_PATH.SEARCH_PLAYLIST,
+        element: <SearchPage />
+      }
+
       { path: ROUTER_PATH.ProfileEdit, element: <ProfileEdit /> }
+
     ]
   }
 ])

@@ -21,6 +21,22 @@ export interface IPlayListType {
   subsc_count: number
 }
 
+export interface IPlayList {
+  video_id: string
+  playlist_id: string
+  description: string
+  likes_count: number
+  video_count: number
+  video_url: string
+  title: string
+  thumbnail: string
+  is_public: boolean
+  comments_count: number
+  playlist_created_at: string
+  playlist_updated_at: string
+  playlist_user_id: string
+}
+
 export interface IPlayListQueryType {
   total_pages: number
   total_items: number

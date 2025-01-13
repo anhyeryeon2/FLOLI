@@ -42,12 +42,11 @@ export function Home() {
     fetchNextPage
   })
 
-  if (isLoading) {
+  if (isLoading || isFetchingNextPage) {
     return <PlayListSkeleton />
   }
 
   if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
-
   return (
     <>
       <S.FeedConteiner>

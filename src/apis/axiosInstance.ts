@@ -8,7 +8,7 @@ const axiosInstance = axios.create({
   baseURL: `${BASE_URL}/rest/v1`,
   headers: {
     apikey: PROJECT_API_KEY,
-    'Content-Type': 'application/json'
+    'Content-Type': 'application/json; charset=UTF-8'
   }
 })
 
