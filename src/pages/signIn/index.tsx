@@ -9,9 +9,9 @@ import Input from '@/component/Input/Input'
 import { Button } from '@/component/Button/Button'
 import Loading from '@/component/LoadingSpinner/Loading'
 import { supabase } from '@/supabase/supabaseConfig'
+import { useToast } from '@/hooks/useToast'
 
 import * as S from './signIn.styles'
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import MainLogo from '@/assets/img/logo/floli.svg'
 import GoogleLogo from '@/assets/img/login/google.svg'
 import KakaoLogo from '@/assets/img/login/kakao.svg'
@@ -23,27 +23,21 @@ const REDIRECT_URL = 'http://localhost:5173/login'
 export function SignIn() {
   const { setUser, user } = useAuthStore()
   const navigate = useNavigate()
-  const { showToastMessage } = useToastMessageContext()
   const [socialLoading, setSocialLoading] = useState(false)
+  const { handleToastError, handleToastSuccess } = useToast()
+
   const {
     register,
     handleSubmit,
     formState: { errors, isSubmitting }
   } = useForm<LoginFormInputs>({ resolver: zodResolver(loginSchema) })
+
   const handleAuthSuccess = (userData: UserData) => {
-    setUser(userData) //zustand 업데이트
-    showToastMessage({
-      message: '로그인 성공하였습니다',
-      type: 'success'
-    })
+    setUser(userData)
+    handleToastSuccess('로그인 성공하였습니다')
     navigate('/')
   }
-  const handleToastError = (message: string) => {
-    showToastMessage({
-      message,
-      type: 'error'
-    })
-  }
+
   const saveTokens = (accessToken: string, refreshToken: string) => {
     localStorage.setItem('accessToken', accessToken)
     localStorage.setItem('refreshToken', refreshToken)
@@ -105,6 +99,7 @@ export function SignIn() {
       console.log('🟢  Zustand 상태:', user)
     }
   }, [user]) // 개발용
+
   const fetchUserInfo = async (userId: string): Promise<UserData> => {
     const { data: userInfo, error } = await supabase
       .from('userinfo')

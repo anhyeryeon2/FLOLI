@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/useAuthStore'
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { useVideoLink } from '@/hooks/useVideoLink'
 import { useModal } from '@/hooks/useModal'
 import { useImageUpload } from '@/hooks/useImageUpload'
@@ -9,6 +8,7 @@ import { useDebounce } from '@/hooks/useDebounce'
 import axiosInstance from '@/apis/axiosInstance'
 import { CreatePlaylistPayload } from '@/types/playListCreate'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { useToast } from '@/hooks/useToast'
 
 import { Button } from '@/component/Button/Button'
 import Input from '@/component/Input/Input'
@@ -21,10 +21,10 @@ export function PlayListCreate() {
   const [playlistTitle, setPlaylistTitle] = useState('')
   const [playlistDescription, setPlaylistDescription] = useState('')
   const [isPublic, setIsPublic] = useState(true)
-  const { showToastMessage } = useToastMessageContext()
   const { open, ModalComponent } = useModal()
   const navigate = useNavigate()
   const queryClient = useQueryClient()
+  const { handleToastError, handleToastSuccess } = useToast()
 
   const user = useAuthStore(state => state.user)
   const {
@@ -46,13 +46,6 @@ export function PlayListCreate() {
       onConfirm: handleCreatePlaylist
     })
   }
-  const handleToastError = (message: string) => {
-    showToastMessage({
-      message,
-      type: 'error'
-    })
-  }
-
   const debouncedTitle = useDebounce(playlistTitle, 300)
 
   const createPlayListMutation = useMutation({
@@ -62,10 +55,7 @@ export function PlayListCreate() {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['playlists'] })
-      showToastMessage({
-        message: '플레이리스트가 성공적으로 생성되었습니다.',
-        type: 'success'
-      })
+      handleToastSuccess('플레이리스트가 성공적으로 생성되었습니다.')
 
       setPlaylistTitle('')
       setPlaylistDescription('')

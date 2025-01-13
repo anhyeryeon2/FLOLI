@@ -3,13 +3,12 @@ import PlayList from '../PlayList/PlayList'
 import { useAuthStore } from '@/store/useAuthStore'
 import { DeleteLikeList, LikedPlayList } from '@/apis/userInfoApi'
 import * as S from './MypageLikes.styled'
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { useToast } from '@/hooks/useToast'
 
 export default function MyPageLikes() {
   const { user } = useAuthStore()
   const userId = user?.id
-
-  const { showToastMessage } = useToastMessageContext()
+  const { handleToastError, handleToastSuccess } = useToast()
 
   const { data: playlistData } = useQuery({
     queryKey: ['LikedPlayList'],
@@ -24,16 +23,10 @@ export default function MyPageLikes() {
       queryClient.invalidateQueries({
         queryKey: ['LikedPlayList']
       })
-      showToastMessage({
-        message: `해당 플리를 좋아요 목록에서 삭제하였습니다`,
-        type: 'success'
-      })
+      handleToastSuccess(`해당 플리를 좋아요 목록에서 삭제하였습니다`)
     },
     onError: () => {
-      showToastMessage({
-        message: `해당 플리를 좋아요 목록에서 삭제하는데 실패하였습니다`,
-        type: 'error'
-      })
+      handleToastError(`해당 플리를 좋아요 목록에서 삭제하는데 실패하였습니다`)
     }
   })
 
