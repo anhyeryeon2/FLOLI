@@ -22,7 +22,7 @@ export default function StepNickname() {
       handleToastError('이메일과 비밀번호 정보가 없습니다.')
       navigate('/signup/email')
     }
-  }, [email, password, navigate, showToastMessage])
+  }, [email, password, navigate])
 
   useEffect(() => {
     setIsValid(nickname.trim().length > 0)
@@ -61,9 +61,11 @@ export default function StepNickname() {
         navigate('/login')
       }
     } catch (error) {
+      console.log(error)
       handleToastError('회원가입 요청에 실패하였습니다. 다시 시도해주세요')
     }
   }
+
   const showModal = () => {
     open({
       title: '회원가입 하시겠습니까?',
@@ -73,6 +75,7 @@ export default function StepNickname() {
       onConfirm: () => handleSignup()
     })
   }
+
   return (
     <form
       onSubmit={e => {

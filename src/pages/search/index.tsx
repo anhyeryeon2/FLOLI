@@ -1,15 +1,18 @@
-import FeedList from '@/components/FeedList/FeedList'
-
+import { getSearchPlayLists } from '@/apis/search/playList/index'
 import { useInfiniteQuery } from '@tanstack/react-query'
-import { getPlayList } from '@/apis/feed'
+import { useRef } from 'react'
+import * as S from '@/components/FeedList/FeedList.style'
+import FeedList from '@/components/FeedList/FeedList'
 import { IPlayListType } from '@/types/playList'
-import { useEffect, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
 import PlayListSkeleton from '@/components/Skeleton/PlayListSkeleton'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useLocation } from 'react-router-dom'
 
-export function Home() {
+export const SearchPage = () => {
   const location = useLocation()
+
+  const searchTerm = location.state
+
   const observerElem = useRef<HTMLDivElement | null>(null)
   const {
     data,
@@ -17,11 +20,11 @@ export function Home() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isLoading,
-    refetch
+    isLoading
   } = useInfiniteQuery({
-    queryKey: ['playList'],
-    queryFn: ({ pageParam }) => getPlayList(pageParam as number),
+    queryKey: ['playListSearch', searchTerm],
+    queryFn: ({ pageParam }) =>
+      getSearchPlayLists(searchTerm, pageParam as number),
 
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1
@@ -37,12 +40,6 @@ export function Home() {
     staleTime: 1000 * 60
   })
 
-  useEffect(() => {
-    if (location.state?.refetch) {
-      refetch()
-    }
-  }, [location.state, refetch])
-
   useInfiniteScroll({
     observerElem,
     hasNextPage,
@@ -50,13 +47,16 @@ export function Home() {
     fetchNextPage
   })
 
+  if (isError)
+    return (
+      <p className="text-center">플레이 리스트 정보를 불러오지 못했습니다.</p>
+    )
   if (isLoading || isFetchingNextPage) {
     return <PlayListSkeleton />
   }
 
-  if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
   return (
-    <>
+    <S.FeedConteiner>
       {data?.map((playList: IPlayListType) => (
         <FeedList
           image={playList.thumbnail}
@@ -72,8 +72,6 @@ export function Home() {
         />
       ))}
       <div ref={observerElem} />
-    </>
+    </S.FeedConteiner>
   )
 }
-
-export default Home

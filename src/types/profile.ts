@@ -9,4 +9,5 @@ export interface ProfileButtonProps {
   radius?: string
   disabledLink?: boolean
   border?: string
+  to?: string
 }

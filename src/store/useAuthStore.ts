@@ -2,10 +2,10 @@ import { create } from 'zustand'
 import { persist, createJSONStorage } from 'zustand/middleware'
 
 interface User {
-  id: string | number
+  id: string
   email: string
   nickname: string
-  profile_img: string
+  profile_img: string | FileList | undefined | null
   introduction?: string | null
   subsc_count?: number
 }
@@ -13,6 +13,7 @@ interface User {
 interface AuthState {
   user: User | null
   setUser: (user: User) => void
+  updateUser: (updates: Partial<User>) => void
   clearUser: () => void
 }
 

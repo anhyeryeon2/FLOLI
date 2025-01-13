@@ -11,11 +11,13 @@ import { useAuthStore } from '@/store/useAuthStore'
 import { useState } from 'react'
 import MyPageLikes from '@/components/MyPageType/MyPageLikes'
 import SignOutButton from '@/components/SignOut/SignOutButton'
+import MyPageSave from '@/components/MyPageType/MyPageSave'
 
 export const Mypage = () => {
   const [type, setType] = useState('like')
 
   const { user } = useAuthStore()
+  console.log(user)
 
   const navigate = useNavigate()
 
@@ -77,7 +79,7 @@ export const Mypage = () => {
         </S.SeparatingBox>
       </S.Container>
       <S.PlayListsBox>
-        {type === 'like' ? <MyPageLikes /> : 'nothing'}
+        {type === 'like' ? <MyPageLikes /> : <MyPageSave />}
       </S.PlayListsBox>
     </>
   )

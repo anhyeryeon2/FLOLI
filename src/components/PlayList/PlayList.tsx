@@ -17,7 +17,8 @@ const PlayList = ({
   playlistId,
   isLocked: initialIsLocked,
   onDelete,
-  onClick
+  onClick,
+  onOptionClick
 }: PlayListProps) => {
   const {
     isOpen,
@@ -46,7 +47,7 @@ const PlayList = ({
             nickname={nickname}
           />
         </S.TextWrapper>
-        <S.Options>
+        <S.Options onClick={onOptionClick}>
           {optionIcon === 'heart' && <FaHeart />}
           {optionIcon === 'bookmark' && <S.PlayListSaveIcon />}
           {optionIcon === 'option' && (
