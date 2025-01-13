@@ -24,7 +24,7 @@
     "paths": {
       "@/*": ["./src/*"],
       "@/styles/*": ["./src/styles/*"],
-      "@/components/*": ["./src/components/*"],
+      "@/component/*": ["./src/component/*"],
       "@/supabase/*": ["./src/supabase/*"]
     }
   },

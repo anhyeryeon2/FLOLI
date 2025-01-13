@@ -1,5 +1,5 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import Layout from '@/components/Layout/Layout'
+import Layout from '@/component/Layout/Layout'
 import {
   Login,
   Mypage,
@@ -14,9 +14,9 @@ import {
 } from '@/pages'
 import { Home } from '@/pages/Home'
 import { ROUTER_PATH } from '@/constants/constant'
-import StepEmail from '@/components/SignUp/StepEmail'
-import StepPassword from '@/components/SignUp/StepPassword'
-import StepNickname from '@/components/SignUp/StepNickname'
+import StepEmail from '@/component/SignUp/StepEmail'
+import StepPassword from '@/component/SignUp/StepPassword'
+import StepNickname from '@/component/SignUp/StepNickname'
 import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/useAuthStore'
 

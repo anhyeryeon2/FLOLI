@@ -1,4 +1,4 @@
-import StepEmail from '@/components/SignUp/StepEmail'
+import StepEmail from '@/component/SignUp/StepEmail'
 
 export function Signup() {
   return (

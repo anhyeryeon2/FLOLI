@@ -1,6 +1,6 @@
-import AllSubscribePlayLists from '@/components/SubscribeList/AllSubscribePlayLists'
-import SubscribeList from '@/components/SubscribeList/SubscribeList'
-import SubscribePlayLists from '@/components/SubscribeList/SubscribePlayLists'
+import AllSubscribePlayLists from '@/component/SubscribeList/AllSubscribePlayLists'
+import SubscribeList from '@/component/SubscribeList/SubscribeList'
+import SubscribePlayLists from '@/component/SubscribeList/SubscribePlayLists'
 import { useState } from 'react'
 
 export function Subscriptions() {

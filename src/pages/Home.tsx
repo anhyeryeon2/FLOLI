@@ -1,11 +1,10 @@
-import FeedList from '@/components/FeedList/FeedList'
-
+import FeedList from '@/component/FeedList/FeedList'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getPlayList } from '@/apis/feed'
 import { IPlayListType } from '@/types/playList'
 import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
-import PlayListSkeleton from '@/components/Skeleton/PlayListSkeleton'
+import PlayListSkeleton from '@/component/Skeleton/PlayListSkeleton'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 
 export function Home() {

@@ -1,5 +1,5 @@
 import { PlayListInfoProps } from '@/types/playListCreate'
-import * as S from '../../components/playListCreate/PlayListCreate.styles'
+import * as S from '@/component/PlayListCreate/PlayListCreate.styles'
 import Input from '../Input/Input'
 import Textarea from '../Textarea/Textarea'
 

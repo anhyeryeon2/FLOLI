@@ -10,11 +10,11 @@ import axiosInstance from '@/apis/axiosInstance'
 import { CreatePlaylistPayload } from '@/types/playListCreate'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
-import { Button } from '@/components/Button/Button'
-import Input from '@/components/Input/Input'
-import * as S from '@/components/playListCreate/PlayListCreate.styles'
-import { PlayListInfo } from '@/components/playListCreate/PlayListInfo'
-import { PlayListIsPublic } from '@/components/playListCreate/PlayListIsPublic'
+import { Button } from '@/component/Button/Button'
+import Input from '@/component/Input/Input'
+import * as S from '@/component/PlayListCreate/PlayListCreate.styles'
+import { PlayListInfo } from '@/component/PlayListCreate/PlayListInfo'
+import { PlayListIsPublic } from '@/component/PlayListCreate/PlayListIsPublic'
 import { RiImageAddLine } from 'react-icons/ri'
 
 export function PlayListCreate() {
