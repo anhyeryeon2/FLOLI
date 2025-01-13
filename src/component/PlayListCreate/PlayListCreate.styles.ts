@@ -1,4 +1,5 @@
 import { styled, css } from 'styled-components'
+import Textarea from '../Textarea/Textarea'
 
 export const Container = styled.div`
   padding: var(--spacing-6);
@@ -163,4 +164,34 @@ export const TrackTag = styled.div`
   font-size: var(--fs-s);
   border-radius: var(--radius-base);
   z-index: 2;
+`
+export const HighlightWrapper = styled.div`
+  position: relative;
+  width: 100%;
+`
+
+export const HighlightView = styled.div`
+  width: 100%;
+  min-height: 11.2rem;
+  padding: var(--spacing-3) var(--spacing-4);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-base);
+  background: white;
+  font-size: var(--fs-l);
+`
+
+export const TransparentTextarea = styled(Textarea)`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: transparent;
+  caret-color: black;
+  background: transparent;
+  z-index: 1;
+`
+
+export const HashtagSpan = styled.span`
+  color: var(--color-main1);
 `
