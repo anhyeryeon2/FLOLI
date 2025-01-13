@@ -1,7 +1,7 @@
 import { IoIosArrowDown } from 'react-icons/io'
 import * as S from './ViewVideoList.style'
-import DetailPlayList from '@/components/DetailPlayList/DetailPlayList'
 import { LAST_VIDEO_TITLE } from '@/constants/constant'
+import DetailPlayList from '@/component/DetailPlayList/DetailPlayList'
 
 interface IViewVideoListProps {
   closeModal: () => void

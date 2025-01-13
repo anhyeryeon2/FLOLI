@@ -1,4 +1,4 @@
-import Modal from '@/components/Modal/Modal'
+import Modal from '@/component/Modal/Modal'
 import styled from 'styled-components'
 
 export const Container = styled.div`

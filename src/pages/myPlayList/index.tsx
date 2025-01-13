@@ -4,9 +4,9 @@ import { useToast } from '@/hooks/useToast'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
-import PlayList from '@/components/PlayList/PlayList'
-import Loading from '@/components/LoadingSpinner/Loading'
-import * as S from '@/components/MyPlayList/MyPlayList.styles'
+import PlayList from '@/component/PlayList/PlayList'
+import Loading from '@/component/LoadingSpinner/Loading'
+import * as S from '@/component/MyPlayList/MyPlayList.styles'
 import { IPlayListType } from '@/types/playList'
 
 const fetchMyPlaylists = async (userId: string): Promise<IPlayListType[]> => {

@@ -1,17 +1,17 @@
 import { useNavigate } from 'react-router-dom'
 
 import * as S from '@/pages/mypage/Mypage.styled'
-import { Button } from '@/components/Button/Button'
-import Profile from '@/components/Profile/Profile'
+import { Button } from '@/component/Button/Button'
+import Profile from '@/component/Profile/Profile'
 import { ROUTER_PATH } from '@/constants/constant'
 import { useQuery } from '@tanstack/react-query'
 import { userInfoGet } from '@/apis/userInfoApi'
-import Loading from '@/components/LoadingSpinner/Loading'
+import Loading from '@/component/LoadingSpinner/Loading'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useState } from 'react'
-import MyPageLikes from '@/components/MyPageType/MyPageLikes'
-import SignOutButton from '@/components/SignOut/SignOutButton'
-import MyPageSave from '@/components/MyPageType/MyPageSave'
+import MyPageLikes from '@/component/MyPageType/MyPageLikes'
+import SignOutButton from '@/component/SignOut/SignOutButton'
+import MyPageSave from '@/component/MyPageType/MyPageSave'
 
 export const Mypage = () => {
   const [type, setType] = useState('like')
