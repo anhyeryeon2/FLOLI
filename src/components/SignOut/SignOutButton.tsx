@@ -21,6 +21,7 @@ export default function SignOutButton() {
 
       navigate('/login')
     } catch (error) {
+      console.log(error)
       showToastMessage({
         message: '로그아웃에 실패하였습니다. 다시 시도해주세요.',
         type: 'error'
@@ -32,5 +33,5 @@ export default function SignOutButton() {
 }
 const StyledButton = styled.button`
   color: var(--color-input);
-  font-size: var(--fs-m);
+  font-size: var(--fs-l);
 `

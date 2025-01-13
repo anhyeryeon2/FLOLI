@@ -1,6 +1,5 @@
 import { ProfileButtonProps } from '@/types/profile'
 import * as S from './Profile.styles'
-import { Link } from 'react-router-dom'
 
 /* 사용예시1 
       <Profile
@@ -31,11 +30,12 @@ const Profile = ({
   size = 'medium',
   radius,
   border,
-  disabledLink = false
+  disabledLink = false,
+  to
 }: ProfileButtonProps) => {
   return (
     <S.ProfileButtonWrapper
-      to={disabledLink ? '#' : `/profile/${userId}`}
+      to={disabledLink ? '#' : to || `/profile/${userId}`}
       size={size}
       className={className}
       radius={radius}

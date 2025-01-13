@@ -77,6 +77,7 @@ export function Login() {
       }
     } catch (error) {
       handleToastError('세션 확인 중 문제가 발생했습니다. 다시 시도해주세요.')
+      console.log(error)
       localStorage.clear()
       navigate('/login')
     }

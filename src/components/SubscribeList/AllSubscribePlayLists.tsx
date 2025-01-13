@@ -1,47 +1,34 @@
 import FeedList from '@/components/FeedList/FeedList'
-
-import { useInfiniteQuery } from '@tanstack/react-query'
-import { getPlayList } from '@/apis/feed'
-import { IPlayListType } from '@/types/playList'
-import { useEffect, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
 import PlayListSkeleton from '@/components/Skeleton/PlayListSkeleton'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import { getSubscribeAllPlayLists } from '@/apis/subscribe/playList/index'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useRef, useEffect } from 'react'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 
-export function Home() {
-  const location = useLocation()
+const AllSubscribePlayLists = () => {
   const observerElem = useRef<HTMLDivElement | null>(null)
-  const {
-    data,
-    isError,
-    hasNextPage,
-    fetchNextPage,
-    isFetchingNextPage,
-    isLoading,
-    refetch
-  } = useInfiniteQuery({
-    queryKey: ['playList'],
-    queryFn: ({ pageParam }) => getPlayList(pageParam as number),
+  const { showToastMessage } = useToastMessageContext()
 
+  const {
+    data: allPlayLists,
+    isError,
+    isLoading,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage
+  } = useInfiniteQuery({
+    queryKey: ['allSubscribePlayList'],
+    queryFn: ({ pageParam }) =>
+      getSubscribeAllPlayLists(undefined, pageParam as number),
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1
-
       return nextPage <= lastPage.length ? nextPage : undefined
     },
-    select: data => {
-      return data.pages.flat()
-    },
-
+    select: data => data.pages.flat(),
     initialPageParam: 1,
-
     staleTime: 1000 * 60
   })
-
-  useEffect(() => {
-    if (location.state?.refetch) {
-      refetch()
-    }
-  }, [location.state, refetch])
 
   useInfiniteScroll({
     observerElem,
@@ -49,15 +36,19 @@ export function Home() {
     isFetchingNextPage,
     fetchNextPage
   })
+  useEffect(() => {
+    if (isError) {
+      showToastMessage({
+        message: '에러가 발생하여 구독자 정보를 가져오지 못하였습니다..',
+        type: 'error'
+      })
+    }
+  }, [isError, showToastMessage])
+  if (isLoading || isFetchingNextPage) return <PlayListSkeleton />
 
-  if (isLoading || isFetchingNextPage) {
-    return <PlayListSkeleton />
-  }
-
-  if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
   return (
     <>
-      {data?.map((playList: IPlayListType) => (
+      {allPlayLists?.map(playList => (
         <FeedList
           image={playList.thumbnail}
           profileImage={playList.profile_img_path}
@@ -76,4 +67,4 @@ export function Home() {
   )
 }
 
-export default Home
+export default AllSubscribePlayLists

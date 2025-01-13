@@ -7,7 +7,7 @@ interface ModalFullProps {
   setModalSearchState: (newState: boolean) => void
 }
 
-export const useModalFullStore = create<ModalFullProps>(set => ({
+export const useSearchModalFullStore = create<ModalFullProps>(set => ({
   state: false,
   searchState: false,
   setModalState: (newState: boolean) => set({ state: newState }),

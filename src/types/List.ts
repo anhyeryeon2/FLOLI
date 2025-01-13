@@ -20,4 +20,8 @@ export interface PlayListProps {
   isLocked?: boolean
   optionIcon?: 'heart' | 'bookmark' | 'option'
   nickname?: string
+  playlistId?: string
+  onDelete?: (id: string) => void
+  onClick?: () => void
+  onOptionClick?: () => void
 }
