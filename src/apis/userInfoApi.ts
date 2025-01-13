@@ -64,7 +64,11 @@ export async function userInfoGet(userId: string | undefined) {
 }
 
 //좋아요 누른 플레이리스트 정보
-export async function LikedPlayList(userId: string | undefined) {
+export async function LikedPlayList(
+  userId: string | undefined,
+  pageParam: number = 1
+) {
+  const PAGE_SIZE = 3
   const { data: likedPlaylists, error } = await supabase
     .from('likes')
     .select('playlist_id')
@@ -81,6 +85,7 @@ export async function LikedPlayList(userId: string | undefined) {
     .from('playlists')
     .select('*')
     .in('playlist_id', playlistIds)
+    .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1)
 
   if (playlistError) {
     console.error(playlistError)
@@ -108,7 +113,11 @@ export async function DeleteLikeList(userId: string | undefined) {
 }
 
 //저장된 플레이리스트 정보
-export async function SavedPlayList(userId: string | undefined) {
+export async function SavedPlayList(
+  userId: string | undefined,
+  pageParam: number = 1
+) {
+  const PAGE_SIZE = 3
   const { data: likedPlaylists, error } = await supabase
     .from('bookmarks')
     .select('playlist_id')
@@ -125,6 +134,7 @@ export async function SavedPlayList(userId: string | undefined) {
     .from('playlists')
     .select('*')
     .in('playlist_id', playlistIds)
+    .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1)
 
   if (playlistError) {
     console.error(playlistError)
@@ -146,6 +156,25 @@ export async function DeleteSaveList(userId: string | undefined) {
   if (error) {
     console.error(error)
     throw new Error('저장된 플레이리스트 삭제에 실패했어요.')
+  }
+
+  return data
+}
+
+//유저 플레이리스트 불러오기
+export async function userPlayListGet(
+  userId: string | undefined,
+  pageParam: number = 1
+) {
+  const PAGE_SIZE = 3
+  const { data, error } = await supabase
+    .from('playlists')
+    .select('*')
+    .eq('user_id', userId)
+    .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1)
+
+  if (error) {
+    console.error(error)
   }
 
   return data

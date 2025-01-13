@@ -1,22 +1,15 @@
-import { useAuthStore } from '@/store/useAuthStore'
-import * as S from './MyPageLikes.styled'
-import {
-  useInfiniteQuery,
-  useMutation,
-  useQueryClient
-} from '@tanstack/react-query'
-import { DeleteSaveList, SavedPlayList } from '@/apis/userInfoApi'
-import PlayList from '../PlayList/PlayList'
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
-import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 import { useRef } from 'react'
-import { useNavigate } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useInfiniteQuery } from '@tanstack/react-query'
+import * as S from './MyPageLikes.styled'
+import PlayList from '../PlayList/PlayList'
+import { userPlayListGet } from '@/apis/userInfoApi'
+import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 
-function MyPageSave() {
+function UserProfileList() {
   const navigate = useNavigate()
   const observerElem = useRef<HTMLDivElement | null>(null)
-  const { user } = useAuthStore()
-  const { showToastMessage } = useToastMessageContext()
+  const { userId } = useParams()
 
   const {
     data: playlistData,
@@ -24,12 +17,14 @@ function MyPageSave() {
     fetchNextPage,
     isFetchingNextPage
   } = useInfiniteQuery({
-    queryKey: ['SavedPlayList'],
-    queryFn: ({ pageParam }) => SavedPlayList(user?.id, pageParam as number),
+    queryKey: ['userPlayList'],
+    queryFn: ({ pageParam }) => userPlayListGet(userId, pageParam as number),
     getNextPageParam: (lastPage, allPages) => {
-      const nextPage = allPages.length + 1
-
-      return nextPage <= lastPage.length ? nextPage : undefined
+      if (Array.isArray(lastPage)) {
+        const nextPage = allPages.length + 1
+        return nextPage <= lastPage.length ? nextPage : undefined
+      }
+      return undefined
     },
     select: data => {
       return data.pages.flat()
@@ -45,28 +40,6 @@ function MyPageSave() {
     isFetchingNextPage,
     fetchNextPage
   })
-
-  const queryClient = useQueryClient()
-
-  const { mutate } = useMutation({
-    mutationFn: () => DeleteSaveList(user?.id),
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ['SavedPlayList'] })
-      showToastMessage({
-        message: '해당 플리를 저장목록에서 삭제 하였습니다',
-        type: 'success'
-      })
-    },
-    onError: () =>
-      showToastMessage({
-        message: `해당 플리를 저장목록에서 삭제하는데 실패하였습니다. `,
-        type: 'error'
-      })
-  })
-
-  function handleDelete() {
-    mutate()
-  }
 
   if (!playlistData || playlistData.length === 0) {
     return <S.NoData>플레이리스트가 존재하지 않습니다.</S.NoData>
@@ -88,9 +61,7 @@ function MyPageSave() {
             date={new Date(playlistData.created_at).toLocaleDateString()}
             likes={playlistData.likes_count}
             comments={playlistData.comments_count}
-            optionIcon="bookmark"
             nickname={playlistData.nickname}
-            onOptionClick={handleDelete}
           />
         </S.ItemList>
       ))}
@@ -99,4 +70,4 @@ function MyPageSave() {
   )
 }
 
-export default MyPageSave
+export default UserProfileList
