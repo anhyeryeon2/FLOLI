@@ -13,7 +13,7 @@ const fetchMyPlaylists = async (userId: string): Promise<IPlayListType[]> => {
   const { data, error } = await supabase.rpc('get_my_playlists', {
     p_user_id: userId
   })
-  if (error) throw new Error('내 플레이리스트를 불러오는데 실패했습니다')
+  if (error) throw new Error('나의 플레이리스트를 불러오는데 실패했습니다')
   return data || []
 }
 
@@ -46,7 +46,7 @@ export const MyPlayLists = () => {
 
   if (error) {
     handleToastError(
-      (error as Error).message || '내 플레이리스트를 불러오는데 실패했습니다.'
+      (error as Error).message || '나의 플레이리스트를 불러오는데 실패했습니다.'
     )
   }
 
@@ -85,7 +85,7 @@ export const MyPlayLists = () => {
     <S.PlayListsContainer>
       <S.Title>{user?.nickname}의 플레이리스트</S.Title>
       {playlists.length === 0 ? (
-        <S.EmptyState>내 플레이리스트가 없습니다</S.EmptyState>
+        <S.EmptyState>나의 플레이리스트가 없습니다</S.EmptyState>
       ) : (
         <S.PlayListWrapper>
           {playlists.map((playlist: IPlayListType) => (
