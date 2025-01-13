@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from '@/component/Layout/Layout'
 import {
-  Login,
   Mypage,
   MyPlayLists,
   NotFound,
@@ -10,7 +9,8 @@ import {
   Subscriptions,
   UserProfile,
   View,
-  ProfileEdit
+  ProfileEdit,
+  SignIn
 } from '@/pages'
 import { Home } from '@/pages/Home'
 import { ROUTER_PATH } from '@/constants/constant'
@@ -57,7 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTER_PATH.LOGIN,
-        element: <Login />
+        element: <SignIn />
       },
       {
         path: ROUTER_PATH.MYPAGE,

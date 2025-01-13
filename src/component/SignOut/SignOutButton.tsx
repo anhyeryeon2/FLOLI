@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import styled from 'styled-components'
 import { removeAuthStorage } from '@/repository/authRepository'
+import { useAuthStore } from '@/store/useAuthStore'
 
 export default function SignOutButton() {
   const navigate = useNavigate()
@@ -13,6 +14,7 @@ export default function SignOutButton() {
       const { error } = await supabase.auth.signOut()
       if (error) throw error
       removeAuthStorage('all')
+      useAuthStore.getState().clearUser()
 
       showToastMessage({
         message: '로그아웃 되었습니다.',
