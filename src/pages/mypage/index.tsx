@@ -57,7 +57,7 @@ export const Mypage = () => {
           <S.ButtonBox>
             <Button
               bordertype="기본"
-              width="20rem"
+              width="100%"
               onClick={handleEditProfileClick}>
               프로필 수정
             </Button>

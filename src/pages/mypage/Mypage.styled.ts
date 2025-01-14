@@ -7,10 +7,14 @@ export const HeaderBox = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-top: var(--spacing-4);
+  gap: var(--spacing-3);
 `
 export const ProfileBox = styled.div`
   display: flex;
   gap: var(--spacing-5);
+  align-items: center;
+  min-width: 10rem;
 `
 
 export const ProfileDetailBox = styled.div`
@@ -21,6 +25,8 @@ export const ProfileDetailBox = styled.div`
 export const UserName = styled.div`
   font-size: var(--fs-xl);
   font-weight: 500;
+  word-break: keep-all;
+  word-break: break-word;
 `
 export const SubscribeCount = styled.div`
   font-size: var(--fs-l);
@@ -31,7 +37,9 @@ export const ButtonBox = styled.div`
   display: flex;
   flex-direction: column;
   gap: var(--spacing-3);
-  padding: var(--spacing-5);
+  Button {
+    white-space: nowrap;
+  }
 `
 
 export const IntruductionBox = styled.div`

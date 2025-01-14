@@ -16,6 +16,8 @@ export const ProfileButtonWrapper = styled(Link)<ProfileButtonWrapperProps>`
   border-radius: ${({ radius }) => radius || 'var(--radius-full)'};
   padding: 0;
   cursor: pointer;
+  flex-shrink: 0;
+  aspect-ratio: 1;
   width: ${({ size }) => {
     if (size === 'xsmall') return '3rem'
     if (size === 'small') return '6rem'
