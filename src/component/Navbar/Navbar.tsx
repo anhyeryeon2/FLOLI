@@ -18,6 +18,9 @@ export default function Navbar() {
   const [active, setActive] = useState<string>('home')
 
   const handleClick = (icon: string) => {
+    if (icon === 'home' && active === 'home') {
+      window.scrollTo({ top: 0, behavior: 'smooth' })
+    }
     setActive(icon)
   }
 
