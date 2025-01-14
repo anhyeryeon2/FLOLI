@@ -5,6 +5,7 @@ export const Container = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.4rem;
+  margin-top: 0.4rem;
 `
 
 export const StyledTextarea = styled(Textarea)`

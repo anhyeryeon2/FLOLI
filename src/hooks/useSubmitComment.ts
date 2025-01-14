@@ -24,6 +24,9 @@ const useSubmitComment = () => {
       queryClient.invalidateQueries({
         queryKey: ['playlistComments', variables.playlistId]
       })
+      queryClient.invalidateQueries({
+        queryKey: ['playlist', variables.playlistId]
+      })
     }
   })
 }
