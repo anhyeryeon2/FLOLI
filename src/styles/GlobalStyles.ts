@@ -5,6 +5,9 @@ import '@/styles/common.css'
 export const GlobalStyle = createGlobalStyle`
   #root {
     background: gray;
+    -webkit-tap-highlight-color: transparent; /* 모바일 파란색 하이라이트 제거 */
+  user-select: none; /* 텍스트 선택 방지 */
+  appearance: none; /* 기본 브라우저 스타일 제거 */
   }
  
 
@@ -34,4 +37,6 @@ export const GlobalStyle = createGlobalStyle`
   .scroll-locked.has-scrollbar {
     overflow-y: scroll;
   }
+
+
 `
