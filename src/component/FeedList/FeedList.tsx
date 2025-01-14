@@ -1,7 +1,7 @@
 import { FeedListProps } from '@/types/List'
 import * as S from './FeedList.style'
 import { FeedFooter } from './Footer'
-import Modal from '../Modal/Modal'
+import { Modal } from '@/component'
 import { RiUserUnfollowLine } from 'react-icons/ri'
 import { MdPlaylistAdd } from 'react-icons/md'
 import { useState } from 'react'

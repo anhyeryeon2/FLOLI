@@ -1,5 +1,5 @@
 import * as S from '@/styles/components/comment/comment-item.style'
-import Profile from '../Profile/Profile'
+import { Profile } from '@/component'
 import { useEffect, useRef, useState } from 'react'
 import { AiFillEdit } from 'react-icons/ai'
 import { MdDelete } from 'react-icons/md'
