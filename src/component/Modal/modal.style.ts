@@ -1,7 +1,10 @@
 import styled, { keyframes } from 'styled-components'
 
 const slideUp = keyframes`
-  100% {
+  from {
+    transform: translateY(100%);
+  }
+  to {
     transform: translateY(0);
   }
 `
