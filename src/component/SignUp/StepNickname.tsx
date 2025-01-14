@@ -8,14 +8,15 @@ import { useNavigate } from 'react-router-dom'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { useEffect, useState } from 'react'
 import { useModal } from '@/hooks/useModal'
+import { useToast } from '@/hooks/useToast'
 
 export default function StepNickname() {
   const navigate = useNavigate()
   const { email, password } = useSignupStore()
   const [nickname, setNickname] = useState('')
   const [isValid, setIsValid] = useState(false)
-  const { showToastMessage } = useToastMessageContext()
   const { open, ModalComponent } = useModal()
+  const { handleToastError, handleToastSuccess } = useToast()
 
   useEffect(() => {
     if (!email || !password) {
@@ -27,13 +28,6 @@ export default function StepNickname() {
   useEffect(() => {
     setIsValid(nickname.trim().length > 0)
   }, [nickname])
-
-  const handleToastError = (message: string) => {
-    showToastMessage({
-      message,
-      type: 'error'
-    })
-  }
 
   const handleSignup = async () => {
     try {
@@ -54,10 +48,7 @@ export default function StepNickname() {
 
       if (signUpData.user) {
         await supabase.auth.signOut()
-        showToastMessage({
-          message: '회원가입 성공하였습니다 ',
-          type: 'success'
-        })
+        handleToastSuccess('회원가입 성공하였습니다 ')
         navigate('/login')
       }
     } catch (error) {

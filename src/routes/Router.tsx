@@ -1,7 +1,6 @@
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import Layout from '@/component/Layout/Layout'
 import {
-  Login,
   Mypage,
   MyPlayLists,
   NotFound,
@@ -10,7 +9,8 @@ import {
   Subscriptions,
   UserProfile,
   View,
-  ProfileEdit
+  ProfileEdit,
+  SignIn
 } from '@/pages'
 import { Home } from '@/pages/Home'
 import { ROUTER_PATH } from '@/constants/constant'
@@ -19,6 +19,8 @@ import StepPassword from '@/component/SignUp/StepPassword'
 import StepNickname from '@/component/SignUp/StepNickname'
 import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/useAuthStore'
+import { ErrorBoundary } from 'react-error-boundary'
+import { ErrorFallback } from '@/component/ErrorBoundary/ErrorFallback'
 
 export function ProtectedRoute({ children }: { children: JSX.Element }) {
   const user = useAuthStore(state => state.user)
@@ -37,8 +39,13 @@ export function ProtectedRoute({ children }: { children: JSX.Element }) {
 const router = createBrowserRouter([
   {
     path: ROUTER_PATH.HOME,
-    element: <Layout />,
+    element: (
+      <ErrorBoundary FallbackComponent={ErrorFallback}>
+        <Layout />
+      </ErrorBoundary>
+    ),
     errorElement: <NotFound />,
+
     children: [
       {
         path: ROUTER_PATH.HOME,
@@ -50,7 +57,7 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTER_PATH.LOGIN,
-        element: <Login />
+        element: <SignIn />
       },
       {
         path: ROUTER_PATH.MYPAGE,

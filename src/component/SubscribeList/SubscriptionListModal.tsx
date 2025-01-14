@@ -1,4 +1,3 @@
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import ModalFull from '../Modal/ModalFull'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteSubscribe } from '@/apis/subscribe/subscribeDelete'
@@ -6,6 +5,7 @@ import { SubscribeType } from '@/types/subscribe'
 import { SetStateAction } from 'react'
 import * as S from './SubscribeList.module'
 import { RiUserUnfollowLine } from 'react-icons/ri'
+import { useToast } from '@/hooks/useToast'
 
 interface SubscriptionListModalProps {
   isOpen: boolean
@@ -19,7 +19,7 @@ const SubscriptionListModal = ({
   setIsOpen
 }: SubscriptionListModalProps) => {
   const queryClient = useQueryClient()
-  const { showToastMessage } = useToastMessageContext()
+  const { handleToastError, handleToastSuccess } = useToast()
 
   const { mutate } = useMutation({
     mutationFn: async (subscribe_id: string) => {
@@ -27,17 +27,11 @@ const SubscriptionListModal = ({
       return res.data
     },
     onSuccess: () => {
-      showToastMessage({
-        message: `구독을 취소하였습니다. `,
-        type: 'success'
-      })
+      handleToastSuccess(`구독을 취소하였습니다. `)
       queryClient.invalidateQueries({ queryKey: ['subscribeList'] })
     },
     onError: () => {
-      showToastMessage({
-        message: `예상치 못한 이유로 구독을 취소하지 못하였습니다.`,
-        type: 'error'
-      })
+      handleToastError(`예상치 못한 이유로 구독을 취소하지 못하였습니다.`)
     }
   })
   const handleMoalFullClose = () => {

@@ -1,7 +1,7 @@
 import { PlayListInfoProps } from '@/types/playListCreate'
 import * as S from '@/component/PlayListCreate/PlayListCreate.styles'
 import Input from '../Input/Input'
-import Textarea from '../Textarea/Textarea'
+import WritingHashtags from '@/utils/writingHashtags'
 
 export const PlayListInfo = ({
   playlistTitle,
@@ -19,14 +19,21 @@ export const PlayListInfo = ({
           placeholder="플레이리스트 제목을 입력해주세요"
         />
       </S.Section>
-
       <S.Section>
         <S.Label>플레이리스트 설명</S.Label>
-        <Textarea
-          value={playlistDescription}
-          onChange={e => setPlaylistDescription(e.target.value)}
-          placeholder="플레이리스트 설명을 입력해주세요"
-        />
+        <S.HighlightWrapper>
+          <S.HighlightView>
+            <WritingHashtags description={playlistDescription} />
+          </S.HighlightView>
+          <S.TransparentTextarea
+            value={playlistDescription}
+            onChange={(e: { target: { value: string } }) =>
+              setPlaylistDescription(e.target.value)
+            }
+            placeholder="플레이리스트 설명을 입력해주세요"
+            wrap="hard"
+          />
+        </S.HighlightWrapper>
       </S.Section>
     </>
   )

@@ -7,7 +7,7 @@ import {
 } from '@tanstack/react-query'
 import { DeleteSaveList, SavedPlayList } from '@/apis/userInfoApi'
 import PlayList from '../PlayList/PlayList'
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { useToast } from '@/hooks/useToast'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
@@ -16,7 +16,7 @@ function MyPageSave() {
   const navigate = useNavigate()
   const observerElem = useRef<HTMLDivElement | null>(null)
   const { user } = useAuthStore()
-  const { showToastMessage } = useToastMessageContext()
+  const { handleToastError, handleToastSuccess } = useToast()
 
   const {
     data: playlistData,
@@ -52,16 +52,10 @@ function MyPageSave() {
     mutationFn: () => DeleteSaveList(user?.id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['SavedPlayList'] })
-      showToastMessage({
-        message: '해당 플리를 저장목록에서 삭제 하였습니다',
-        type: 'success'
-      })
+      handleToastSuccess('해당 플리를 저장목록에서 삭제 하였습니다')
     },
     onError: () =>
-      showToastMessage({
-        message: `해당 플리를 저장목록에서 삭제하는데 실패하였습니다. `,
-        type: 'error'
-      })
+      handleToastError(`해당 플리를 저장목록에서 삭제하는데 실패하였습니다. `)
   })
 
   function handleDelete() {
