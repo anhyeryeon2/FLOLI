@@ -18,6 +18,7 @@ export default function StepPassword() {
   useEffect(() => {
     if (!email) {
       handleToastError(`이메일 정보가 없습니다. `)
+      useSignupStore.getState().reset()
       navigate('/signup/email')
     }
   }, [email, navigate])

@@ -12,6 +12,7 @@ export const ROUTER_PATH = {
   SIGNUP_EMAIL: '/signup/email',
   SIGNUP_PASSWORD: '/signup/password',
   SIGNUP_NICKNAME: '/signup/nickname',
+  END_SIGNUP: '/signup/complete',
   SEARCH_PLAYLIST: '/search'
 }
 

@@ -15,7 +15,7 @@ export default function StepNickname() {
   const [nickname, setNickname] = useState('')
   const [isValid, setIsValid] = useState(false)
   const { open, ModalComponent } = useModal()
-  const { handleToastError, handleToastSuccess } = useToast()
+  const { handleToastError } = useToast()
 
   useEffect(() => {
     if (!email || !password) {
@@ -42,17 +42,19 @@ export default function StepNickname() {
 
       if (error) {
         handleToastError('회원가입 요청에 실패하였습니다')
+        useSignupStore.getState().reset()
+        navigate('/signup/email')
         return
       }
 
       if (signUpData.user) {
         await supabase.auth.signOut()
-        handleToastSuccess('회원가입 성공하였습니다 ')
-        navigate('/login')
+        navigate('/signup/complete')
       }
     } catch (error) {
-      console.log(error)
       handleToastError('회원가입 요청에 실패하였습니다. 다시 시도해주세요')
+      useSignupStore.getState().reset()
+      navigate('/signup/email')
     }
   }
 
