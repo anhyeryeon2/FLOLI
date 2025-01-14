@@ -33,20 +33,7 @@ import ViewVideoContent from '@/component/ViewVideoContent/ViewVideoContent'
 import useFetchVideoList from '@/hooks/useFetchVideoList'
 import { LAST_VIDEO_TITLE } from '@/constants/constant'
 import axiosInstance from '@/apis/axiosInstance'
-
-// todo: util에 등록된걸로 바꾸기
-const dateKoreanFormat = (date: string): string => {
-  const dateTypeFormat = date as unknown as Date
-  const stringToDate = new Date(dateTypeFormat)
-
-  const year = stringToDate.getFullYear()
-  const month = String(stringToDate.getMonth() + 1).padStart(2, '0')
-  const day = String(stringToDate.getDate()).padStart(2, '0')
-
-  const formattedDate = `${year}년 ${month}월 ${day}일`
-
-  return formattedDate
-}
+import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 
 const DescriptionText = ({ description }: Pick<IViewProps, 'description'>) => {
   const textRef = useRef<HTMLDivElement>(null)
@@ -231,12 +218,9 @@ export const View = (): JSX.Element => {
     return <NotFound />
   }
 
-  const { title, description, created_at, video_count } = playlist
+  const { title, description, created_at, video_count, comments_count } =
+    playlist
   const { id: creator_id, nickname, profile_img, subsc_count } = creatorData
-
-  console.log('@@', creatorData)
-
-  const commentCount = 172
 
   const handleShareClick = () => {
     copyToClipboard({ url: nowHref, showToastMessage })
@@ -369,7 +353,7 @@ export const View = (): JSX.Element => {
         <S.CommentWrapper>
           <div className="comment-count">
             댓글
-            <span>{commentCount}</span>
+            <span>{comments_count}</span>
           </div>
           <CommentEditor playlistId={playlist_id!} />
           <CommentList playlistId={playlist_id!} />
