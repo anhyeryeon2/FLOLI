@@ -44,8 +44,9 @@ export const SeparatingBox = styled.div`
   justify-content: center;
   gap: 10rem;
   position: relative;
+  border-bottom: 1px solid var(--color-border);
 `
-export const ShowTypes = styled.button<{ isActive: boolean }>`
+export const ShowTypes = styled.button<{ isActive?: boolean }>`
   font-size: var(--fs-xl);
   font-weight: 500;
   cursor: pointer;
