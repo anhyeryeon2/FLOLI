@@ -1,12 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 
 import * as S from '@/pages/mypage/Mypage.styled'
-import { Button } from '@/component/Button/Button'
-import Profile from '@/component/Profile/Profile'
+import { Profile, Loading, Button } from '@/component'
 import { ROUTER_PATH } from '@/constants/constant'
 import { useQuery } from '@tanstack/react-query'
 import { userInfoGet } from '@/apis/userInfoApi'
-import Loading from '@/component/LoadingSpinner/Loading'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useState } from 'react'
 import MyPageLikes from '@/component/MyPageType/MyPageLikes'

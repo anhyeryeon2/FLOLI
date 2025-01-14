@@ -1,6 +1,6 @@
 import * as S from './Loading.module'
 
-export default function Loading() {
+export function Loading() {
   return (
     <>
       <S.Container>

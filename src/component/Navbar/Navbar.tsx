@@ -9,10 +9,10 @@ import {
 } from 'react-icons/md'
 import * as S from './Navbar.styled'
 import { useAuthStore } from '@/store/useAuthStore'
-import Profile from '../Profile/Profile'
-import useUserInfo from '@/hooks/useUserInfo'
+import { Profile } from '@/component'
+import { useUserInfo } from '@/hooks'
 
-export default function Navbar() {
+export function Navbar() {
   const { userinfo } = useUserInfo()
   const { user } = useAuthStore()
   const [active, setActive] = useState<string>('home')

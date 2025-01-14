@@ -2,9 +2,9 @@ import { useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import * as S from './MyPageLikes.styled'
-import PlayList from '../PlayList/PlayList'
+import { PlayList } from '@/component'
 import { userPlayListGet } from '@/apis/userInfoApi'
-import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useInfiniteScroll } from '@/hooks'
 
 function UserProfileList() {
   const navigate = useNavigate()

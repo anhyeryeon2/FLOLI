@@ -1,6 +1,6 @@
 import CommentEditor from '@/component/Comment/CommentEditor'
 import CommentList from '@/component/Comment/CommentList'
-import Profile from '@/component/Profile/Profile'
+import { Profile } from '@/component'
 import ViewVideoList from '@/component/ViewVideoList/ViewVideoList'
 import * as S from '@/styles/pages/view/view.style'
 import { IViewProps } from '@/types/View'

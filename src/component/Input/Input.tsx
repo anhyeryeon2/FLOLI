@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components'
  * @param {string} [width]
  * @param {string} [height]
  */
-const Input = forwardRef<HTMLInputElement, IInputProps>(
+export const Input = forwardRef<HTMLInputElement, IInputProps>(
   (
     { width, height, type = 'text', value, isCustom, onChange, ...props },
     ref
@@ -48,5 +48,3 @@ const StyledInput = styled.input<
   height: ${props => props.height || 'auto'};
   ${props => !props.isCustom && mainStyle};
 `
-
-export default Input

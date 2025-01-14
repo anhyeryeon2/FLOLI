@@ -23,7 +23,7 @@ import { Button } from '../Button/Button'
  * {ModalComponent};
  */
 
-export default function ConfirmModal({
+export function ConfirmModal({
   title,
   description,
   confirmText = '확인',

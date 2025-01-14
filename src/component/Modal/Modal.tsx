@@ -9,7 +9,7 @@ import { useLocation, useNavigate } from 'react-router-dom'
  * @param isBg - true일 때 모달 bg 생김
  */
 
-const Modal = ({
+export const Modal = ({
   id,
   className,
   isOpen,
@@ -61,5 +61,3 @@ const Modal = ({
     modalRoot as HTMLElement
   )
 }
-
-export default Modal

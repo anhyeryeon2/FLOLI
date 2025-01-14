@@ -7,7 +7,7 @@ import { MdPlaylistAdd } from 'react-icons/md'
 import { useState } from 'react'
 import { FaShareAlt } from 'react-icons/fa'
 
-const FeedList = ({
+export const FeedList = ({
   image,
   profileImage,
   title,
@@ -74,5 +74,3 @@ const FeedList = ({
     </>
   )
 }
-
-export default FeedList

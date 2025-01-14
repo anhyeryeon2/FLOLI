@@ -4,8 +4,7 @@ import { useToast } from '@/hooks/useToast'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
-import PlayList from '@/component/PlayList/PlayList'
-import Loading from '@/component/LoadingSpinner/Loading'
+import { PlayList, Loading } from '@/component'
 import * as S from '@/component/MyPlayList/MyPlayList.styles'
 import { IPlayListType } from '@/types/playList'
 

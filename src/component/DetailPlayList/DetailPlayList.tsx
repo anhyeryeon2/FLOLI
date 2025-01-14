@@ -6,7 +6,11 @@ interface DetailPlayListProps {
   nickname: string
 }
 
-const DetailPlayList = ({ image, title, nickname }: DetailPlayListProps) => {
+export const DetailPlayList = ({
+  image,
+  title,
+  nickname
+}: DetailPlayListProps) => {
   return (
     <S.CardContainer>
       <S.ImageWrapper>
@@ -22,5 +26,3 @@ const DetailPlayList = ({ image, title, nickname }: DetailPlayListProps) => {
     </S.CardContainer>
   )
 }
-
-export default DetailPlayList

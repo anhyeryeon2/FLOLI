@@ -1,6 +1,6 @@
 import { useState, useRef } from 'react'
 import { createPortal } from 'react-dom'
-import ConfirmModal from '@/component/ConfirmModal/ConfirmModal'
+import { ConfirmModal } from '@/component'
 import { ConfirmModalProps } from '@/types/modal'
 import * as S from '@/component/ConfirmModal/ConfirmModal.styles'
 

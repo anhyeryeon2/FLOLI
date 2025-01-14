@@ -2,7 +2,7 @@ import { userInfoGet } from '@/apis/userInfoApi'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useQuery } from '@tanstack/react-query'
 
-export default function useUserInfo() {
+export function useUserInfo() {
   const { user } = useAuthStore()
 
   const { data: userinfo } = useQuery({

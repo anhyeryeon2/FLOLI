@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import MainLogo from '@/assets/img/logo/floli.svg'
-import { Button } from '@/component/Button/Button'
+import { Button } from '@/component'
 import * as S from './EndSignUp.styles'
 
 export default function EndSignUp() {

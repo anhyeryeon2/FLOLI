@@ -2,10 +2,10 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
 import Header from '../header/header-main/Header'
-import Navbar from '../navbar/Navbar'
+
 import { ROUTER_PATH, ROUTER_PATH_REGEX } from '@/constants/constant'
 import HeaderSub from '../header/header-sub/HeaderSub'
-import ModalFull from '../Modal/ModalFull'
+
 import { useSearchModalFullStore } from '@/store/useSearchModalFullStore'
 
 import { CiTimer } from 'react-icons/ci'
@@ -17,9 +17,9 @@ import {
   useSearchTermListStore,
   useSearchTermStore
 } from '@/store/useSearchTermStore'
-import Loading from '../LoadingSpinner/Loading'
 import { IPlayList } from '@/types/playList'
 import { useDebounce } from '@/hooks/useDebounce'
+import { Navbar, Loading, ModalFull } from '@/component'
 
 const Container = styled.div`
   max-width: var(--max-width);

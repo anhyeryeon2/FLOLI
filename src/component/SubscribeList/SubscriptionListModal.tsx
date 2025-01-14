@@ -1,4 +1,4 @@
-import ModalFull from '../Modal/ModalFull'
+import { ModalFull } from '@/component'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteSubscribe } from '@/apis/subscribe/subscribeDelete'
 import { SubscribeType } from '@/types/subscribe'

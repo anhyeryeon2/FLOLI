@@ -2,10 +2,9 @@ import { getSearchPlayLists } from '@/apis/search/playList/index'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useRef } from 'react'
 import * as S from '@/component/FeedList/FeedList.style'
-import FeedList from '@/component/FeedList/FeedList'
+import { FeedList, PlayListSkeleton } from '@/component'
 import { IPlayListType } from '@/types/playList'
-import PlayListSkeleton from '@/component/Skeleton/PlayListSkeleton'
-import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useInfiniteScroll } from '@/hooks'
 import { useLocation } from 'react-router-dom'
 
 export const SearchPage = () => {

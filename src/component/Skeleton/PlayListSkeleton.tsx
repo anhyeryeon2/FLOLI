@@ -1,6 +1,6 @@
 import * as S from './PlayListSkeleton.module'
 
-const PlayListSkeleton = () => {
+export const PlayListSkeleton = () => {
   return (
     <S.Container>
       <S.Wrapper>
@@ -22,5 +22,3 @@ const PlayListSkeleton = () => {
     </S.Container>
   )
 }
-
-export default PlayListSkeleton

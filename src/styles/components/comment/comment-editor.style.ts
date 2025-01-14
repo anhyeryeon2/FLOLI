@@ -1,4 +1,4 @@
-import Textarea from '@/component/Textarea/Textarea'
+import { Textarea } from '@/component'
 import styled from 'styled-components'
 
 export const Container = styled.div`

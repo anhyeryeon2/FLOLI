@@ -3,10 +3,10 @@ import { FaEllipsisH } from 'react-icons/fa'
 import * as S from './PlayList.styles'
 import { PlayListFooter } from './Footer'
 import { PlayListProps } from '@/types/List'
-import Modal from '../Modal/Modal'
-import { useMyPlaylistOptions } from '@/hooks/useMyPlayListOptions'
+import { Modal } from '@/component'
+import { useMyPlaylistOptions } from '@/hooks'
 
-const PlayList = ({
+export const PlayList = ({
   image,
   title,
   date,
@@ -80,5 +80,3 @@ const PlayList = ({
     </>
   )
 }
-
-export default PlayList
