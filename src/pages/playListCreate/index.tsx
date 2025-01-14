@@ -5,7 +5,6 @@ import { useVideoLink } from '@/hooks/useVideoLink'
 import { useModal } from '@/hooks/useModal'
 import { useImageUpload } from '@/hooks/useImageUpload'
 import { useDebounce } from '@/hooks/useDebounce'
-import axiosInstance from '@/apis/axiosInstance'
 import { CreatePlaylistPayload } from '@/types/playListCreate'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { useToast } from '@/hooks/useToast'
@@ -16,6 +15,8 @@ import * as S from '@/component/PlayListCreate/PlayListCreate.styles'
 import { PlayListInfo } from '@/component/PlayListCreate/PlayListInfo'
 import { PlayListIsPublic } from '@/component/PlayListCreate/PlayListIsPublic'
 import { RiImageAddLine } from 'react-icons/ri'
+import { createPlaylist } from '@/apis/createPlayList'
+import { VideoList } from '@/component/PlayListCreate/VideoList'
 
 export function PlayListCreate() {
   const [playlistTitle, setPlaylistTitle] = useState('')
@@ -49,10 +50,7 @@ export function PlayListCreate() {
   const debouncedTitle = useDebounce(playlistTitle, 300)
 
   const createPlayListMutation = useMutation({
-    mutationFn: async (payload: CreatePlaylistPayload) => {
-      const response = await axiosInstance.post('/rpc/create_playlist', payload)
-      return response.data
-    },
+    mutationFn: createPlaylist,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['playlists'] })
       handleToastSuccess('플레이리스트가 성공적으로 생성되었습니다.')
@@ -95,6 +93,7 @@ export function PlayListCreate() {
     createPlayListMutation.mutate(payload)
   }
 
+  const isButtonDisabled = !playlistTitle.trim() || videoList.length == 0
   return (
     <S.Container>
       <PlayListInfo
@@ -129,26 +128,10 @@ export function PlayListCreate() {
 
       <S.Section>
         <S.Label>영상 목록</S.Label>
-        {videoList.map((video, index) => (
-          <S.VideoItem key={video.id}>
-            <a
-              href={video.link}
-              target="_blank"
-              rel="noopener noreferrer">
-              <S.Thumbnail
-                src={`https://img.youtube.com/vi/${video.id}/0.jpg`}
-                alt={video.title}
-              />
-            </a>
-            <S.VideoInfo>
-              <span>{video.title}</span>
-              <p>{video.channel || '알 수 없는 채널'}</p>
-            </S.VideoInfo>
-            <S.RemoveButton onClick={() => handleRemoveVideo(index)}>
-              ✕
-            </S.RemoveButton>
-          </S.VideoItem>
-        ))}
+        <VideoList
+          videoList={videoList}
+          handleRemoveVideo={handleRemoveVideo}
+        />
       </S.Section>
 
       <S.Section>
@@ -189,7 +172,8 @@ export function PlayListCreate() {
         <Button
           bordertype="기본"
           width="100%"
-          onClick={showModal}>
+          onClick={showModal}
+          disabled={isButtonDisabled}>
           플레이리스트 생성하기
         </Button>
         {ModalComponent}

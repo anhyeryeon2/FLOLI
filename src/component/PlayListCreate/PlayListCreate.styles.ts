@@ -36,6 +36,14 @@ export const ToggleButton = styled.button<{ $isActive: boolean }>`
     $isActive ? 'var(--color-main2)' : 'var(--color-bg1)'};
   color: var(--color-black);
   font-weight: 500;
+
+  &:first-child {
+    border-radius: var(--radius-xl) 0 0 var(--radius-xl);
+  }
+
+  &:last-child {
+    border-radius: 0 var(--radius-xl) var(--radius-xl) 0;
+  }
 `
 export const VideoLinkInput = styled.div`
   display: flex;
@@ -101,7 +109,7 @@ export const ThumbnailPreview = styled.div`
   background-color: var(--color-bg2);
   border-radius: var(--radius-lg);
   overflow: hidden;
-  height: 120px; /* 부모 컨테이너 높이 고정 */
+  height: 120px;
   width: 100%;
 `
 export const EmptyThumbnail = styled.div`
@@ -146,12 +154,14 @@ export const ThumbnailTitle = styled.p`
   font-size: var(--fs-l);
   font-weight: 600;
   color: var(--color-black);
+  padding: var(--spacing-2);
   ${TextEllipsis}
 `
 export const ThumbnailMaker = styled.p`
   font-size: var(--fs-m);
   font-weight: 500;
   color: var(--color-black);
+  padding-left: var(--spacing-2);
   ${TextEllipsis}
 `
 export const TrackTag = styled.div`
@@ -178,6 +188,8 @@ export const HighlightView = styled.div`
   border-radius: var(--radius-base);
   background: white;
   font-size: var(--fs-l);
+  white-space: pre-wrap;
+  word-break: break-word;
 `
 
 export const TransparentTextarea = styled(Textarea)`
@@ -194,4 +206,11 @@ export const TransparentTextarea = styled(Textarea)`
 
 export const HashtagSpan = styled.span`
   color: var(--color-main1);
+`
+export const Message = styled.p`
+  margin-top: var(--spacing-2);
+  font-size: var(--fs-m);
+  color: var(--color-gray);
+  text-align: center;
+  transition: opacity 0.3s ease-in-out;
 `
