@@ -1,31 +1,6 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
-import axiosInstance from '@/apis/axiosInstance'
-import { IFetchCommentsProps } from '@/types/comments'
-
-const limit = 10
-
-const fetchPlaylistComments = async ({
-  playlistId,
-  pageParam = 0
-}: IFetchCommentsProps) => {
-  const offset = pageParam * limit
-
-  const res = await axiosInstance.get('/comments', {
-    params: {
-      playlist_id: `eq.${playlistId}`,
-      order: 'updated_at.desc',
-      limit: limit,
-      offset: offset
-    }
-  })
-
-  if (!res.data) {
-    // 댓글이 없는 경우
-    return { data: [], nextPage: undefined }
-  }
-
-  return res.data
-}
+import { COMMENT_CALL_LIMIT } from '@/constants/constant'
+import fetchPlaylistComments from '@/apis/comment/fetchPlaylistComments'
 
 /**
  * @param {string} playlistId - 플레이리스트 ID
@@ -39,7 +14,7 @@ const useFetchPlaylistComments = (playlistId: string) => {
     initialPageParam: 0,
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length
-      return lastPage.length === limit ? nextPage : undefined
+      return lastPage.length === COMMENT_CALL_LIMIT ? nextPage : undefined
     },
     enabled: !!playlistId
   })

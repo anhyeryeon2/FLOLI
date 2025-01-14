@@ -1,5 +1,5 @@
 import { IToggleBookmarkParams } from '@/types/toggleBookmark'
-import toggleBookmarkStatus from '@/utils/toggleBookmarkStatus'
+import toggleBookmarkStatus from '@/apis/bookmark/toggleBookmarkStatus'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 const useToggleBookmark = () => {

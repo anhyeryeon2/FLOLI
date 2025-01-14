@@ -1,6 +1,6 @@
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { IToggleLikeParams } from '@/types/toggleLike'
-import toggleLikeStatus from '@/utils/toggleLikeStatus'
+import toggleLikeStatus from '@/apis/like/toggleLikeStatus'
 
 const useToggleLike = () => {
   const queryClient = useQueryClient()

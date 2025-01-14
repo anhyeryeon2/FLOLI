@@ -1,5 +1,5 @@
 import { IToggleSubscParams } from '@/types/toggleSubsc'
-import toggleSubscStatus from '@/utils/toggleSubscStatus'
+import toggleSubscStatus from '@/apis/subscribe/toggleSubscStatus'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 const useToggleSubsc = () => {
