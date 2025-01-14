@@ -11,13 +11,16 @@ import * as S from './Navbar.styled'
 import { useAuthStore } from '@/store/useAuthStore'
 import Profile from '../Profile/Profile'
 import useUserInfo from '@/hooks/useUserInfo'
+import { useSearchTermStore } from '@/store/useSearchTermStore'
 
 export default function Navbar() {
   const { userinfo } = useUserInfo()
   const { user } = useAuthStore()
   const [active, setActive] = useState<string>('home')
+  const setSearchTerm = useSearchTermStore(state => state.setSearchTerm)
 
   const handleClick = (icon: string) => {
+    setSearchTerm('')
     setActive(icon)
   }
 

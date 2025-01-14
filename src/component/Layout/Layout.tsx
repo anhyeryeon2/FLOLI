@@ -89,7 +89,6 @@ const Layout = () => {
   })
 
   const handleMoalFullClose = () => {
-    // setModalSearchState(false)
     setModalFull(false)
     setSearchTerm('')
   }
@@ -122,11 +121,15 @@ const Layout = () => {
               <S.ModalfullContent
                 key={search.playlist_id}
                 onClick={() => handleSearchClick()}>
-                <CiTimer />
-                <S.ModalSpan>{search.title}</S.ModalSpan>
-                <S.ModalfullClickContent>
+                <S.ModalFullTop>
+                  <CiTimer onClick={() => handleSearchClick()} />
+                </S.ModalFullTop>
+                <S.ModalFullMid>
+                  <S.ModalSpan>{search.title}</S.ModalSpan>
+                </S.ModalFullMid>
+                <S.ModalFullBottom>
                   <GoArrowUpLeft />
-                </S.ModalfullClickContent>
+                </S.ModalFullBottom>
               </S.ModalfullContent>
             ))
           : searchTermList &&
@@ -134,11 +137,15 @@ const Layout = () => {
               <S.ModalfullContent
                 key={search.id}
                 onClick={() => handleSearchClick(search.term)}>
-                <CiTimer />
-                <S.ModalSpan>{search.term}</S.ModalSpan>
-                <S.ModalfullClickContent>
+                <S.ModalFullTop>
+                  <CiTimer />
+                </S.ModalFullTop>
+                <S.ModalFullMid>
+                  <S.ModalSpan>{search.term}</S.ModalSpan>
+                </S.ModalFullMid>
+                <S.ModalFullBottom>
                   <GoArrowUpLeft />
-                </S.ModalfullClickContent>
+                </S.ModalFullBottom>
               </S.ModalfullContent>
             ))}
       </ModalFull>

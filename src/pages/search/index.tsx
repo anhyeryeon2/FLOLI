@@ -57,20 +57,28 @@ export const SearchPage = () => {
 
   return (
     <S.FeedConteiner>
-      {data?.map((playList: IPlayListType) => (
-        <FeedList
-          image={playList.thumbnail}
-          profileImage={playList.profile_img_path}
-          nickname={playList.nickname}
-          likes={playList.likes_count}
-          track={playList.video_count}
-          date={playList.created_at}
-          title={playList.title}
-          comments={playList.comments_count}
-          key={playList.playlist_id}
-          id={playList.playlist_id}
-        />
-      ))}
+      {Array.isArray(data) && data.length > 0 ? (
+        data.map((playList: IPlayListType) => (
+          <FeedList
+            image={playList.thumbnail}
+            profileImage={playList.profile_img_path}
+            nickname={playList.nickname}
+            likes={playList.likes_count}
+            track={playList.video_count}
+            date={playList.created_at}
+            title={playList.title}
+            comments={playList.comments_count}
+            key={playList.playlist_id}
+            id={playList.playlist_id}
+          />
+        ))
+      ) : (
+        <div
+          style={{ display: 'flex', justifyContent: 'center', color: 'red' }}>
+          데이터가 없습니다.
+        </div>
+      )}
+
       <div ref={observerElem} />
     </S.FeedConteiner>
   )

@@ -60,6 +60,7 @@ const AllSubscribePlayLists = () => {
           comments={playList.comments_count}
           key={playList.playlist_id}
           id={playList.playlist_id}
+          likesState={playList.is_liked}
         />
       ))}
       <div ref={observerElem} />
