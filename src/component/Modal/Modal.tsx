@@ -2,7 +2,7 @@ import ReactDOM from 'react-dom'
 import * as S from './modal.style'
 import { useScrollLock } from '@/hooks/useScrollLock'
 import { IModalExtendsProps } from '@/types/modal'
-import { MouseEvent, useCallback, useEffect } from 'react'
+import { MouseEvent, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
 /**
@@ -19,27 +19,27 @@ const Modal = ({
   isBg
 }: IModalExtendsProps) => {
   const modalRoot = document.getElementById('modal-container')
-
   const navigate = useNavigate()
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
 
   useScrollLock({ isOpen })
 
-  const handlePopState = useCallback(() => {
-    closeModal()
-  }, [closeModal])
+  useEffect(() => {
+    if (isOpen && !search.includes(`modal=${id}`)) {
+      navigate(`${pathname}?modal=${id}`, { replace: true })
+    }
+  }, [isOpen, id, pathname])
 
   useEffect(() => {
-    if (isOpen) {
-      navigate(`${pathname}?modal=${id}`)
-
-      window.addEventListener('popstate', handlePopState)
-
-      return () => {
-        window.removeEventListener('popstate', handlePopState)
+    const handlePopState = () => {
+      if (isOpen) {
+        closeModal()
       }
     }
-  }, [isOpen, navigate, pathname, id, handlePopState])
+
+    window.addEventListener('popstate', handlePopState)
+    return () => window.removeEventListener('popstate', handlePopState)
+  }, [closeModal, isOpen])
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation()
 
