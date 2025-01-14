@@ -83,7 +83,9 @@ export const MyPlayLists = () => {
 
   return (
     <S.PlayListsContainer>
-      <S.Title>{user?.nickname}의 플레이리스트</S.Title>
+      <S.Title>
+        <span>{user?.nickname}</span>의 플레이리스트
+      </S.Title>
       {playlists.length === 0 ? (
         <S.EmptyState>나의 플레이리스트가 없습니다</S.EmptyState>
       ) : (
