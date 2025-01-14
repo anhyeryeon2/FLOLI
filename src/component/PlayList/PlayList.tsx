@@ -28,6 +28,14 @@ const PlayList = ({
     handleOptionsPopState
   } = useMyPlaylistOptions(playlistId, initialIsLocked, onDelete)
 
+  const handleOptionsClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+    onOptionClick?.()
+    if (optionIcon === 'option') {
+      handleOptionsPopup()
+    }
+  }
+
   return (
     <>
       <S.CardContainer onClick={onClick}>
@@ -47,17 +55,10 @@ const PlayList = ({
             nickname={nickname}
           />
         </S.TextWrapper>
-        <S.Options
-          onClick={event => {
-            event.stopPropagation()
-            onOptionClick?.()
-            if (optionIcon === 'option') handleOptionsPopup()
-          }}>
+        <S.Options onClick={handleOptionsClick}>
           {optionIcon === 'heart' && <FaHeart />}
           {optionIcon === 'bookmark' && <S.PlayListSaveIcon />}
-          {optionIcon === 'option' && (
-            <FaEllipsisH onClick={handleOptionsPopup} />
-          )}
+          {optionIcon === 'option' && <FaEllipsisH />}
         </S.Options>
       </S.CardContainer>
       <Modal
