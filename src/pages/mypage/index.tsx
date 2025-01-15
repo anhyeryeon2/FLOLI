@@ -38,10 +38,13 @@ export const Mypage = () => {
     <>
       <S.Container>
         <S.HeaderBox>
+          <S.logout>
+            <SignOutButton />
+          </S.logout>
           <S.ProfileBox>
             <Profile
               className="profile-img"
-              size="8rem"
+              size="10rem"
               userId="userIdtest"
               imageUrl={data[0].profile_img}
               disabledLink={true}
@@ -49,6 +52,7 @@ export const Mypage = () => {
             <S.ProfileDetailBox>
               <S.UserName>{data[0].nickname}</S.UserName>
               <S.SubscribeCount>{data[0].subsc_count} 구독자</S.SubscribeCount>
+              <S.IntruductionBox>{data[0].introduction}</S.IntruductionBox>
             </S.ProfileDetailBox>
           </S.ProfileBox>
           <S.ButtonBox>
@@ -58,10 +62,9 @@ export const Mypage = () => {
               onClick={handleEditProfileClick}>
               프로필 수정
             </Button>
-            <SignOutButton />
           </S.ButtonBox>
         </S.HeaderBox>
-        <S.IntruductionBox>{data[0].introduction}</S.IntruductionBox>
+
         <S.SeparatingBox>
           <S.ShowTypes
             onClick={() => setType('like')}
@@ -75,6 +78,7 @@ export const Mypage = () => {
           </S.ShowTypes>
         </S.SeparatingBox>
       </S.Container>
+
       <S.PlayListsBox>
         {type === 'like' ? <MyPageLikes /> : <MyPageSave />}
       </S.PlayListsBox>
