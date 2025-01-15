@@ -52,7 +52,8 @@ export const FeedList = ({
     <>
       <S.CardContainer
         key={key}
-        id={id}>
+        id={id}
+        to={`/view/${id}`}>
         <S.ImageWrapper key={key}>
           <img
             src={image}
