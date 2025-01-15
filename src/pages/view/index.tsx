@@ -70,7 +70,6 @@ export const View = (): JSX.Element => {
   const { user: currentUser } = useAuthStore()
 
   const [isVideoListOpen, setIsVideoListOpen] = useState(false)
-  const [likeCount, setLikeCount] = useState(0)
 
   const [videoContentId, setVideoContentId] = useState('')
   const [videoContentIndex, setVideoContentIndex] = useState(0)
@@ -129,12 +128,6 @@ export const View = (): JSX.Element => {
     isPending: isLikePending
   } = useFetchUserLikeStatus(currentUser!.id, playlist_id!)
 
-  useEffect(() => {
-    if (playlist) {
-      setLikeCount(playlist.likes_count)
-    }
-  }, [playlist])
-
   // 구독 상태 가져오기
   const {
     data: isSubsc,
@@ -175,6 +168,7 @@ export const View = (): JSX.Element => {
   }
 
   if (error) {
+    console.error('플레이리스트 페이지 호출 실패:', error)
     return <NotFound />
   }
 
@@ -199,27 +193,38 @@ export const View = (): JSX.Element => {
   }
 
   if (creatorDataError) {
-    return <NotFound />
+    console.error('제작자 정보 호출 실패:', creatorDataError)
+    throw new Error('제작자 정보를 가져오는 데 실패하였습니다.')
   }
 
   if (likeError) {
-    return <NotFound />
+    console.error('좋아요 정보 호출 실패:', likeError)
+    throw new Error('좋아요 정보를 가져오는 데 실패하였습니다.')
   }
 
   if (subscError) {
-    return <NotFound />
+    console.error('구독자 정보 호출 실패:', subscError)
+    throw new Error('구독자 정보를 가져오는 데 실패하였습니다.')
   }
 
   if (bookmarkError) {
-    return <NotFound />
+    console.error('플레이리스트 저장 정보 호출 실패:', bookmarkError)
+    throw new Error('플레이리스트 저장 정보를 가져오는 데 실패하였습니다.')
   }
 
   if (videoDataError) {
-    return <NotFound />
+    console.error('영상 목록 정보 호출 실패:', videoDataError)
+    throw new Error('영상 목록 정보를 가져오는 데 실패하였습니다.')
   }
 
-  const { title, description, created_at, video_count, comments_count } =
-    playlist
+  const {
+    title,
+    description,
+    created_at,
+    video_count,
+    comments_count,
+    likes_count
+  } = playlist
   const { id: creator_id, nickname, profile_img, subsc_count } = creatorData
 
   const handleShareClick = () => {
@@ -229,8 +234,13 @@ export const View = (): JSX.Element => {
   const handleLikeClick = () => {
     const props = { userId: currentUser!.id, playlistId: playlist_id! }
     toggleLikeMutate(props, {
-      onSuccess: data => {
-        setLikeCount(prevCount => (data ? prevCount + 1 : prevCount - 1))
+      onError: () => {
+        showToastMessage({
+          message:
+            '좋아요 동작이 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
+          type: 'error',
+          delay: 10000
+        })
       }
     })
   }
@@ -240,12 +250,30 @@ export const View = (): JSX.Element => {
       currentUserId: currentUser!.id,
       subscribedUserId: creator_id
     }
-    toggleSubscMutate(props)
+    toggleSubscMutate(props, {
+      onError: () => {
+        showToastMessage({
+          message:
+            '구독에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
+          type: 'error',
+          delay: 10000
+        })
+      }
+    })
   }
 
   const handleBookmarkClick = () => {
     const props = { userId: currentUser!.id, playlistId: playlist_id! }
-    toggleBookmarkMutate(props)
+    toggleBookmarkMutate(props, {
+      onError: () => {
+        showToastMessage({
+          message:
+            '플레이리스트 저장에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
+          type: 'error',
+          delay: 10000
+        })
+      }
+    })
   }
 
   const openVideoList = () => setIsVideoListOpen(true)
@@ -329,7 +357,7 @@ export const View = (): JSX.Element => {
                   color="var(--color-main1)"
                 />
               )}
-              <span>{formatKoreanUnit(likeCount)}</span>
+              <span>{formatKoreanUnit(likes_count)}</span>
             </button>
             <button
               type="button"

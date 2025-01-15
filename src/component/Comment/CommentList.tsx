@@ -3,7 +3,6 @@ import CommentItem from './CommentItem'
 import useFetchPlaylistComments from '@/hooks/useFetchPlaylistComments'
 import { ICommentItemProps, CommentListProps } from '@/types/comments'
 import Loading from '../LoadingSpinner/Loading'
-import { NotFound } from '@/pages'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
 import { useRef } from 'react'
 
@@ -32,7 +31,7 @@ const CommentList = ({ playlistId }: CommentListProps) => {
 
   if (error) {
     console.error('댓글 정보 호출 실패:', error)
-    return <NotFound />
+    throw new Error('댓글 목록을 불러오는 데 실패하였습니다.')
   }
 
   return (
@@ -48,7 +47,7 @@ const CommentList = ({ playlistId }: CommentListProps) => {
           playlistId={playlistId}
         />
       ))}
-      <div ref={observerElem}>{isFetchingNextPage && <div>asdfasdf</div>}</div>
+      <div ref={observerElem}>{isFetchingNextPage && <Loading />}</div>
     </S.Container>
   )
 }

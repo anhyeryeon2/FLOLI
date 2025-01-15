@@ -18,7 +18,7 @@ const CommentEditor = ({ playlistId }: CommentEditorProps) => {
 
   const [commentContent, setCommentContent] = useState('')
 
-  const { mutate: submitComment, isPending, error } = useSubmitComment()
+  const { mutate: submitComment, isPending } = useSubmitComment()
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setCommentContent(e.target.value)
@@ -47,7 +47,7 @@ const CommentEditor = ({ playlistId }: CommentEditorProps) => {
             console.error('댓글 전송 오류:', err)
             showToastMessage({
               message:
-                '댓글 작성에 오류가 발생하였습니다. 새로고침 후에도 오류가 지속될 경우 관리자에 문의 부탁드립니다.',
+                '댓글 작성에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
               type: 'error',
               delay: 10000
             })

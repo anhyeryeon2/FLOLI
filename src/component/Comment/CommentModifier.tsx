@@ -18,7 +18,7 @@ const CommentModifier = ({
 
   const { showToastMessage } = useToastMessageContext()
 
-  const { mutate: modifyCommentMutate, isPending, error } = useModifyComment()
+  const { mutate: modifyCommentMutate, isPending } = useModifyComment()
 
   const handleChange = (e: ChangeEvent<HTMLTextAreaElement>) => {
     setModifiedContent(e.target.value)
@@ -63,6 +63,15 @@ const CommentModifier = ({
               message: '댓글이 수정되었습니다.',
               type: 'success'
             })
+          },
+          onError: () => {
+            showToastMessage({
+              message:
+                '댓글 수정에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
+              type: 'success',
+              delay: 10000
+            })
+            throw new Error('댓글 수정에 실패하였습니다.')
           }
         })
         setIsModifier(false)

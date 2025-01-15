@@ -6,12 +6,12 @@ import { MdDelete } from 'react-icons/md'
 import { useAuthStore } from '@/store/useAuthStore'
 import useFetchUserData from '@/hooks/useFetchUserData'
 import Loading from '../LoadingSpinner/Loading'
-import { NotFound } from '@/pages'
 import getTimeAgo from '@/utils/getTimeAgo'
 import LogoAsset from '@/assets/img/logo/floli_o.svg'
 import useDeleteComment from '@/hooks/useDeleteComment'
 import { useModal } from '@/hooks/useModal'
 import CommentModifier from './CommentModifier'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 
 type ContentTextProps = {
   text: string
@@ -64,6 +64,8 @@ const CommentItem = ({
 }: CommentItemProps) => {
   const [isModifier, setIsModifier] = useState(false)
 
+  const { showToastMessage } = useToastMessageContext()
+
   const { user: currentUser } = useAuthStore()
   const currentUserId = currentUser?.id
 
@@ -75,14 +77,15 @@ const CommentItem = ({
     isPending: iscommentUserDataPending
   } = useFetchUserData(commentUserId)
 
-  const { mutate: deleteCommentMutate, isPending, error } = useDeleteComment()
+  const { mutate: deleteCommentMutate, isPending: isDeleteCommentPending } =
+    useDeleteComment()
 
   if (iscommentUserDataPending) {
     return <Loading />
   }
 
   if (commentUserDataError) {
-    return <NotFound />
+    throw new Error('댓글 정보를 가져오는 데 실패하였습니다.')
   }
 
   const { nickname, profile_img } = commentUserData
@@ -94,7 +97,17 @@ const CommentItem = ({
       cancelText: '취소',
       onConfirm: () => {
         const props = { commentId, playlistId }
-        deleteCommentMutate(props)
+        deleteCommentMutate(props, {
+          onError: () => {
+            showToastMessage({
+              message:
+                '댓글 삭제에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
+              type: 'error',
+              delay: 10000
+            })
+            throw new Error('댓글 삭제에 실패하였습니다.')
+          }
+        })
       }
     })
   }
@@ -154,7 +167,8 @@ const CommentItem = ({
               </button>
               <button
                 type="button"
-                onClick={handleDeleteClick}>
+                onClick={handleDeleteClick}
+                disabled={isDeleteCommentPending}>
                 <span>삭제</span>
                 <MdDelete />
               </button>
