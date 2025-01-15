@@ -12,12 +12,14 @@ import { CreatePlaylistPayload } from '@/types/playListCreate'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 
 import { Button, Input } from '@/component'
-import * as S from '@/component/PlayListCreate/PlayListCreate.styles'
-import { PlayListInfo } from '@/component/PlayListCreate/PlayListInfo'
-import { PlayListIsPublic } from '@/component/PlayListCreate/PlayListIsPublic'
+import * as S from '@/component/PlayListCreate'
+import {
+  PlayListInfo,
+  PlayListIsPublic,
+  VideoList
+} from '@/component/PlayListCreate'
 import { RiImageAddLine } from 'react-icons/ri'
 import { createPlaylist } from '@/apis/createPlayList'
-import { VideoList } from '@/component/PlayListCreate/VideoList'
 
 export function PlayListCreate() {
   const [playlistTitle, setPlaylistTitle] = useState('')
