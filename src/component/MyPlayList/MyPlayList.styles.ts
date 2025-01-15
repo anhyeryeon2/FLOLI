@@ -12,15 +12,15 @@ export const Title = styled.p`
   font-weight: 500;
   color: var(--color-black);
   padding: var(--spacing-4) 0;
+  display: flex;
+  align-items: start;
+
   span {
     font-size: var(--fs-xl);
-    display: inline-block;
     max-width: 200px;
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
-    text-align: center;
-    vertical-align: middle;
   }
 `
 export const PlayListWrapper = styled.div`
