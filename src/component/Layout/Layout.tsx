@@ -17,7 +17,6 @@ import {
   useSearchTermListStore,
   useSearchTermStore
 } from '@/store/useSearchTermStore'
-import Loading from '../LoadingSpinner/Loading'
 import { IPlayList } from '@/types/playList'
 import { useDebounce } from '@/hooks/useDebounce'
 
@@ -77,11 +76,7 @@ const Layout = () => {
 
   const debouncedTitle = useDebounce(searchTerm, 300)
 
-  const {
-    data: searchs,
-    isError,
-    isLoading
-  } = useQuery<IPlayList[]>({
+  const { data: searchs, isError } = useQuery<IPlayList[]>({
     queryKey: ['searchPlayList', debouncedTitle],
     queryFn: () => getSearch(debouncedTitle),
     enabled: !!debouncedTitle,
@@ -101,8 +96,6 @@ const Layout = () => {
     addSearchTerm(searchValue) // 최근 검색어 목록에 추가
     navigate(`/search?search=${searchValue}`, { state: searchValue }) // navigate로 검색어와 함께 이동
   }
-
-  if (isLoading) <Loading />
 
   if (isError) <div>에러가 났습니다. 다시 시도 해주세요</div>
 
