@@ -21,6 +21,8 @@ import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/useAuthStore'
 import { ErrorBoundary } from 'react-error-boundary'
 import { ErrorFallback } from '@/component/ErrorBoundary/ErrorFallback'
+import { Suspense } from 'react'
+import Loading from '@/component/LoadingSpinner/Loading'
 
 export function ProtectedRoute({ children }: { children: JSX.Element }) {
   const user = useAuthStore(state => state.user)
@@ -40,9 +42,11 @@ const router = createBrowserRouter([
   {
     path: ROUTER_PATH.HOME,
     element: (
-      <ErrorBoundary FallbackComponent={ErrorFallback}>
-        <Layout />
-      </ErrorBoundary>
+      <Suspense fallback={<Loading />}>
+        <ErrorBoundary FallbackComponent={ErrorFallback}>
+          <Layout />
+        </ErrorBoundary>
+      </Suspense>
     ),
     errorElement: <NotFound />,
 
