@@ -51,8 +51,8 @@ export const Mypage = () => {
             />
             <S.ProfileDetailBox>
               <S.UserName>{data[0].nickname}</S.UserName>
-              <S.SubscribeCount>{data[0].subsc_count} 구독자</S.SubscribeCount>
               <S.IntruductionBox>{data[0].introduction}</S.IntruductionBox>
+              <S.SubscribeCount> 구독자 {data[0].subsc_count}</S.SubscribeCount>
             </S.ProfileDetailBox>
           </S.ProfileBox>
           <S.ButtonBox>
