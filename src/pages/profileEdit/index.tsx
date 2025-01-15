@@ -44,10 +44,10 @@ export function ProfileEdit() {
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>({
-    defaultValues: userinfo
+    defaultValues: user
       ? {
-          nickname: userinfo[0].nickname,
-          introduction: userinfo[0].introduction
+          nickname: user?.nickname,
+          introduction: user?.introduction ?? undefined
         }
       : {}
   })
