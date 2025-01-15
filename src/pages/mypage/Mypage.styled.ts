@@ -35,14 +35,7 @@ export const ProfileDetailBox = styled.div`
 export const UserName = styled.div`
   font-size: var(--fs-xl);
   font-weight: 500;
-
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  word-break: break-all;
-  max-width: 250px;
+  padding: 0 var(--spacing-7);
 `
 export const SubscribeCount = styled.div`
   padding: var(--spacing-1) 0;
