@@ -9,6 +9,7 @@ export interface FeedListProps {
   track: number
   key: string
   id: string
+  playlist_user_id: string
 }
 
 export interface PlayListProps {
