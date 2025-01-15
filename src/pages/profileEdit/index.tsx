@@ -96,7 +96,7 @@ export function ProfileEdit() {
     mutate({ data: editProfileData, image: newImage, id: userId })
 
     updateUser({
-      profile_img: newImage,
+      profile_img: userinfo![0].profile_img,
       nickname: editProfileData.nickname,
       introduction: editProfileData.introduction
     })
