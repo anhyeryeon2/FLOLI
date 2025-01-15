@@ -61,7 +61,7 @@ export const FeedList = ({
           {track > 0 && <S.TrackTag>Track: {track}</S.TrackTag>}
         </S.ImageWrapper>
         <S.ContentWrapper>
-          <S.ProfileImage>
+          <S.ProfileImage to={`/profile/${playlist_user_id}`}>
             <img
               src={profileImage}
               alt="Profile"

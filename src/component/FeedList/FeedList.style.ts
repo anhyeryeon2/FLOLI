@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { FaEllipsisH } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 export const FeedConteiner = styled.div`
   display: flex;
@@ -50,7 +51,7 @@ export const ContentWrapper = styled.div`
   padding: var(--spacing-4) var(--spacing-3) 0 var(--spacing-3);
 `
 
-export const ProfileImage = styled.div`
+export const ProfileImage = styled(Link)`
   width: 5rem;
   height: 5rem;
   border-radius: var(--radius-full);
