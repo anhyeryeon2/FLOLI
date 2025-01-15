@@ -69,12 +69,14 @@ export const SearchPage = () => {
             comments={playList.comments_count}
             key={playList.playlist_id}
             id={playList.playlist_id}
+            likesState={playList.is_liked}
+            playlist_user_id={playList.playlist_user_id}
           />
         ))
       ) : (
         <div
           style={{ display: 'flex', justifyContent: 'center', color: 'red' }}>
-          데이터가 없습니다.
+          검색한 내용이 없습니다.
         </div>
       )}
 

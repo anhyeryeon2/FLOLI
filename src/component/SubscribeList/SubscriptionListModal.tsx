@@ -50,21 +50,25 @@ const SubscriptionListModal = ({
         <S.SubscribeAllLength>
           총 {subscribeList && subscribeList.length}명
         </S.SubscribeAllLength>
-        {subscribeList?.map(subscribe => (
-          <S.ModalfullContent key={subscribe.subscriber_id}>
-            <S.SubscribeAvatar
-              src={subscribe.user_profile_image}
-              alt="구독한 프로필 이미지"
-            />
-            <span>{subscribe.user_nickname}</span>
-            <S.ModalfullClickContent
-              onClick={() =>
-                handleSubscribeDelete(subscribe.subscribed_user_id)
-              }>
-              <RiUserUnfollowLine size={30} />
-            </S.ModalfullClickContent>
-          </S.ModalfullContent>
-        ))}
+        {subscribeList && subscribeList.length > 0 ? (
+          subscribeList?.map(subscribe => (
+            <S.ModalfullContent key={subscribe.subscriber_id}>
+              <S.SubscribeAvatar
+                src={subscribe.user_profile_image}
+                alt="구독한 프로필 이미지"
+              />
+              <span>{subscribe.user_nickname}</span>
+              <S.ModalfullClickContent
+                onClick={() =>
+                  handleSubscribeDelete(subscribe.subscribed_user_id)
+                }>
+                <RiUserUnfollowLine size={30} />
+              </S.ModalfullClickContent>
+            </S.ModalfullContent>
+          ))
+        ) : (
+          <div>구독 목록이 없습니다.</div>
+        )}
       </ModalFull>
     </>
   )

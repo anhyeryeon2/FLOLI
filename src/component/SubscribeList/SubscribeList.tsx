@@ -60,18 +60,24 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
         onMouseLeave={onDragEnd} //마우스가 해당 요소 영역을 벗어낫을 때
         onMouseMove={isDrag ? onThrottleDragMove : undefined} //마우스가 움직일때
       >
-        {subscribeList?.map(subscribe => (
-          <S.SubscribeListItem
-            key={subscribe.user_id}
-            onClick={() => handleSubscribeClick(subscribe.subscribed_user_id)}>
-            <S.SubscribeItem>
-              <S.SubscribeAvatar
-                src={subscribe.user_profile_image}
-                alt="구독한 프로필 이미지"
-              />
-            </S.SubscribeItem>
-          </S.SubscribeListItem>
-        ))}
+        {subscribeList && subscribeList.length > 0 ? (
+          subscribeList?.map(subscribe => (
+            <S.SubscribeListItem
+              key={subscribe.user_id}
+              onClick={() =>
+                handleSubscribeClick(subscribe.subscribed_user_id)
+              }>
+              <S.SubscribeItem>
+                <S.SubscribeAvatar
+                  src={subscribe.user_profile_image}
+                  alt="구독한 프로필 이미지"
+                />
+              </S.SubscribeItem>
+            </S.SubscribeListItem>
+          ))
+        ) : (
+          <div>구독한 사람이 없습니다.</div>
+        )}
       </S.SubscribeListContainer>
       <S.SubscribeAllList onClick={handleSubscribeListOpen}>
         전체
