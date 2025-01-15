@@ -11,6 +11,7 @@ export interface FeedListProps {
   id: string
   likesState: boolean
   playlist_user_id: string
+  is_public: boolean
 }
 
 export interface PlayListProps {

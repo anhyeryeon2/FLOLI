@@ -69,6 +69,9 @@ export const SearchPage = () => {
             comments={playList.comments_count}
             key={playList.playlist_id}
             id={playList.playlist_id}
+            likesState={playList.is_liked}
+            playlist_user_id={playList.playlist_user_id}
+            is_public={playList.is_public}
           />
         ))
       ) : (

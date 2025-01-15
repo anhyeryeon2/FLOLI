@@ -20,7 +20,8 @@ export const FeedList = ({
   key,
   id,
   likesState,
-  playlist_user_id
+  playlist_user_id,
+  is_public
 }: FeedListProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
@@ -50,43 +51,47 @@ export const FeedList = ({
   }
   return (
     <>
-      <S.CardContainer
-        key={key}
-        id={id}>
-        <S.ImageWrapper key={key}>
-          <img
-            src={image}
-            alt={title}
+      {is_public && (
+        <>
+          <S.CardContainer
+            key={key}
+            id={id}>
+            <S.ImageWrapper key={key}>
+              <img
+                src={image}
+                alt={title}
+              />
+              {track > 0 && <S.TrackTag>Track: {track}</S.TrackTag>}
+            </S.ImageWrapper>
+            <S.ContentWrapper>
+              <S.ProfileImage>
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                />
+              </S.ProfileImage>
+              <S.TextWrapper>
+                <S.Title>{title}</S.Title>
+                <S.nickname>{nickname}</S.nickname>
+                <FeedFooter
+                  likes={likes}
+                  comments={comments}
+                  date={dateKoreanFormat(date)}
+                  onClick={handleOptionsPopup}
+                  onLikeClick={() => handleUpdateLike(id)}
+                  likesState={likesState}
+                />
+              </S.TextWrapper>
+            </S.ContentWrapper>
+          </S.CardContainer>
+          <FeedListOptionPopUp
+            isOpen={isOpen}
+            handleOptionsPopState={handleOptionsPopState}
+            id={id}
+            playlist_user_id={playlist_user_id}
           />
-          {track > 0 && <S.TrackTag>Track: {track}</S.TrackTag>}
-        </S.ImageWrapper>
-        <S.ContentWrapper>
-          <S.ProfileImage>
-            <img
-              src={profileImage}
-              alt="Profile"
-            />
-          </S.ProfileImage>
-          <S.TextWrapper>
-            <S.Title>{title}</S.Title>
-            <S.nickname>{nickname}</S.nickname>
-            <FeedFooter
-              likes={likes}
-              comments={comments}
-              date={dateKoreanFormat(date)}
-              onClick={handleOptionsPopup}
-              onLikeClick={() => handleUpdateLike(id)}
-              likesState={likesState}
-            />
-          </S.TextWrapper>
-        </S.ContentWrapper>
-      </S.CardContainer>
-      <FeedListOptionPopUp
-        isOpen={isOpen}
-        handleOptionsPopState={handleOptionsPopState}
-        id={id}
-        playlist_user_id={playlist_user_id}
-      />
+        </>
+      )}
     </>
   )
 }
