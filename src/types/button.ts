@@ -9,5 +9,5 @@ export type TButtonProps = {
   fontSize?: string
   width?: string
   type?: string
-  bordertype: '구독' | '기본'
+  bordertype?: '구독' | '기본'
 }

@@ -2,8 +2,9 @@ import CommentEditor from '@/component/Comment/CommentEditor'
 import CommentList from '@/component/Comment/CommentList'
 import Profile from '@/component/Profile/Profile'
 import ViewVideoList from '@/component/ViewVideoList/ViewVideoList'
-import * as S from '@/styles/pages/view/view.style'
+import * as S from './view.style'
 import { IViewProps } from '@/types/View'
+import { useQuery } from '@tanstack/react-query'
 import { useEffect, useRef, useState } from 'react'
 import {
   FaBookmark,
@@ -14,6 +15,25 @@ import {
 } from 'react-icons/fa'
 import { IoIosArrowUp } from 'react-icons/io'
 import { RiPlayList2Fill } from 'react-icons/ri'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
+import useFetchUserData from '@/hooks/useFetchUserData'
+import useFetchUserLikeStatus from '@/hooks/useFetchUserLikeStatus' // 좋아요 상태 가져오는 훅
+import { NotFound } from '../notFound'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { formatKoreanUnit } from '@/utils/formatKoreanUnit'
+import copyToClipboard from '@/utils/copyToClipboard'
+import Loading from '@/component/LoadingSpinner/Loading'
+import { useAuthStore } from '@/store/useAuthStore'
+import useFetchUserSubscStatus from '@/hooks/useFetchUserSubscStatus'
+import useToggleLike from '@/hooks/useToggleLike'
+import useToggleSubsc from '@/hooks/useToggleSubsc'
+import useToggleBookmark from '@/hooks/useToggleBookmark'
+import useFetchUserBookmarkStatus from '@/hooks/useFetchUserBookmarkStatus'
+import ViewVideoContent from '@/component/ViewVideoContent/ViewVideoContent'
+import useFetchVideoList from '@/hooks/useFetchVideoList'
+import { LAST_VIDEO_TITLE } from '@/constants/constant'
+import axiosInstance from '@/apis/axiosInstance'
+import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 
 const DescriptionText = ({ description }: Pick<IViewProps, 'description'>) => {
   const textRef = useRef<HTMLDivElement>(null)
@@ -44,51 +64,250 @@ const DescriptionText = ({ description }: Pick<IViewProps, 'description'>) => {
   )
 }
 
-// {
-//   playListTitle,
-//   VideoTitle,
-//   createAt,
-//   description,
-//   creatorImgPath,
-//   creatorName,
-//   subscCount,
-//   isSubsc,
-//   isLike,
-//   isStore,
-//   commentCount,
-//   trackCount,
-// }: IViewProps
-export const View = () => {
-  const playListTitle =
-    '플레이리스트 제목 플레이리스트 제목 플레이리스트 제목 플레이리스트 제목 플레이리스트 제목플레이리스트 제목플레이리스트 제목플레이리스트 제목플레이리스트 제목'
-  const VideoTitle = '영상 제목 가나다라 마바사아'
-  const createAt = '2024년 9월 10일'
-  const description =
-    '테스트입니다 테스트입니다테스트입니다 테스트입니다테스트입니다 테스트입니다테스트입니다 테스트입니다테스트입니다 테스트입니다테스트입니다 테스트입니다테스트입니다 테스트입니다'
-  const creatorImgPath =
-    'https://www.next-t.co.kr/public/uploads/7b7f7e2138e29e598cd0cdf2c85ea08d.jpg'
-  const creatorName =
-    '홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동홍길동'
-  const subscCount = 2857612
-  const isSubsc = false
-  const isLike = false
-  const isStore = false
-  const commentCount = 172
-  const trackCount = 24
+export const View = (): JSX.Element => {
+  // const videoContentRef = useRef(null)
+
+  const { user: currentUser } = useAuthStore()
 
   const [isVideoListOpen, setIsVideoListOpen] = useState(false)
+
+  const [videoContentId, setVideoContentId] = useState('')
+  const [videoContentIndex, setVideoContentIndex] = useState(0)
+  const [videoContentTitle, setVideoContentTitle] = useState('')
+  const [nextVideoContentTitle, setNextVideoContentTitle] = useState('')
+  // const [playlistModalHeight, setPlaylistModalHeight] = useState(0)
+
+  const navigate = useNavigate()
+  const { pathname, search } = useLocation()
+
+  const { mutate: toggleLikeMutate, isPending: isToggleLikePending } =
+    useToggleLike()
+  const { mutate: toggleSubscMutate, isPending: isToggleSubscPending } =
+    useToggleSubsc()
+
+  const { mutate: toggleBookmarkMutate, isPending: isToggleBookmarkPending } =
+    useToggleBookmark()
+
+  const { showToastMessage } = useToastMessageContext()
+
+  const { playlist_id } = useParams<{ playlist_id: string }>()
+
+  const nowHref = window.location.href
+
+  // 플리 정보
+  const fetchPlaylistData = async (id: string) => {
+    const res = await axiosInstance.get('/playlists', {
+      params: {
+        playlist_id: `eq.${id}`
+      }
+    })
+    return res.data[0]
+  }
+
+  const {
+    data: playlist,
+    error,
+    isPending
+  } = useQuery({
+    queryKey: ['playlist', playlist_id],
+    queryFn: () => fetchPlaylistData(playlist_id!),
+    enabled: !!playlist_id
+  })
+
+  // 플리 제작한 유저 정보
+  const {
+    data: creatorData,
+    error: creatorDataError,
+    isPending: isCreatorDataPending
+  } = useFetchUserData(playlist?.user_id)
+
+  // 좋아요 상태 가져오기
+  const {
+    data: isLike,
+    error: likeError,
+    isPending: isLikePending
+  } = useFetchUserLikeStatus(currentUser!.id, playlist_id!)
+
+  // 구독 상태 가져오기
+  const {
+    data: isSubsc,
+    error: subscError,
+    isPending: isSubscPending
+  } = useFetchUserSubscStatus(currentUser!.id, playlist?.user_id)
+
+  // 플리 저장 상태 가져오기
+  const {
+    data: isBookmark,
+    error: bookmarkError,
+    isPending: isBookmarkPending
+  } = useFetchUserBookmarkStatus(currentUser!.id, playlist_id!)
+
+  // 영상 목록 데이터 가져오기
+  const {
+    data: videoData,
+    error: videoDataError,
+    isPending: isVideoDataPending
+  } = useFetchVideoList(playlist?.video_url.split(','))
+
+  // 첫 영상 보여주기
+  useEffect(() => {
+    if (videoData && videoData.length > 0) {
+      setVideoContentId(videoData[0]?.video_id)
+      setVideoContentIndex(0)
+      setVideoContentTitle(videoData[0]?.title)
+      setNextVideoContentTitle(videoData[1]?.title || LAST_VIDEO_TITLE)
+    }
+  }, [videoData])
+
+  // useEffect(() => {
+  //   setPlaylistModalHeight(videoContentRef.current?.offsetHeight)
+  // }, [videoContentRef])
+
+  if (isPending) {
+    return <Loading />
+  }
+
+  if (error) {
+    console.error('플레이리스트 페이지 호출 실패:', error)
+    return <NotFound />
+  }
+
+  if (isCreatorDataPending) {
+    return <Loading />
+  }
+
+  if (isLikePending) {
+    return <Loading />
+  }
+
+  if (isSubscPending) {
+    return <Loading />
+  }
+
+  if (isBookmarkPending) {
+    return <Loading />
+  }
+
+  if (isVideoDataPending) {
+    return <Loading />
+  }
+
+  if (creatorDataError) {
+    console.error('제작자 정보 호출 실패:', creatorDataError)
+    throw new Error('제작자 정보를 가져오는 데 실패하였습니다.')
+  }
+
+  if (likeError) {
+    console.error('좋아요 정보 호출 실패:', likeError)
+    throw new Error('좋아요 정보를 가져오는 데 실패하였습니다.')
+  }
+
+  if (subscError) {
+    console.error('구독자 정보 호출 실패:', subscError)
+    throw new Error('구독자 정보를 가져오는 데 실패하였습니다.')
+  }
+
+  if (bookmarkError) {
+    console.error('플레이리스트 저장 정보 호출 실패:', bookmarkError)
+    throw new Error('플레이리스트 저장 정보를 가져오는 데 실패하였습니다.')
+  }
+
+  if (videoDataError) {
+    console.error('영상 목록 정보 호출 실패:', videoDataError)
+    throw new Error('영상 목록 정보를 가져오는 데 실패하였습니다.')
+  }
+
+  const {
+    title,
+    description,
+    created_at,
+    video_count,
+    comments_count,
+    likes_count
+  } = playlist
+  const { id: creator_id, nickname, profile_img, subsc_count } = creatorData
+
+  const handleShareClick = () => {
+    copyToClipboard({ url: nowHref, showToastMessage })
+  }
+
+  const handleLikeClick = () => {
+    const props = { userId: currentUser!.id, playlistId: playlist_id! }
+    toggleLikeMutate(props, {
+      onError: () => {
+        showToastMessage({
+          message:
+            '좋아요 동작이 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
+          type: 'error',
+          delay: 10000
+        })
+      }
+    })
+  }
+
+  const handleSubscClick = () => {
+    const props = {
+      currentUserId: currentUser!.id,
+      subscribedUserId: creator_id
+    }
+    toggleSubscMutate(props, {
+      onError: () => {
+        showToastMessage({
+          message:
+            '구독에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
+          type: 'error',
+          delay: 10000
+        })
+      }
+    })
+  }
+
+  const handleBookmarkClick = () => {
+    const props = { userId: currentUser!.id, playlistId: playlist_id! }
+    toggleBookmarkMutate(props, {
+      onError: () => {
+        showToastMessage({
+          message:
+            '플레이리스트 저장에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
+          type: 'error',
+          delay: 10000
+        })
+      }
+    })
+  }
+
   const openVideoList = () => setIsVideoListOpen(true)
-  const closeVideoList = () => setIsVideoListOpen(false)
+  const closeVideoList = () => {
+    const params = new URLSearchParams(search)
+    params.delete('modal')
+    navigate(`${pathname}?${params.toString()}`)
+    setIsVideoListOpen(false)
+  }
+
+  const handleVideoSelect = (
+    videoId: string,
+    index: number,
+    title: string,
+    nextTitle: string
+  ) => {
+    setVideoContentId(videoId)
+    setVideoContentIndex(index)
+    setVideoContentTitle(title)
+    setNextVideoContentTitle(nextTitle)
+  }
 
   return (
     <>
       <S.Container>
-        {/* todo: 영상 들어가는 영역 - sticky 넣기 */}
+        <ViewVideoContent
+          // ref={videoContentRef}
+          videoId={videoContentId}
+        />
         <S.VideoInfoWrapper>
-          <h2>{VideoTitle}</h2>
-          <h1>{playListTitle}</h1>
+          <h2>{videoContentTitle}</h2>
+          <h1>{title}</h1>
           <div className="info-box">
-            <span className="create-at">{createAt}</span>
+            <span className="create-at">{dateKoreanFormat(created_at)}</span>
             <DescriptionText description={description} />
           </div>
           <S.CreatorProfileWrapper>
@@ -97,23 +316,36 @@ export const View = () => {
                 className="profile-img"
                 userId="userIdtest"
                 size="3.2rem"
-                imageUrl={creatorImgPath}
+                imageUrl={profile_img}
               />
-              <h3 className="creator-name">{creatorName}</h3>
-              <span className="subsc-count">{subscCount}</span>
+              <h3 className="creator-name">{nickname}</h3>
+              <span className="subsc-count">
+                {formatKoreanUnit(subsc_count)}
+              </span>
             </div>
-            {isSubsc ? (
-              <S.StyledButton
-                type="button"
-                className="subsc-cancel">
-                구독 취소
-              </S.StyledButton>
-            ) : (
-              <S.StyledButton type="button">구독</S.StyledButton>
-            )}
+            {currentUser!.id !== playlist?.user_id &&
+              (isSubsc ? (
+                <S.StyledButton
+                  type="button"
+                  className="subsc-cancel"
+                  onClick={handleSubscClick}
+                  disabled={isToggleSubscPending}>
+                  구독 취소
+                </S.StyledButton>
+              ) : (
+                <S.StyledButton
+                  type="button"
+                  onClick={handleSubscClick}
+                  disabled={isToggleSubscPending}>
+                  구독
+                </S.StyledButton>
+              ))}
           </S.CreatorProfileWrapper>
           <S.ActionButtonWrapper>
-            <button type="button">
+            <button
+              type="button"
+              onClick={handleLikeClick}
+              disabled={isToggleLikePending}>
               {isLike ? (
                 <FaHeart
                   size="16"
@@ -125,14 +357,23 @@ export const View = () => {
                   color="var(--color-main1)"
                 />
               )}
-              <span>25.6K</span>
+              <span>{formatKoreanUnit(likes_count)}</span>
             </button>
-            <button type="button">
+            <button
+              type="button"
+              onClick={handleShareClick}>
               <FaShareAlt size="16" />
               <span>공유</span>
             </button>
-            <button type="button">
-              {isStore ? <FaBookmark size="16" /> : <FaRegBookmark size="16" />}
+            <button
+              type="button"
+              onClick={handleBookmarkClick}
+              disabled={isToggleBookmarkPending}>
+              {isBookmark ? (
+                <FaBookmark size="16" />
+              ) : (
+                <FaRegBookmark size="16" />
+              )}
               <span>저장</span>
             </button>
           </S.ActionButtonWrapper>
@@ -140,23 +381,24 @@ export const View = () => {
         <S.CommentWrapper>
           <div className="comment-count">
             댓글
-            <span>{commentCount}</span>
+            <span>{comments_count}</span>
           </div>
-          <CommentEditor />
-          <CommentList />
+          <CommentEditor playlistId={playlist_id!} />
+          <CommentList playlistId={playlist_id!} />
         </S.CommentWrapper>
 
         <S.VideoListPanel onClick={openVideoList}>
-          <RiPlayList2Fill size="24" />
-          <div className="playList-info-wrapper">
-            <p className="next-video-title">
-              다음 영상 제목 들어가기다음 영상 제목 들어가기 다음 영상 제목
-              들어가기
-            </p>
-            <div className="playList-info">
-              <p>{playListTitle} 말줄임표 넣기</p>
-              <span>&nbsp;|&nbsp;</span>
-              <span>2/{trackCount}</span>
+          <div className="inner">
+            <RiPlayList2Fill size="22" />
+            <div className="playList-info-wrapper">
+              <p className="next-video-title">{nextVideoContentTitle}</p>
+              <div className="playList-info">
+                <p>{title}</p>
+                <span>&nbsp;|&nbsp;</span>
+                <span>
+                  {videoContentIndex + 1}/{video_count}
+                </span>
+              </div>
             </div>
           </div>
           <button
@@ -166,13 +408,17 @@ export const View = () => {
           </button>
         </S.VideoListPanel>
         <S.StyledModal
-          id="testmodal"
+          id="videoList"
+          // height={`${playlistModalHeight}px`}
           isOpen={isVideoListOpen}
           closeModal={closeVideoList}>
           <ViewVideoList
             closeModal={closeVideoList}
-            trackCount={trackCount}
-            playListTitle={playListTitle}
+            trackCount={video_count}
+            playListTitle={title}
+            videoData={videoData}
+            selectVideo={handleVideoSelect}
+            videoContentIndex={videoContentIndex}
           />
         </S.StyledModal>
       </S.Container>
