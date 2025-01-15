@@ -2,14 +2,13 @@ import { FeedListProps } from '@/types/List'
 import * as S from './FeedList.style'
 import { FeedFooter } from './Footer'
 import { useState } from 'react'
-import { FaShareAlt } from 'react-icons/fa'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { updateLike } from '@/apis/like'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 import FeedListOptionPopUp from './FeedListOptionPopUp'
 
-const FeedList = ({
+export const FeedList = ({
   image,
   profileImage,
   title,
@@ -91,5 +90,3 @@ const FeedList = ({
     </>
   )
 }
-
-export default FeedList

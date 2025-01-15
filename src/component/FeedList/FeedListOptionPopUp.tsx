@@ -1,4 +1,4 @@
-import Modal from '../Modal/Modal'
+import { Modal } from '@/component'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { MdPlaylistAdd } from 'react-icons/md'
 import { FaShareAlt } from 'react-icons/fa'

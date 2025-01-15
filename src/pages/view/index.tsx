@@ -1,6 +1,6 @@
 import CommentEditor from '@/component/Comment/CommentEditor'
 import CommentList from '@/component/Comment/CommentList'
-import Profile from '@/component/Profile/Profile'
+import { Profile } from '@/component'
 import ViewVideoList from '@/component/ViewVideoList/ViewVideoList'
 import * as S from './view.style'
 import { IViewProps } from '@/types/View'
@@ -22,7 +22,7 @@ import { NotFound } from '../notFound'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { formatKoreanUnit } from '@/utils/formatKoreanUnit'
 import copyToClipboard from '@/utils/copyToClipboard'
-import Loading from '@/component/LoadingSpinner/Loading'
+import { Loading } from '@/component'
 import { useAuthStore } from '@/store/useAuthStore'
 import useFetchUserSubscStatus from '@/hooks/useFetchUserSubscStatus'
 import useToggleLike from '@/hooks/useToggleLike'
@@ -238,8 +238,7 @@ export const View = (): JSX.Element => {
         showToastMessage({
           message:
             '좋아요 동작이 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
-          type: 'error',
-          delay: 10000
+          type: 'error'
         })
       }
     })
@@ -255,8 +254,7 @@ export const View = (): JSX.Element => {
         showToastMessage({
           message:
             '구독에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
-          type: 'error',
-          delay: 10000
+          type: 'error'
         })
       }
     })
@@ -269,8 +267,7 @@ export const View = (): JSX.Element => {
         showToastMessage({
           message:
             '플레이리스트 저장에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
-          type: 'error',
-          delay: 10000
+          type: 'error'
         })
       }
     })

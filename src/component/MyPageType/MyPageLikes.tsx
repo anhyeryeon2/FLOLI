@@ -3,14 +3,13 @@ import {
   useMutation,
   useQueryClient
 } from '@tanstack/react-query'
-import PlayList from '../PlayList/PlayList'
+import { PlayList } from '@/component'
 import { useAuthStore } from '@/store/useAuthStore'
 import { DeleteLikeList, LikedPlayList } from '@/apis/userInfoApi'
 import * as S from './MyPageLikes.styled'
-import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useInfiniteScroll, useToast } from '@/hooks'
 import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
-import { useToast } from '@/hooks/useToast'
 
 export default function MyPageLikes() {
   const navigate = useNavigate()

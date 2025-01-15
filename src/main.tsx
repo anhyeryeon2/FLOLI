@@ -10,8 +10,7 @@ import {
   QueryErrorResetBoundary
 } from '@tanstack/react-query'
 import { ErrorBoundary } from 'react-error-boundary'
-import { ErrorFallback } from '@/component/ErrorBoundary/ErrorFallback.tsx'
-import Loading from './component/LoadingSpinner/Loading.tsx'
+import { Loading, ErrorFallback } from './component'
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(

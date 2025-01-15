@@ -2,10 +2,9 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
 import Header from '../header/header-main/Header'
-import Navbar from '../Navbar/Navbar'
 import { ROUTER_PATH, ROUTER_PATH_REGEX } from '@/constants/constant'
 import HeaderSub from '../header/header-sub/HeaderSub'
-import ModalFull from '../Modal/ModalFull'
+
 import { useSearchModalFullStore } from '@/store/useSearchModalFullStore'
 
 import { CiTimer } from 'react-icons/ci'
@@ -19,6 +18,7 @@ import {
 } from '@/store/useSearchTermStore'
 import { IPlayList } from '@/types/playList'
 import { useDebounce } from '@/hooks/useDebounce'
+import { Navbar, ModalFull } from '@/component'
 
 const Container = styled.div`
   max-width: var(--max-width);
@@ -36,13 +36,15 @@ const Layout = () => {
     ROUTER_PATH.LOGIN,
     ROUTER_PATH.SIGNUP_EMAIL,
     ROUTER_PATH.SIGNUP_PASSWORD,
-    ROUTER_PATH.SIGNUP_NICKNAME
+    ROUTER_PATH.SIGNUP_NICKNAME,
+    ROUTER_PATH.END_SIGNUP
   ]
   const noNavbarPaths = [
     ROUTER_PATH.LOGIN,
     ROUTER_PATH.SIGNUP_EMAIL,
     ROUTER_PATH.SIGNUP_PASSWORD,
     ROUTER_PATH.SIGNUP_NICKNAME,
+    ROUTER_PATH.END_SIGNUP,
     ROUTER_PATH.VIEW
   ]
   const backHeaderPaths = ROUTER_PATH_REGEX.VIEW.test(location.pathname)

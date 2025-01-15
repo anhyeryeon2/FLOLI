@@ -5,9 +5,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, LoginFormInputs } from '@/schema/loginSchema'
 import { useAuthStore } from '@/store/useAuthStore'
 
-import Input from '@/component/Input/Input'
-import { Button } from '@/component/Button/Button'
-import Loading from '@/component/LoadingSpinner/Loading'
+import { Input, Loading, Button } from '@/component'
 import { supabase } from '@/supabase/supabaseConfig'
 import { useToast } from '@/hooks/useToast'
 

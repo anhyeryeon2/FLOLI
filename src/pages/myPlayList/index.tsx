@@ -4,8 +4,7 @@ import { useToast } from '@/hooks/useToast'
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query'
 import { useNavigate } from 'react-router-dom'
 
-import PlayList from '@/component/PlayList/PlayList'
-import Loading from '@/component/LoadingSpinner/Loading'
+import { PlayList, Loading } from '@/component'
 import * as S from '@/component/MyPlayList/MyPlayList.styles'
 import { IPlayListType } from '@/types/playList'
 
@@ -83,7 +82,9 @@ export const MyPlayLists = () => {
 
   return (
     <S.PlayListsContainer>
-      <S.Title>{user?.nickname}의 플레이리스트</S.Title>
+      <S.Title>
+        <span>{user?.nickname}</span>의 플레이리스트
+      </S.Title>
       {playlists.length === 0 ? (
         <S.EmptyState>나의 플레이리스트가 없습니다</S.EmptyState>
       ) : (
@@ -96,7 +97,7 @@ export const MyPlayLists = () => {
               date={new Date(playlist.created_at).toLocaleDateString()}
               likes={playlist.likes_count}
               comments={playlist.comments_count}
-              isLocked={playlist.is_public}
+              ispublic={playlist.is_public}
               optionIcon="option"
               playlistId={playlist.playlist_id}
               onDelete={handleDeletePlayList}

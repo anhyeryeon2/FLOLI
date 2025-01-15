@@ -1,6 +1,6 @@
 import { PlayListInfoProps } from '@/types/playListCreate'
 import * as S from '@/component/PlayListCreate/PlayListCreate.styles'
-import Input from '../Input/Input'
+import { Input } from '@/component'
 import WritingHashtags from '@/utils/writingHashtags'
 
 export const PlayListInfo = ({

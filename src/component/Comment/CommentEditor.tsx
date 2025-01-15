@@ -1,5 +1,5 @@
+import { Profile } from '@/component'
 import * as S from './CommentEditor.style'
-import Profile from '../Profile/Profile'
 import { LuSendHorizontal } from 'react-icons/lu'
 import { ChangeEvent, useState } from 'react'
 import useSubmitComment from '@/hooks/useSubmitComment'

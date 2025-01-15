@@ -1,17 +1,14 @@
 import { useEffect, useRef, useState } from 'react'
 import * as S from './EditProfile.styled'
-import Profile from '@/component/Profile/Profile'
-import { Button } from '@/component/Button/Button'
+import { Profile, Input, Button } from '@/component'
 import img from '@/assets/img/profile/default_profile.png'
-import Input from '@/component/Input/Input'
 import { useForm } from 'react-hook-form'
 import { useMutation } from '@tanstack/react-query'
 import { UserProfileEdit } from '@/apis/userInfoApi'
 import { useAuthStore } from '@/store/useAuthStore'
 import { CiCirclePlus } from 'react-icons/ci'
-import useUserInfo from '@/hooks/useUserInfo'
+import { useUserInfo, useToast } from '@/hooks'
 import { FormData, EditProfile } from '@/types/profileEdit'
-import { useToast } from '@/hooks/useToast'
 
 export function ProfileEdit() {
   const { user, updateUser } = useAuthStore()

@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import Textarea from '../Textarea/Textarea'
+import { Textarea } from '@/component'
 
 export const Container = styled.div`
   display: flex;

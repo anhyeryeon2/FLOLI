@@ -7,7 +7,7 @@ type UseInfiniteScrollProps = {
   fetchNextPage: () => void
 }
 
-const useInfiniteScroll = ({
+export const useInfiniteScroll = ({
   observerElem,
   hasNextPage,
   isFetchingNextPage,
@@ -38,5 +38,3 @@ const useInfiniteScroll = ({
     }
   }, [hasNextPage, isFetchingNextPage, fetchNextPage, observerElem])
 }
-
-export default useInfiniteScroll

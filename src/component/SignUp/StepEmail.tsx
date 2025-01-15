@@ -1,7 +1,7 @@
 import * as S from './SignUp.styles'
 import { useNavigate } from 'react-router-dom'
 import MainLogo from '@/assets/img/logo/floli.svg'
-import Input from '../Input/Input'
+import { Input } from '@/component'
 import { Button } from '../Button/Button'
 import { useSignupStore } from '@/store/signupStore'
 import { EmailForm, emailSchema } from '@/schema/signupSchema'

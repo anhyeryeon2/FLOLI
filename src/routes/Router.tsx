@@ -20,9 +20,9 @@ import StepNickname from '@/component/SignUp/StepNickname'
 import { Navigate } from 'react-router-dom'
 import { useAuthStore } from '@/store/useAuthStore'
 import { ErrorBoundary } from 'react-error-boundary'
-import { ErrorFallback } from '@/component/ErrorBoundary/ErrorFallback'
+import EndSignUp from '@/component/SignUp/EndSignUp'
 import { Suspense } from 'react'
-import Loading from '@/component/LoadingSpinner/Loading'
+import { Loading, ErrorFallback } from '@/component'
 
 export function ProtectedRoute({ children }: { children: JSX.Element }) {
   const user = useAuthStore(state => state.user)
@@ -122,6 +122,10 @@ const router = createBrowserRouter([
       {
         path: ROUTER_PATH.SIGNUP_NICKNAME,
         element: <StepNickname />
+      },
+      {
+        path: ROUTER_PATH.END_SIGNUP,
+        element: <EndSignUp />
       },
       {
         path: ROUTER_PATH.ProfileEdit,

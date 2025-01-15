@@ -5,7 +5,7 @@ import { IModalExtendsProps } from '@/types/modal'
 import { MouseEvent, useCallback, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-const Modal = ({
+export const Modal = ({
   id,
   className,
   isOpen,
@@ -62,5 +62,3 @@ const Modal = ({
     modalRoot as HTMLElement
   )
 }
-
-export default Modal

@@ -7,7 +7,7 @@ interface DetailPlayListProps {
   onClick: () => void
 }
 
-const DetailPlayList = ({
+export const DetailPlayList = ({
   image,
   title,
   nickname,
@@ -28,5 +28,3 @@ const DetailPlayList = ({
     </S.CardContainer>
   )
 }
-
-export default DetailPlayList

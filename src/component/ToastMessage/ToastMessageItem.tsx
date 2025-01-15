@@ -2,7 +2,7 @@ import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { type ToastMessageProps } from '@/types/ToastMessage'
 import * as S from './toastMessage.module'
 
-const ToastMessageItem = ({ id, message, type }: ToastMessageProps) => {
+export const ToastMessageItem = ({ id, message, type }: ToastMessageProps) => {
   const { removeToastMessage } = useToastMessageContext()
   return (
     <S.ToastItemContainer
@@ -13,5 +13,3 @@ const ToastMessageItem = ({ id, message, type }: ToastMessageProps) => {
     </S.ToastItemContainer>
   )
 }
-
-export default ToastMessageItem

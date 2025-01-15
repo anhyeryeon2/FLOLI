@@ -6,9 +6,8 @@ import {
   useQueryClient
 } from '@tanstack/react-query'
 import { DeleteSaveList, SavedPlayList } from '@/apis/userInfoApi'
-import PlayList from '../PlayList/PlayList'
-import { useToast } from '@/hooks/useToast'
-import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { PlayList } from '@/component'
+import { useInfiniteScroll, useToast } from '@/hooks'
 import { useRef } from 'react'
 import { useNavigate } from 'react-router-dom'
 

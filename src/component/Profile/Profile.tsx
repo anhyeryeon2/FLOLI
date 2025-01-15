@@ -22,7 +22,7 @@ import * as S from './Profile.styles'
       - 작은 사이즈 프로필: small  이외에 커스텀 가능 => 모바일 설정을 경험해 본 적이 없어, 추후 필요시 styles 속성에서 조정부탁드립니다.
 */
 
-const Profile = ({
+export const Profile = ({
   imageUrl,
   altText = 'Profile',
   userId,
@@ -47,5 +47,3 @@ const Profile = ({
     </S.ProfileButtonWrapper>
   )
 }
-
-export default Profile

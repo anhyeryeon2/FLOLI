@@ -1,6 +1,6 @@
 import { userInfoGet } from '@/apis/userInfoApi'
 import UserProfileList from '@/component/MyPageType/UserProfileList'
-import Profile from '@/component/Profile/Profile'
+import { Profile } from '@/component'
 import * as S from '@/pages/mypage/Mypage.styled'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'

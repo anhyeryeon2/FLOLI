@@ -7,7 +7,7 @@ import styled, { css } from 'styled-components'
  * @param {string} [width]
  * @param {string} [height]
  */
-const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
+export const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
   ({ width, height, value, isCustom, onChange, ...props }, ref) => {
     return (
       <StyledTextarea
@@ -44,5 +44,3 @@ const StyledTextarea = styled.textarea<
   height: ${props => props.height || '11.2rem'};
   ${props => !props.isCustom && mainStyle};
 `
-
-export default Textarea

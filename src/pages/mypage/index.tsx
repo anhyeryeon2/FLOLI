@@ -1,12 +1,10 @@
 import { useNavigate } from 'react-router-dom'
 
 import * as S from '@/pages/mypage/Mypage.styled'
-import { Button } from '@/component/Button/Button'
-import Profile from '@/component/Profile/Profile'
+import { Profile, Loading, Button } from '@/component'
 import { ROUTER_PATH } from '@/constants/constant'
 import { useQuery } from '@tanstack/react-query'
 import { userInfoGet } from '@/apis/userInfoApi'
-import Loading from '@/component/LoadingSpinner/Loading'
 import { useAuthStore } from '@/store/useAuthStore'
 import { useState } from 'react'
 import MyPageLikes from '@/component/MyPageType/MyPageLikes'
@@ -40,30 +38,33 @@ export const Mypage = () => {
     <>
       <S.Container>
         <S.HeaderBox>
+          <S.logout>
+            <SignOutButton />
+          </S.logout>
           <S.ProfileBox>
             <Profile
               className="profile-img"
-              size="8rem"
+              size="10rem"
               userId="userIdtest"
               imageUrl={data[0].profile_img}
               disabledLink={true}
             />
             <S.ProfileDetailBox>
               <S.UserName>{data[0].nickname}</S.UserName>
-              <S.SubscribeCount>{data[0].subsc_count} 구독자</S.SubscribeCount>
+              <S.IntruductionBox>{data[0].introduction}</S.IntruductionBox>
+              <S.SubscribeCount> 구독자 {data[0].subsc_count}</S.SubscribeCount>
             </S.ProfileDetailBox>
           </S.ProfileBox>
           <S.ButtonBox>
             <Button
               bordertype="기본"
-              width="20rem"
+              width="100%"
               onClick={handleEditProfileClick}>
               프로필 수정
             </Button>
-            <SignOutButton />
           </S.ButtonBox>
         </S.HeaderBox>
-        <S.IntruductionBox>{data[0].introduction}</S.IntruductionBox>
+
         <S.SeparatingBox>
           <S.ShowTypes
             onClick={() => setType('like')}
@@ -77,6 +78,7 @@ export const Mypage = () => {
           </S.ShowTypes>
         </S.SeparatingBox>
       </S.Container>
+
       <S.PlayListsBox>
         {type === 'like' ? <MyPageLikes /> : <MyPageSave />}
       </S.PlayListsBox>

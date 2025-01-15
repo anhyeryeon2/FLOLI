@@ -1,8 +1,7 @@
-import FeedList from '@/component/FeedList/FeedList'
-import PlayListSkeleton from '@/component/Skeleton/PlayListSkeleton'
+import { FeedList, PlayListSkeleton } from '@/component'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getSubscribePlayLists } from '@/apis/subscribe/subscribePlayList/index'
-import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useInfiniteScroll } from '@/hooks'
 import { useRef, useEffect } from 'react'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 

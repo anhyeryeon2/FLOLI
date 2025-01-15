@@ -2,8 +2,8 @@ import * as S from './CommentList.style'
 import CommentItem from './CommentItem'
 import useFetchPlaylistComments from '@/hooks/useFetchPlaylistComments'
 import { ICommentItemProps, CommentListProps } from '@/types/comments'
-import Loading from '../LoadingSpinner/Loading'
-import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { Loading } from '@/component'
+import { useInfiniteScroll } from '@/hooks'
 import { useRef } from 'react'
 
 const CommentList = ({ playlistId }: CommentListProps) => {

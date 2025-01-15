@@ -1,5 +1,5 @@
 import { PlayListIsPublicProps } from '@/types/playListCreate'
-import * as S from '../../component/PlayListCreate/PlayListCreate.styles'
+import * as S from '@/component/PlayListCreate/PlayListCreate.styles'
 import { useState } from 'react'
 
 export const PlayListIsPublic = ({

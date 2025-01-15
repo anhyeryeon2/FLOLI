@@ -1,8 +1,7 @@
 import * as S from './SignUp.styles'
 import { useNavigate } from 'react-router-dom'
 import MainLogo from '@/assets/img/logo/floli.svg'
-import Input from '../Input/Input'
-import { Button } from '../Button/Button'
+import { Button, Input } from '@/component'
 import { useSignupStore } from '@/store/signupStore'
 import { PasswordForm, passwordSchema } from '@/schema/signupSchema'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -18,6 +17,7 @@ export default function StepPassword() {
   useEffect(() => {
     if (!email) {
       handleToastError(`이메일 정보가 없습니다. `)
+      useSignupStore.getState().reset()
       navigate('/signup/email')
     }
   }, [email, navigate])

@@ -6,7 +6,7 @@ import { MouseEvent, useCallback, useEffect } from 'react'
 import HeaderSub from '../header/header-sub/HeaderSub'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-const ModalFull = ({
+export const ModalFull = ({
   id,
   className,
   isOpen,
@@ -61,5 +61,3 @@ const ModalFull = ({
     modalRoot as HTMLElement
   )
 }
-
-export default ModalFull

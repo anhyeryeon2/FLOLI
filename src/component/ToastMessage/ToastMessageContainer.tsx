@@ -1,7 +1,7 @@
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import * as S from './toastMessageContainer.module'
 
-import ToastMessageItem from './ToastMessageItem'
+import { ToastMessageItem } from '@/component'
 const ToastMessageContainer = () => {
   const { toastMessages } = useToastMessageContext()
 
