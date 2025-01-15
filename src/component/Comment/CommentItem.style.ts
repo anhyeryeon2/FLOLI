@@ -30,6 +30,11 @@ export const Container = styled.div`
       white-space: nowrap;
     }
 
+    .is-creator-nickname {
+      width: 1rem;
+      margin-left: 0.2rem;
+    }
+
     .create-at {
       flex: 0 0 auto;
       margin-left: 1rem;

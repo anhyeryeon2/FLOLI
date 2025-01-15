@@ -19,6 +19,7 @@ export interface IPlayListType {
   playlist_user_id: string
   profile_img_path: string
   subsc_count: number
+  is_liked: boolean
 }
 
 export interface IPlayList {

@@ -20,7 +20,7 @@ export function Home() {
     refetch
   } = useInfiniteQuery({
     queryKey: ['playList'],
-    queryFn: ({ pageParam }) => getPlayList(pageParam as number),
+    queryFn: ({ pageParam }) => getPlayList(undefined, pageParam as number),
 
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1
@@ -68,6 +68,8 @@ export function Home() {
           comments={playList.comments_count}
           key={playList.playlist_id}
           id={playList.playlist_id}
+          likesState={playList.is_liked}
+          playlist_user_id={playList.playlist_user_id}
         />
       ))}
       <div ref={observerElem} />

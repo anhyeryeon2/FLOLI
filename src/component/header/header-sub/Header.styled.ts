@@ -28,12 +28,20 @@ export const Content = styled.span`
   font-size: 2rem;
 `
 
+export const Headeritem = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`
+
 export const HeaderInput = styled.input`
-  width: 80%;
+  width: 90%;
+
   padding: 5px 20px 5px 5px;
   border: 1px solid #ccc;
   border-radius: var(--radius-xl);
   outline: none;
+
   &:focus {
     border-color: #007bff;
   }
@@ -42,7 +50,7 @@ export const HeaderInput = styled.input`
 export const SearchIcon = styled(FaSearch)`
   position: absolute;
   top: 50%;
-  right: 80px;
+  right: 30px;
   transform: translateY(-50%);
   color: #888;
 `
