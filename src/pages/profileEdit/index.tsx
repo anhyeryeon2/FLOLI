@@ -90,14 +90,12 @@ export function ProfileEdit() {
     }
 
     mutate({ data: editProfileData, image: newImage, id: userId })
-    if (userinfo) {
-      updateUser({
-        nickname: userinfo[0].nickname,
-        introduction: userinfo[0].introduction,
-        profile_img: userinfo[0].profile_img,
-        id: userId
-      })
-    }
+
+    updateUser({
+      profile_img: newImage,
+      nickname: editProfileData.nickname,
+      introduction: editProfileData.introduction
+    })
   }
 
   return (
