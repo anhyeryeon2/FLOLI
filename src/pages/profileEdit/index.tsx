@@ -94,8 +94,6 @@ export function ProfileEdit() {
 
     mutate({ data: editProfileData, image: newImage, id: userId })
 
-    console.log('data확인', data)
-
     updateUser({
       profile_img: newImage,
       nickname: editProfileData.nickname,
