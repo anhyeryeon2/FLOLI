@@ -13,6 +13,7 @@ export const SearchPage = () => {
   const searchTerm = location.state
 
   const observerElem = useRef<HTMLDivElement | null>(null)
+
   const {
     data,
     isError,
@@ -33,7 +34,6 @@ export const SearchPage = () => {
     select: data => {
       return data.pages.flat()
     },
-
     initialPageParam: 1,
 
     staleTime: 1000 * 60
@@ -53,7 +53,6 @@ export const SearchPage = () => {
   if (isLoading || isFetchingNextPage) {
     return <PlayListSkeleton />
   }
-
   return (
     <S.FeedConteiner>
       {Array.isArray(data) && data.length > 0 ? (
@@ -69,6 +68,8 @@ export const SearchPage = () => {
             comments={playList.comments_count}
             key={playList.playlist_id}
             id={playList.playlist_id}
+            likesState={playList.is_liked}
+            playlist_user_id={playList.playlist_user_id}
           />
         ))
       ) : (
