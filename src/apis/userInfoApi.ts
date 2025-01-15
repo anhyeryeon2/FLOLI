@@ -68,7 +68,7 @@ export async function LikedPlayList(
   userId: string | undefined,
   pageParam: number = 1
 ) {
-  const PAGE_SIZE = 3
+  const PAGE_SIZE = 10
   const { data: likedPlaylists, error } = await supabase
     .from('likes')
     .select('playlist_id')
@@ -117,7 +117,7 @@ export async function SavedPlayList(
   userId: string | undefined,
   pageParam: number = 1
 ) {
-  const PAGE_SIZE = 3
+  const PAGE_SIZE = 10
   const { data: likedPlaylists, error } = await supabase
     .from('bookmarks')
     .select('playlist_id')
@@ -166,7 +166,7 @@ export async function userPlayListGet(
   userId: string | undefined,
   pageParam: number = 1
 ) {
-  const PAGE_SIZE = 3
+  const PAGE_SIZE = 10
   const { data, error } = await supabase
     .from('playlists')
     .select('*')
