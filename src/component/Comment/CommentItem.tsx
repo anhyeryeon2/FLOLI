@@ -154,26 +154,23 @@ const CommentItem = ({
         ) : (
           <ContentText text={content} />
         )}
-        {commentUserId === currentUserId &&
-          (isModifier ? (
-            <div></div>
-          ) : (
-            <S.CommentEditButtonBox>
-              <button
-                type="button"
-                onClick={handleModifyClick}>
-                <span>수정</span>
-                <AiFillEdit />
-              </button>
-              <button
-                type="button"
-                onClick={handleDeleteClick}
-                disabled={isDeleteCommentPending}>
-                <span>삭제</span>
-                <MdDelete />
-              </button>
-            </S.CommentEditButtonBox>
-          ))}
+        {commentUserId === currentUserId && !isModifier && (
+          <S.CommentEditButtonBox>
+            <button
+              type="button"
+              onClick={handleModifyClick}>
+              <span>수정</span>
+              <AiFillEdit />
+            </button>
+            <button
+              type="button"
+              onClick={handleDeleteClick}
+              disabled={isDeleteCommentPending}>
+              <span>삭제</span>
+              <MdDelete />
+            </button>
+          </S.CommentEditButtonBox>
+        )}
       </div>
       {ModalComponent}
     </S.Container>
