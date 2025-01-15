@@ -7,17 +7,25 @@ export const ModalfullContent = styled.div`
   position: relative;
   padding: var(--spacing-3);
   align-items: center;
-  white-space: nowrap;
-  text-overflow: ellipsis;
 `
-export const ModalfullClickContent = styled.div`
-  position: absolute;
-  right: 0;
+
+export const ModalFullTop = styled.div`
+  flex: 0;
+`
+
+export const ModalFullMid = styled.div`
+  flex: 1;
+  width: 100%;
+`
+
+export const ModalFullBottom = styled.div`
+  flex: 0;
 `
 
 export const ModalSpan = styled.span`
-  display: flex;
-  overflow: hidden;
-  width: 80%;
+  display: inline-block;
+  width: 200px;
+  white-space: nowrap;
   text-overflow: ellipsis;
+  overflow: hidden;
 `

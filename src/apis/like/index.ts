@@ -1,7 +1,5 @@
+import { supabase } from '@/supabase/supabaseConfig'
 import axiosInstance from '../axiosInstance'
-import { supabase } from '../../supabase/supabaseConfig'
-
-const ITEM_COUNT = 3
 
 const getCurrentUser = async () => {
   const { data, error } = await supabase.auth.getUser()
@@ -17,24 +15,16 @@ const getCurrentUser = async () => {
 
   return null
 }
-
-export const getPlayList = async (
-  userId?: string,
-  page: number = 1,
-  item: number = ITEM_COUNT
-) => {
+export const updateLike = async (id: string, userId?: string) => {
   try {
     const currentUserId = userId || (await getCurrentUser())
 
     if (!currentUserId) {
       throw new Error('사용자가 로그인되지 않았습니다.')
     }
-    const playListData = await axiosInstance.get('rpc/get_user_and_playlists', {
-      params: {
-        current_user_id: currentUserId,
-        page: page,
-        item: item
-      }
+    const playListData = await axiosInstance.post('rpc/update_likes_count', {
+      input_playlist_id: id,
+      input_user_id: currentUserId
     })
     return playListData.data
   } catch (error) {
