@@ -2,7 +2,7 @@ import { Outlet, useLocation, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
 import { useQuery } from '@tanstack/react-query'
 import Header from '../header/header-main/Header'
-import Navbar from '../navbar/Navbar'
+import Navbar from '../Navbar/Navbar'
 import { ROUTER_PATH, ROUTER_PATH_REGEX } from '@/constants/constant'
 import HeaderSub from '../header/header-sub/HeaderSub'
 import ModalFull from '../Modal/ModalFull'
@@ -89,7 +89,6 @@ const Layout = () => {
   })
 
   const handleMoalFullClose = () => {
-    // setModalSearchState(false)
     setModalFull(false)
     setSearchTerm('')
   }
@@ -104,7 +103,7 @@ const Layout = () => {
 
   if (isLoading) <Loading />
 
-  if (isError) <div>에러가 났습니다. 다시 시도 해주세요</div>
+  if (isError) throw new Error('에러가 발생했습니다.')
 
   return (
     <>
@@ -122,11 +121,15 @@ const Layout = () => {
               <S.ModalfullContent
                 key={search.playlist_id}
                 onClick={() => handleSearchClick()}>
-                <CiTimer />
-                <S.ModalSpan>{search.title}</S.ModalSpan>
-                <S.ModalfullClickContent>
+                <S.ModalFullTop>
+                  <CiTimer onClick={() => handleSearchClick()} />
+                </S.ModalFullTop>
+                <S.ModalFullMid>
+                  <S.ModalSpan>{search.title}</S.ModalSpan>
+                </S.ModalFullMid>
+                <S.ModalFullBottom>
                   <GoArrowUpLeft />
-                </S.ModalfullClickContent>
+                </S.ModalFullBottom>
               </S.ModalfullContent>
             ))
           : searchTermList &&
@@ -134,11 +137,15 @@ const Layout = () => {
               <S.ModalfullContent
                 key={search.id}
                 onClick={() => handleSearchClick(search.term)}>
-                <CiTimer />
-                <S.ModalSpan>{search.term}</S.ModalSpan>
-                <S.ModalfullClickContent>
+                <S.ModalFullTop>
+                  <CiTimer />
+                </S.ModalFullTop>
+                <S.ModalFullMid>
+                  <S.ModalSpan>{search.term}</S.ModalSpan>
+                </S.ModalFullMid>
+                <S.ModalFullBottom>
                   <GoArrowUpLeft />
-                </S.ModalfullClickContent>
+                </S.ModalFullBottom>
               </S.ModalfullContent>
             ))}
       </ModalFull>

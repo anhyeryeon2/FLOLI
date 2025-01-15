@@ -2,6 +2,11 @@ import { FeedListProps } from '@/types/List'
 import * as S from './FeedList.style'
 import { FeedFooter } from './Footer'
 import { useState } from 'react'
+import { FaShareAlt } from 'react-icons/fa'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
+import { updateLike } from '@/apis/like'
+import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 import FeedListOptionPopUp from './FeedListOptionPopUp'
 
 const FeedList = ({
@@ -15,17 +20,40 @@ const FeedList = ({
   track,
   key,
   id,
+  likesState,
   playlist_user_id
 }: FeedListProps) => {
   const [isOpen, setIsOpen] = useState(false)
 
+  const { showToastMessage } = useToastMessageContext()
+  const queryClient = useQueryClient()
+  const { mutate } = useMutation({
+    mutationFn: (id: string) => updateLike(id, undefined),
+    onSuccess: () => {
+      showToastMessage({
+        message: `좋아요를 눌렀습니다.!! `,
+        type: 'success'
+      })
+      queryClient.invalidateQueries({ queryKey: ['playList'] })
+    },
+    onError: () =>
+      showToastMessage({
+        message: `좋아요를 누르는데 실패했습니다.`,
+        type: 'error'
+      })
+  })
+
   const handleOptionsPopup = () => setIsOpen(true)
 
   const handleOptionsPopState = () => setIsOpen(false)
-
+  const handleUpdateLike = (id: string) => {
+    mutate(id)
+  }
   return (
     <>
-      <S.CardContainer key={key}>
+      <S.CardContainer
+        key={key}
+        id={id}>
         <S.ImageWrapper key={key}>
           <img
             src={image}
@@ -46,8 +74,10 @@ const FeedList = ({
             <FeedFooter
               likes={likes}
               comments={comments}
-              date={date}
+              date={dateKoreanFormat(date)}
               onClick={handleOptionsPopup}
+              onLikeClick={() => handleUpdateLike(id)}
+              likesState={likesState}
             />
           </S.TextWrapper>
         </S.ContentWrapper>

@@ -13,7 +13,7 @@ export const Container = styled.div`
 export const TitleWrapper = styled.header`
   display: flex;
   align-items: flex-start;
-  gap: 0.8rem;
+  justify-content: space-between;
   position: sticky;
   top: 0;
   padding: var(--layout-padding) 0;
@@ -34,5 +34,9 @@ export const TitleWrapper = styled.header`
       font-size: var(--fs-m);
       color: var(--color-gray);
     }
+  }
+
+  button {
+    padding-left: 0.8rem;
   }
 `

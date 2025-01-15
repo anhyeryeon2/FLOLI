@@ -64,7 +64,7 @@ const FeedListOptionPopUp = ({
   }
 
   const handleSharePlaylist = (id: string) => {
-    const shareUrl = `${window.location.origin}/playlists/${id}`
+    const shareUrl = `${window.location.origin}/view/${id}`
     navigator.clipboard
       .writeText(shareUrl)
       .then(() => {
@@ -98,13 +98,13 @@ const FeedListOptionPopUp = ({
             <MdSubscriptions size={24} />
             <p>구독하기</p>
           </S.ModalContentContainer>
-          <S.ModalContentContainer onClick={() => handleSharePlaylist(id)}>
-            <MdPlaylistAdd size={24} />
-            <p>공유</p>
-          </S.ModalContentContainer>
           <S.ModalContentContainer onClick={() => handlePlayListBookmarks(id)}>
-            <FaShareAlt size={24} />
+            <MdPlaylistAdd size={24} />
             <p>저장</p>
+          </S.ModalContentContainer>
+          <S.ModalContentContainer onClick={() => handleSharePlaylist(id)}>
+            <FaShareAlt size={24} />
+            <p>공유</p>
           </S.ModalContentContainer>
         </S.ModalWrapper>
       </Modal>

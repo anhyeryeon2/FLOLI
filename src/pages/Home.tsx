@@ -20,7 +20,7 @@ export function Home() {
     refetch
   } = useInfiniteQuery({
     queryKey: ['playList'],
-    queryFn: ({ pageParam }) => getPlayList(pageParam as number),
+    queryFn: ({ pageParam }) => getPlayList(undefined, pageParam as number),
 
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1
@@ -54,7 +54,6 @@ export function Home() {
   }
 
   if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
-
   return (
     <>
       {data?.map((playList: IPlayListType) => (
@@ -69,6 +68,7 @@ export function Home() {
           comments={playList.comments_count}
           key={playList.playlist_id}
           id={playList.playlist_id}
+          likesState={playList.is_liked}
           playlist_user_id={playList.playlist_user_id}
         />
       ))}

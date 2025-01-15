@@ -12,7 +12,7 @@ export const Container = styled.div`
 `
 
 export const StyledTextarea = styled(Textarea)`
-  font-size: var(--fs-m);
+  font-size: 1.4rem;
 
   &:focus {
     height: 10rem;
