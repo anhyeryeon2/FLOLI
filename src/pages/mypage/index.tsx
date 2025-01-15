@@ -17,7 +17,6 @@ export const Mypage = () => {
   const [type, setType] = useState('like')
 
   const { user } = useAuthStore()
-  console.log(user)
 
   const navigate = useNavigate()
 
