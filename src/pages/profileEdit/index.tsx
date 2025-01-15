@@ -22,6 +22,7 @@ export function ProfileEdit() {
 
   // data get는 커스텀훅으로 처리
   const { userinfo } = useUserInfo()
+
   // data edit
   const { mutate } = useMutation({
     mutationFn: ({
