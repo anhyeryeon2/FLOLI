@@ -9,7 +9,9 @@ export const PlayListsContainer = styled.div`
 export const Title = styled.p`
   font-size: var(--fs-xl);
   text-align: left;
+  font-weight: 500;
   color: var(--color-black);
+  padding: var(--spacing-4) 0;
 `
 export const PlayListWrapper = styled.div`
   display: flex;

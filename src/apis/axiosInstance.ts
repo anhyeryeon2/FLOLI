@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { getAuthStorage } from '@/repository/authRepository'
+import { refreshAccessToken } from '@/utils/refreshAccessToken'
 
 const BASE_URL = import.meta.env.VITE_SUPABASE_URL
 const PROJECT_API_KEY = import.meta.env.VITE_SUPABASE_KEY
@@ -28,4 +29,23 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error)
   }
 )
+
+axiosInstance.interceptors.response.use(
+  response => response,
+  async error => {
+    if (error.response?.status === 401) {
+      const newAccessToken = await refreshAccessToken()
+
+      if (newAccessToken) {
+        error.config.headers.Authorization = `Bearer ${newAccessToken}`
+        return axiosInstance(error.config)
+      } else {
+        window.location.href = '/login'
+      }
+    }
+
+    return Promise.reject(error)
+  }
+)
+
 export default axiosInstance

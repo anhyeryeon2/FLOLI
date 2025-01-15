@@ -26,7 +26,7 @@ const Textarea = forwardRef<HTMLTextAreaElement, ITextareaProps>(
 const mainStyle = css`
   padding: var(--spacing-3) var(--spacing-4);
   font-size: var(--fs-l);
-  font-weight: 500;
+  font-weight: 400;
   border-radius: var(--radius-base);
   border: 1px solid var(--color-border);
 

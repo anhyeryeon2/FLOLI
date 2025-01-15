@@ -4,12 +4,14 @@ import { useForm, SubmitHandler } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { loginSchema, LoginFormInputs } from '@/schema/loginSchema'
 import { useAuthStore } from '@/store/useAuthStore'
+
 import Input from '@/component/Input/Input'
 import { Button } from '@/component/Button/Button'
 import Loading from '@/component/LoadingSpinner/Loading'
 import { supabase } from '@/supabase/supabaseConfig'
-import * as S from './login.styles'
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { useToast } from '@/hooks/useToast'
+
+import * as S from './signIn.styles'
 import MainLogo from '@/assets/img/logo/floli.svg'
 import GoogleLogo from '@/assets/img/login/google.svg'
 import KakaoLogo from '@/assets/img/login/kakao.svg'
@@ -18,11 +20,11 @@ import { UserData } from '@/types/user'
 type SocialProvider = 'kakao' | 'google'
 const REDIRECT_URL = 'http://localhost:5173/login'
 
-export function Login() {
+export function SignIn() {
   const { setUser, user } = useAuthStore()
   const navigate = useNavigate()
-  const { showToastMessage } = useToastMessageContext()
   const [socialLoading, setSocialLoading] = useState(false)
+  const { handleToastError, handleToastSuccess } = useToast()
 
   const {
     register,
@@ -31,31 +33,19 @@ export function Login() {
   } = useForm<LoginFormInputs>({ resolver: zodResolver(loginSchema) })
 
   const handleAuthSuccess = (userData: UserData) => {
-    setUser(userData) //zustand 업데이트
-    showToastMessage({
-      message: '로그인 성공하였습니다',
-      type: 'success'
-    })
+    setUser(userData)
+    handleToastSuccess('로그인 성공하였습니다')
     navigate('/')
-  }
-
-  const handleToastError = (message: string) => {
-    showToastMessage({
-      message,
-      type: 'error'
-    })
   }
 
   const saveTokens = (accessToken: string, refreshToken: string) => {
     localStorage.setItem('accessToken', accessToken)
     localStorage.setItem('refreshToken', refreshToken)
   }
-
   const checkSession = async () => {
     try {
       const { data: sessionData } = await supabase.auth.getSession()
       const user = sessionData?.session?.user
-
       if (user && sessionData.session) {
         const userData: UserData = {
           id: user.id,
@@ -81,7 +71,6 @@ export function Login() {
       navigate('/login')
     }
   }
-
   const handleSocialLogin = async (provider: SocialProvider) => {
     setSocialLoading(true)
     try {
@@ -117,11 +106,9 @@ export function Login() {
       .select('id, email, nickname, profile_img, introduction, subsc_count')
       .eq('id', userId)
       .single()
-
     if (error) throw new Error('유저 정보를 가져오는 데 실패했습니다.')
     return userInfo
   }
-
   const handleEmailLogin: SubmitHandler<LoginFormInputs> = async data => {
     const { email, password } = data
     try {
@@ -130,7 +117,6 @@ export function Login() {
           email,
           password
         })
-
       if (error) throw new Error('로그인 실패하였습니다')
       if (sessionData.session) {
         saveTokens(
@@ -153,11 +139,9 @@ export function Login() {
       checkSession()
     }
   }, [location.pathname])
-
   return (
     <S.Container>
       <S.Logo src={MainLogo} />
-
       <S.Form onSubmit={handleSubmit(handleEmailLogin)}>
         <S.InputWrapper>
           <Input
@@ -190,7 +174,6 @@ export function Login() {
             로그인
           </Button>
         )}
-
         <S.Divider />
         <S.ButtonContainer>
           <Button
@@ -203,7 +186,6 @@ export function Login() {
             <S.LoginLogo src={GoogleLogo} />
             구글 로그인
           </Button>
-
           <Button
             width="100%"
             color="var(--color-black)"
@@ -216,7 +198,6 @@ export function Login() {
           </Button>
         </S.ButtonContainer>
       </S.Form>
-
       <S.SignupText>
         계정이 없으신가요?{' '}
         <S.SignupLink onClick={() => navigate('/signup/email')}>

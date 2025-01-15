@@ -6,3 +6,6 @@ export const LikedBox = styled.div`
 export const ItemList = styled.div`
   margin-bottom: var(--spacing-3);
 `
+export const NoData = styled.div`
+  margin: var(--spacing-5) auto;
+`

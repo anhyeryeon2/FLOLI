@@ -9,16 +9,16 @@ import { useMutation } from '@tanstack/react-query'
 import { UserProfileEdit } from '@/apis/userInfoApi'
 import { useAuthStore } from '@/store/useAuthStore'
 import { CiCirclePlus } from 'react-icons/ci'
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import useUserInfo from '@/hooks/useUserInfo'
 import { FormData, EditProfile } from '@/types/profileEdit'
+import { useToast } from '@/hooks/useToast'
 
 export function ProfileEdit() {
-  const { showToastMessage } = useToastMessageContext()
   const { user, updateUser } = useAuthStore()
   const userId = user?.id
   const fileInputRef = useRef<HTMLInputElement>(null)
   const [image, setImage] = useState<string | null>(null)
+  const { handleToastError, handleToastSuccess } = useToast()
 
   // data get는 커스텀훅으로 처리
   const { userinfo } = useUserInfo()
@@ -33,16 +33,9 @@ export function ProfileEdit() {
       image: string | FileList | null
       id: string
     }) => UserProfileEdit(data, image, id),
-    onSuccess: () =>
-      showToastMessage({
-        message: `수정되었습니다!! `,
-        type: 'success'
-      }),
-    onError: () =>
-      showToastMessage({
-        message: `수정에 실패하였습니다... `,
-        type: 'error'
-      })
+    onSuccess: () => handleToastSuccess(`수정되었습니다!! `),
+
+    onError: () => handleToastError(`수정에 실패하였습니다... `)
   })
 
   //Form
