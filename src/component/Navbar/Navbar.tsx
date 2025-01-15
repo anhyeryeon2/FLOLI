@@ -88,8 +88,8 @@ export default function Navbar() {
               altText="profile"
               userId={user?.id || ''}
               size="xsmall"
+              to="/mypage"
               border="2px solid var(--color-black)"
-              disabledLink={true}
             />
           ) : (
             <Profile

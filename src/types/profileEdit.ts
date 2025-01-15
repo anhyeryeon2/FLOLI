@@ -4,7 +4,7 @@ export type FormData = {
   introduction: string
 }
 
-export interface EditProfile {
+export type EditProfile = {
   image?: FileList | null
   nickname?: string
   introduction?: string
