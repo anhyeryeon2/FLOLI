@@ -1,17 +1,49 @@
 import { useAuthStore } from '@/store/useAuthStore'
-import * as S from './MypageLikes.styled'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import * as S from './MyPageLikes.styled'
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient
+} from '@tanstack/react-query'
 import { DeleteSaveList, SavedPlayList } from '@/apis/userInfoApi'
 import PlayList from '../PlayList/PlayList'
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { useToast } from '@/hooks/useToast'
+import useInfiniteScroll from '@/hooks/useInfiniteScroll'
+import { useRef } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 function MyPageSave() {
+  const navigate = useNavigate()
+  const observerElem = useRef<HTMLDivElement | null>(null)
   const { user } = useAuthStore()
-  const { showToastMessage } = useToastMessageContext()
+  const { handleToastError, handleToastSuccess } = useToast()
 
-  const { data: playlistData } = useQuery({
+  const {
+    data: playlistData,
+    hasNextPage,
+    fetchNextPage,
+    isFetchingNextPage
+  } = useInfiniteQuery({
     queryKey: ['SavedPlayList'],
-    queryFn: () => SavedPlayList(user?.id)
+    queryFn: ({ pageParam }) => SavedPlayList(user?.id, pageParam as number),
+    getNextPageParam: (lastPage, allPages) => {
+      const nextPage = allPages.length + 1
+
+      return nextPage <= lastPage.length ? nextPage : undefined
+    },
+    select: data => {
+      return data.pages.flat()
+    },
+    initialPageParam: 1,
+
+    staleTime: 1000 * 60
+  })
+
+  useInfiniteScroll({
+    observerElem,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage
   })
 
   const queryClient = useQueryClient()
@@ -20,39 +52,43 @@ function MyPageSave() {
     mutationFn: () => DeleteSaveList(user?.id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['SavedPlayList'] })
-      showToastMessage({
-        message: '해당 플리를 저장목록에서 삭제 하였습니다',
-        type: 'success'
-      })
+      handleToastSuccess('해당 플리를 저장목록에서 삭제 하였습니다')
     },
     onError: () =>
-      showToastMessage({
-        message: `해당 플리를 저장목록에서 삭제하는데 실패하였습니다. `,
-        type: 'error'
-      })
+      handleToastError(`해당 플리를 저장목록에서 삭제하는데 실패하였습니다. `)
   })
 
   function handleDelete() {
     mutate()
   }
 
+  if (!playlistData || playlistData.length === 0) {
+    return <S.NoData>플레이리스트가 존재하지 않습니다.</S.NoData>
+  }
+
+  const handleDetailPage = (playlistId: string) => {
+    navigate(`/view/${playlistId}`)
+  }
+
   return (
     <S.LikedBox>
       {playlistData?.map(playlistData => (
-        <S.ItemList>
+        <S.ItemList
+          key={playlistData.playlist_id}
+          onClick={() => handleDetailPage(playlistData.playlist_id)}>
           <PlayList
             image={playlistData.thumbnail}
             title={playlistData.title}
-            date={playlistData.created_at}
+            date={new Date(playlistData.created_at).toLocaleDateString()}
             likes={playlistData.likes_count}
             comments={playlistData.comments_count}
             optionIcon="bookmark"
             nickname={playlistData.nickname}
-            key={playlistData.playlist_id}
             onOptionClick={handleDelete}
           />
         </S.ItemList>
       ))}
+      <div ref={observerElem} />
     </S.LikedBox>
   )
 }

@@ -11,7 +11,7 @@ type Option = {
   action: () => void
 }
 
-export const usePlaylistOptions = (
+export const useMyPlaylistOptions = (
   playlistId: string | undefined,
   initialIsLocked: boolean | undefined,
   onDelete?: (id: string) => void
@@ -38,7 +38,7 @@ export const usePlaylistOptions = (
       )
       setIsLocked(updatedIsLocked)
       setIsOpen(false)
-    } catch (error) {
+    } catch {
       handleToastError('공개 여부 변경에 실패했습니다.')
     }
   }

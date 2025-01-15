@@ -4,7 +4,7 @@ import * as S from './PlayList.styles'
 import { PlayListFooter } from './Footer'
 import { PlayListProps } from '@/types/List'
 import Modal from '../Modal/Modal'
-import { usePlaylistOptions } from '@/hooks/usePlayListOptions'
+import { useMyPlaylistOptions } from '@/hooks/useMyPlayListOptions'
 
 const PlayList = ({
   image,
@@ -26,7 +26,15 @@ const PlayList = ({
     options,
     handleOptionsPopup,
     handleOptionsPopState
-  } = usePlaylistOptions(playlistId, initialIsLocked, onDelete)
+  } = useMyPlaylistOptions(playlistId, initialIsLocked, onDelete)
+
+  const handleOptionsClick = (event: React.MouseEvent<HTMLDivElement>) => {
+    event.stopPropagation()
+    onOptionClick?.()
+    if (optionIcon === 'option') {
+      handleOptionsPopup()
+    }
+  }
 
   return (
     <>
@@ -47,12 +55,10 @@ const PlayList = ({
             nickname={nickname}
           />
         </S.TextWrapper>
-        <S.Options onClick={onOptionClick}>
+        <S.Options onClick={handleOptionsClick}>
           {optionIcon === 'heart' && <FaHeart />}
           {optionIcon === 'bookmark' && <S.PlayListSaveIcon />}
-          {optionIcon === 'option' && (
-            <FaEllipsisH onClick={handleOptionsPopup} />
-          )}
+          {optionIcon === 'option' && <FaEllipsisH />}
         </S.Options>
       </S.CardContainer>
       <Modal
