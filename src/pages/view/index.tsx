@@ -311,7 +311,7 @@ export const View = (): JSX.Element => {
             <div>
               <Profile
                 className="profile-img"
-                userId="userIdtest"
+                userId={creator_id}
                 size="3.2rem"
                 imageUrl={profile_img}
               />
