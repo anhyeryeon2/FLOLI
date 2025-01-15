@@ -103,7 +103,7 @@ const Layout = () => {
 
   if (isLoading) <Loading />
 
-  if (isError) <div>에러가 났습니다. 다시 시도 해주세요</div>
+  if (isError) throw new Error('에러가 발생했습니다.')
 
   return (
     <>
