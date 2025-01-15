@@ -19,6 +19,7 @@ export function ProfileEdit() {
 
   // data get는 커스텀훅으로 처리
   const { userinfo } = useUserInfo()
+
   // data edit
   const { mutate } = useMutation({
     mutationFn: ({
@@ -41,10 +42,10 @@ export function ProfileEdit() {
     handleSubmit,
     formState: { errors }
   } = useForm<FormData>({
-    defaultValues: userinfo
+    defaultValues: user
       ? {
-          nickname: userinfo[0].nickname,
-          introduction: userinfo[0].introduction
+          nickname: user?.nickname,
+          introduction: user?.introduction ?? undefined
         }
       : {}
   })
@@ -92,7 +93,7 @@ export function ProfileEdit() {
     mutate({ data: editProfileData, image: newImage, id: userId })
 
     updateUser({
-      profile_img: newImage,
+      profile_img: userinfo![0].profile_img,
       nickname: editProfileData.nickname,
       introduction: editProfileData.introduction
     })

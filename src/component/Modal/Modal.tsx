@@ -5,10 +5,6 @@ import { IModalExtendsProps } from '@/types/modal'
 import { MouseEvent, useCallback, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom'
 
-/**
- * @param isBg - true일 때 모달 bg 생김
- */
-
 export const Modal = ({
   id,
   className,
@@ -21,7 +17,7 @@ export const Modal = ({
   const modalRoot = document.getElementById('modal-container')
 
   const navigate = useNavigate()
-  const { pathname } = useLocation()
+  const { pathname, search } = useLocation()
 
   useScrollLock({ isOpen })
 
@@ -31,7 +27,12 @@ export const Modal = ({
 
   useEffect(() => {
     if (isOpen) {
-      navigate(`${pathname}?modal=${id}`)
+      const params = new URLSearchParams(search)
+      const currentModalId = params.get('modal')
+
+      if (currentModalId !== id) {
+        navigate(`${pathname}?modal=${id}`)
+      }
 
       window.addEventListener('popstate', handlePopState)
 
@@ -39,7 +40,7 @@ export const Modal = ({
         window.removeEventListener('popstate', handlePopState)
       }
     }
-  }, [isOpen, navigate, pathname, id, handlePopState])
+  }, [isOpen, pathname, search, navigate, id, handlePopState])
 
   const handleClick = (e: MouseEvent<HTMLDivElement>) => e.stopPropagation()
 

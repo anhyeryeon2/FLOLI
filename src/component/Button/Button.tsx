@@ -15,7 +15,7 @@ export function Button({
   fontSize,
   width,
   type = 'button',
-  bordertype,
+  bordertype = '기본',
   disabled = false
 }: TButtonProps) {
   return (

@@ -4,15 +4,17 @@ interface DetailPlayListProps {
   image: string
   title: string
   nickname: string
+  onClick: () => void
 }
 
 export const DetailPlayList = ({
   image,
   title,
-  nickname
+  nickname,
+  onClick
 }: DetailPlayListProps) => {
   return (
-    <S.CardContainer>
+    <S.CardContainer onClick={onClick}>
       <S.ImageWrapper>
         <img
           src={image}

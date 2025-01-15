@@ -1,18 +1,10 @@
 import { VideoItem } from '@/types/playListCreate'
+import extractYouTubeVideoId from '@/utils/extractYouTubeVideoId'
 import { useState } from 'react'
 
 export const useVideoLink = () => {
   const [videoLink, setVideoLink] = useState('')
   const [videoList, setVideoList] = useState<VideoItem[]>([])
-
-  // 유튜브 영상 ID 추출
-  const extractYouTubeVideoId = (url: string) => {
-    const regExp =
-      /(?:youtube\.com\/(?:[^\/]+\/.+\/|(?:v|e(?:mbed)?)\/|.*[?&]v=)|youtu\.be\/)([^"&?\/\s]{11})/
-    const match = url.match(regExp)
-    return match ? match[1] : null
-  }
-
   // 영상 추가 핸들러
   const handleAddVideo = async () => {
     if (!videoLink.trim()) return alert('유튜브 링크를 입력해주세요.')

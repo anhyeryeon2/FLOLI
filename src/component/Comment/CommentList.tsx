@@ -1,49 +1,53 @@
-import * as S from '@/styles/components/Comment/Comment-list.style'
+import * as S from './CommentList.style'
 import CommentItem from './CommentItem'
+import useFetchPlaylistComments from '@/hooks/useFetchPlaylistComments'
+import { ICommentItemProps, CommentListProps } from '@/types/comments'
+import { Loading } from '@/component'
+import { useInfiniteScroll } from '@/hooks'
+import { useRef } from 'react'
 
-const CommentList = () => {
-  const testData = [
-    {
-      commentId: 'asdlifuw',
-      userId: 'klajlsdifjqwer',
-      content:
-        '이것은 댓글 내용입니다이것은\n 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다',
-      createAt: '2024년 2월 11일',
-      updatedAt: '2024년 3월 7일',
-      nickname: '몽글이'
-    },
-    {
-      commentId: '245dagah63245',
-      userId: 'sifu98723dfs',
-      content: '댓글을 한줄만 써보자',
-      createAt: '2024년 8월 21일',
-      nickname: '이건닉네임'
-    },
-    {
-      commentId: '5436asfdet4326',
-      userId: 'klajlsdihgao83u12fjqwer',
-      content:
-        '이것은 댓글 내용입니다이것은\n 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다이것은 댓글 내용입니다',
-      createAt: '2024년 2월 11일',
-      updatedAt: '2024년 3월 7일',
-      nickname:
-        '닉네임을 길게 써보자닉네임을 길게 써보자닉네임을 길게 써보자닉네임을 길게 써보자'
-    }
-  ]
+const CommentList = ({ playlistId }: CommentListProps) => {
+  const {
+    data: commentsData,
+    fetchNextPage,
+    hasNextPage,
+    isFetchingNextPage,
+    isPending,
+    error
+  } = useFetchPlaylistComments(playlistId)
+
+  const observerElem = useRef(null)
+
+  useInfiniteScroll({
+    observerElem,
+    hasNextPage,
+    isFetchingNextPage,
+    fetchNextPage
+  })
+
+  if (isPending) {
+    return <Loading />
+  }
+
+  if (error) {
+    console.error('댓글 정보 호출 실패:', error)
+    throw new Error('댓글 목록을 불러오는 데 실패하였습니다.')
+  }
 
   return (
     <S.Container>
-      {testData.map(data => (
+      {commentsData?.pages.flat().map((data: ICommentItemProps) => (
         <CommentItem
-          key={data.commentId}
-          commentId={data.commentId}
-          userId={data.userId}
+          key={data.comment_id}
+          commentId={data.comment_id}
+          commentUserId={data.user_id}
           content={data.content}
-          createAt={data.createAt}
-          updatedAt={data.updatedAt ? data.updatedAt : null}
-          nickname={data.nickname}
+          createAt={data.created_at}
+          updatedAt={data.updated_at ? data.updated_at : null}
+          playlistId={playlistId}
         />
       ))}
+      <div ref={observerElem}>{isFetchingNextPage && <Loading />}</div>
     </S.Container>
   )
 }

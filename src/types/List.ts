@@ -9,6 +9,8 @@ export interface FeedListProps {
   track: number
   key: string
   id: string
+  likesState: boolean
+  playlist_user_id: string
 }
 
 export interface PlayListProps {

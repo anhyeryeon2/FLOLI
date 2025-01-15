@@ -6,7 +6,7 @@ export const dateKoreanFormat = (date: string): string => {
   const month = String(stringToDate.getMonth() + 1).padStart(2, '0')
   const day = String(stringToDate.getDate()).padStart(2, '0')
 
-  const formattedDate = `${year}/${month}/${day}`
+  const formattedDate = `${year}년 ${month}월 ${day}일`
 
   return formattedDate
 }

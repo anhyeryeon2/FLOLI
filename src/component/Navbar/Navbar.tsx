@@ -11,16 +11,19 @@ import * as S from './Navbar.styled'
 import { useAuthStore } from '@/store/useAuthStore'
 import { Profile } from '@/component'
 import { useUserInfo } from '@/hooks'
+import { useSearchTermStore } from '@/store/useSearchTermStore'
 
 export function Navbar() {
   const { userinfo } = useUserInfo()
   const { user } = useAuthStore()
   const [active, setActive] = useState<string>('home')
+  const setSearchTerm = useSearchTermStore(state => state.setSearchTerm)
 
   const handleClick = (icon: string) => {
     if (icon === 'home' && active === 'home') {
       window.scrollTo({ top: 0, behavior: 'smooth' })
     }
+    setSearchTerm('')
     setActive(icon)
   }
 
@@ -88,8 +91,8 @@ export function Navbar() {
               altText="profile"
               userId={user?.id || ''}
               size="xsmall"
+              to="/mypage"
               border="2px solid var(--color-black)"
-              disabledLink={true}
             />
           ) : (
             <Profile

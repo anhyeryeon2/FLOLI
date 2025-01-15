@@ -114,9 +114,17 @@ export const OptionsIcon = styled(FaEllipsisH)`
 `
 export const ModalWrapper = styled.div`
   display: flex;
-  font-size: var(--fs-xl);
   padding: var(--spacing-4);
   gap: 2rem;
   align-items: center;
   margin-bottom: 1rem;
+  flex-direction: column;
+`
+
+export const ModalContentContainer = styled.div`
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  align-items: center;
+  font-size: var(--fs-xl);
 `
