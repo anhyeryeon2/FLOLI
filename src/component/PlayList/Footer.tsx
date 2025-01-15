@@ -6,24 +6,24 @@ interface PlayListFooterProps {
   date: string
   likes: number
   comments: number
-  isLocked?: boolean
+  ispublic?: boolean
   nickname?: string
 }
 export const PlayListFooter = ({
   date,
   likes,
   comments,
-  isLocked,
+  ispublic,
   nickname
 }: PlayListFooterProps) => (
   <S.Footer>
     <S.Stat>
       {nickname}
       <S.Icon>
-        {isLocked === undefined ? null : isLocked === true ? (
-          <FaLock />
-        ) : (
+        {ispublic === undefined ? null : ispublic === true ? (
           <FaLockOpen />
+        ) : (
+          <FaLock />
         )}
       </S.Icon>
       {date}

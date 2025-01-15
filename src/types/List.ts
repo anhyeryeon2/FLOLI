@@ -17,7 +17,7 @@ export interface PlayListProps {
   date: string
   likes: number
   comments: number
-  isLocked?: boolean
+  ispublic?: boolean
   optionIcon?: 'heart' | 'bookmark' | 'option'
   nickname?: string
   playlistId?: string

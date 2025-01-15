@@ -97,7 +97,7 @@ export const MyPlayLists = () => {
               date={new Date(playlist.created_at).toLocaleDateString()}
               likes={playlist.likes_count}
               comments={playlist.comments_count}
-              isLocked={playlist.is_public}
+              ispublic={playlist.is_public}
               optionIcon="option"
               playlistId={playlist.playlist_id}
               onDelete={handleDeletePlayList}

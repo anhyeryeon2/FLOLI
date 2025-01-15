@@ -15,14 +15,14 @@ export const PlayList = ({
   optionIcon,
   nickname,
   playlistId,
-  isLocked: initialIsLocked,
+  ispublic: initialIsLocked,
   onDelete,
   onClick,
   onOptionClick
 }: PlayListProps) => {
   const {
     isOpen,
-    isLocked,
+    ispublic,
     options,
     handleOptionsPopup,
     handleOptionsPopState
@@ -51,7 +51,7 @@ export const PlayList = ({
             date={date}
             likes={likes}
             comments={comments}
-            isLocked={isLocked}
+            ispublic={ispublic}
             nickname={nickname}
           />
         </S.TextWrapper>
