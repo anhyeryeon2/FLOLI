@@ -9,6 +9,7 @@ import { FaShareAlt } from 'react-icons/fa'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { updateLike } from '@/apis/like'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 
 const FeedList = ({
   image,
@@ -78,7 +79,7 @@ const FeedList = ({
             <FeedFooter
               likes={likes}
               comments={comments}
-              date={date}
+              date={dateKoreanFormat(date)}
               onClick={handleOptionsPopup}
               onLikeClick={() => handleUpdateLike(id)}
               likesState={likesState}
