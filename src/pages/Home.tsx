@@ -6,7 +6,6 @@ import { useEffect, useRef } from 'react'
 import { useLocation } from 'react-router-dom'
 import PlayListSkeleton from '@/component/Skeleton/PlayListSkeleton'
 import useInfiniteScroll from '@/hooks/useInfiniteScroll'
-import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 
 export function Home() {
   const location = useLocation()
@@ -54,7 +53,7 @@ export function Home() {
     return <PlayListSkeleton />
   }
 
-  if (isError) throw new Error('예상치 못한 에러가 발생했습니다')
+  if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
   return (
     <>
       {data?.map((playList: IPlayListType) => (
@@ -70,6 +69,7 @@ export function Home() {
           key={playList.playlist_id}
           id={playList.playlist_id}
           likesState={playList.is_liked}
+          playlist_user_id={playList.playlist_user_id}
         />
       ))}
       <div ref={observerElem} />
