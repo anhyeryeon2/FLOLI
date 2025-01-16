@@ -1,4 +1,4 @@
-import { FeedList, PlayListSkeleton } from '@/component'
+import { FeedList, Loading, PlayListSkeleton } from '@/component'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getSubscribeAllPlayLists } from '@/apis/subscribe/playList/index'
 import { useInfiniteScroll } from '@/hooks'
@@ -44,7 +44,7 @@ const AllSubscribePlayLists = () => {
     }
   }, [isError, showToastMessage])
 
-  if (isLoading || isFetchingNextPage) return <PlayListSkeleton />
+  if (isLoading || isFetchingNextPage) return <Loading />
 
   return (
     <>
@@ -61,6 +61,7 @@ const AllSubscribePlayLists = () => {
           key={playList.playlist_id}
           id={playList.playlist_id}
           likesState={playList.is_liked}
+          playlist_user_id={playList.playlist_user_id}
         />
       ))}
       <div ref={observerElem} />

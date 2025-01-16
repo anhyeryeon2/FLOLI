@@ -1,4 +1,4 @@
-import { FeedList, PlayListSkeleton } from '@/component'
+import { FeedList, Loading } from '@/component'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getPlayList } from '@/apis/feed'
 import { IPlayListType } from '@/types/playList'
@@ -49,10 +49,11 @@ export function Home() {
   })
 
   if (isLoading || isFetchingNextPage) {
-    return <PlayListSkeleton />
+    return <Loading />
   }
 
   if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
+
   return (
     <>
       {data?.map((playList: IPlayListType) => (

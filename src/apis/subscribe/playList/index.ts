@@ -1,7 +1,7 @@
 import axiosInstance from '../../axiosInstance'
 import { supabase } from '../../../supabase/supabaseConfig'
 
-const ITEM_COUNT = 3
+const ITEM_COUNT = 5
 
 const getCurrentUser = async () => {
   const { data, error } = await supabase.auth.getUser()

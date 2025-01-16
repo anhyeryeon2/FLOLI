@@ -2,7 +2,7 @@ import { getSearchPlayLists } from '@/apis/search/playList/index'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useRef } from 'react'
 import * as S from '@/component/FeedList/FeedList.style'
-import { FeedList, PlayListSkeleton } from '@/component'
+import { FeedList, Loading } from '@/component'
 import { IPlayListType } from '@/types/playList'
 import { useInfiniteScroll } from '@/hooks'
 import { useLocation } from 'react-router-dom'
@@ -51,7 +51,7 @@ export const SearchPage = () => {
       <p className="text-center">플레이 리스트 정보를 불러오지 못했습니다.</p>
     )
   if (isLoading || isFetchingNextPage) {
-    return <PlayListSkeleton />
+    return <Loading />
   }
 
   return (
@@ -69,6 +69,8 @@ export const SearchPage = () => {
             comments={playList.comments_count}
             key={playList.playlist_id}
             id={playList.playlist_id}
+            likesState={playList.is_liked}
+            playlist_user_id={playList.playlist_user_id}
           />
         ))
       ) : (
