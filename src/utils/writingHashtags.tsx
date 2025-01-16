@@ -1,6 +1,4 @@
 import React from 'react'
-import * as S from '@/component/PlayListCreate/PlayListCreate.styles'
-
 interface WritingHashtagsProps {
   description: string
 }
@@ -19,9 +17,10 @@ const WritingHashtags = ({ description }: WritingHashtagsProps) => {
         const processedLine = parts.map((part, partIndex) => {
           if (part.startsWith('#')) {
             return (
-              <S.HashtagSpan key={`${lineIndex}-${partIndex}`}>
-                {part}
-              </S.HashtagSpan>
+              <HashtagSpan key={`${lineIndex}-${partIndex}`}>
+                <span className="hash-symbol">#</span>
+                <span className="hash-text">{part.slice(1)}</span>
+              </HashtagSpan>
             )
           }
           return part
@@ -39,3 +38,9 @@ const WritingHashtags = ({ description }: WritingHashtagsProps) => {
 }
 
 export default WritingHashtags
+import styled from 'styled-components'
+
+export const HashtagSpan = styled.span`
+  color: var(--color-main1);
+  font-weight: 500;
+`
