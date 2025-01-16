@@ -70,6 +70,7 @@ export const SearchPage = () => {
             id={playList.playlist_id}
             likesState={playList.is_liked}
             playlist_user_id={playList.playlist_user_id}
+            is_public={playList.is_public}
           />
         ))
       ) : (

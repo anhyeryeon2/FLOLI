@@ -1,6 +1,6 @@
 import axiosInstance from '../../axiosInstance'
 
-const ITEM_COUNT = 3
+const ITEM_COUNT = 4
 
 export const getSearchPlayLists = async (
   search_term: string,
