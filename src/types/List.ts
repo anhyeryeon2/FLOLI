@@ -7,7 +7,6 @@ export interface FeedListProps {
   comments: number
   date: string
   track: number
-  key: string
   id: string
   likesState: boolean
   playlist_user_id: string

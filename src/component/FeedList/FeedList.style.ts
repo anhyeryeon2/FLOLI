@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { FaEllipsisH } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 export const FeedConteiner = styled.div`
   display: flex;
@@ -9,7 +10,7 @@ export const FeedConteiner = styled.div`
   justify-content: center;
 `
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   background-color: var(--color-bg1);

@@ -17,7 +17,7 @@ export const FeedList = ({
   comments,
   date,
   track,
-  key,
+
   id,
   likesState,
   playlist_user_id,
@@ -54,9 +54,9 @@ export const FeedList = ({
       {is_public && (
         <>
           <S.CardContainer
-            key={key}
-            id={id}>
-            <S.ImageWrapper key={key}>
+            id={id}
+            to={`/view/${id}`}>
+            <S.ImageWrapper>
               <img
                 src={image}
                 alt={title}
@@ -89,6 +89,7 @@ export const FeedList = ({
             handleOptionsPopState={handleOptionsPopState}
             id={id}
             playlist_user_id={playlist_user_id}
+            setIsOpen={setIsOpen}
           />
         </>
       )}
