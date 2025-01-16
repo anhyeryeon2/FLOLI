@@ -59,6 +59,7 @@ export const PlayList = ({
           {optionIcon === 'heart' && <FaHeart />}
           {optionIcon === 'bookmark' && <S.PlayListSaveIcon />}
           {optionIcon === 'option' && <FaEllipsisH />}
+          {optionIcon === 'removeBookmark' && <S.PlayListDeleteIcon />}
         </S.Options>
       </S.CardContainer>
       <Modal
