@@ -21,7 +21,7 @@ export interface PlayListProps {
   likes: number
   comments: number
   ispublic?: boolean
-  optionIcon?: 'heart' | 'bookmark' | 'option'
+  optionIcon?: 'heart' | 'bookmark' | 'option' | 'removeBookmark'
   nickname?: string
   playlistId?: string
   onDelete?: (id: string) => void

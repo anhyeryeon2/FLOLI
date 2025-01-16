@@ -24,7 +24,6 @@ export const FeedList = ({
   is_public
 }: FeedListProps) => {
   const [isOpen, setIsOpen] = useState(false)
-
   const { showToastMessage } = useToastMessageContext()
   const queryClient = useQueryClient()
   const { mutate } = useMutation({
@@ -49,6 +48,7 @@ export const FeedList = ({
   const handleUpdateLike = (id: string) => {
     mutate(id)
   }
+
   return (
     <>
       {is_public && (

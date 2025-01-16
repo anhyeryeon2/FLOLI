@@ -118,7 +118,7 @@ export async function SavedPlayList(
   pageParam: number = 1
 ) {
   const PAGE_SIZE = 10
-  const { data: likedPlaylists, error } = await supabase
+  const { data: savedPlaylists, error } = await supabase
     .from('bookmarks')
     .select('playlist_id')
     .eq('user_id', userId)
@@ -128,7 +128,7 @@ export async function SavedPlayList(
     throw new Error('userId와 일치하는 row 데이터가 존재하지 않습니다.')
   }
 
-  const playlistIds = likedPlaylists.map(item => item.playlist_id)
+  const playlistIds = savedPlaylists.map(item => item.playlist_id)
 
   const { data: playlists, error: playlistError } = await supabase
     .from('playlists')
@@ -147,11 +147,15 @@ export async function SavedPlayList(
 }
 
 //저장된 리스트 삭제
-export async function DeleteSaveList(userId: string | undefined) {
+export async function DeleteSaveList(
+  userId: string | undefined,
+  playlistId: string | undefined
+) {
   const { data, error } = await supabase
     .from('bookmarks')
     .delete()
     .eq('user_id', userId)
+    .eq('playlist_id', playlistId)
 
   if (error) {
     console.error(error)
