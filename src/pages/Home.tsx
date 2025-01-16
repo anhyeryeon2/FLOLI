@@ -7,7 +7,8 @@ import { useLocation } from 'react-router-dom'
 import { useInfiniteScroll } from '@/hooks'
 
 export function Home() {
-  const location = useLocation()
+  // const location = useLocation()
+  const isMainPage = location.pathname === '/'
   const observerElem = useRef<HTMLDivElement | null>(null)
   const {
     data,
@@ -15,8 +16,8 @@ export function Home() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isLoading,
-    refetch
+    isLoading
+    // refetch
   } = useInfiniteQuery({
     queryKey: ['playList'],
     queryFn: ({ pageParam }) => getPlayList(undefined, pageParam as number),
@@ -32,14 +33,15 @@ export function Home() {
 
     initialPageParam: 1,
 
-    staleTime: 1000 * 60
+    staleTime: 1000 * 60,
+    enabled: isMainPage
   })
 
-  useEffect(() => {
-    if (location.state?.refetch) {
-      refetch()
-    }
-  }, [location.state, refetch])
+  // useEffect(() => {
+  //   if (location.state?.refetch) {
+  //     refetch()
+  //   }
+  // }, [location.state, refetch])
 
   useInfiniteScroll({
     observerElem,
@@ -53,6 +55,7 @@ export function Home() {
   }
 
   if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
+
   return (
     <>
       {data?.map((playList: IPlayListType) => (
