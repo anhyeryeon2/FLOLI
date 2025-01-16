@@ -48,7 +48,7 @@ function MyPageSave() {
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation({
-    mutationFn: () => DeleteSaveList(user?.id),
+    mutationFn: () => DeleteSaveList(user?.id, playlistData?.[0]?.playlist_id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['SavedPlayList'] })
       handleToastSuccess('해당 플리를 저장목록에서 삭제 하였습니다')
@@ -81,7 +81,7 @@ function MyPageSave() {
             date={new Date(playlistData.created_at).toLocaleDateString()}
             likes={playlistData.likes_count}
             comments={playlistData.comments_count}
-            optionIcon="bookmark"
+            optionIcon="removeBookmark"
             nickname={playlistData.nickname}
             onOptionClick={handleDelete}
           />

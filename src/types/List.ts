@@ -10,6 +10,7 @@ export interface FeedListProps {
   id: string
   likesState: boolean
   playlist_user_id: string
+  is_public: boolean
 }
 
 export interface PlayListProps {
@@ -19,7 +20,7 @@ export interface PlayListProps {
   likes: number
   comments: number
   ispublic?: boolean
-  optionIcon?: 'heart' | 'bookmark' | 'option'
+  optionIcon?: 'heart' | 'bookmark' | 'option' | 'removeBookmark'
   nickname?: string
   playlistId?: string
   onDelete?: (id: string) => void

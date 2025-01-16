@@ -20,10 +20,10 @@ export const FeedList = ({
 
   id,
   likesState,
-  playlist_user_id
+  playlist_user_id,
+  is_public
 }: FeedListProps) => {
   const [isOpen, setIsOpen] = useState(false)
-
   const { showToastMessage } = useToastMessageContext()
   const queryClient = useQueryClient()
   const { mutate } = useMutation({
@@ -48,45 +48,51 @@ export const FeedList = ({
   const handleUpdateLike = (id: string) => {
     mutate(id)
   }
+
   return (
     <>
-      <S.CardContainer
-        id={id}
-        to={`/view/${id}`}>
-        <S.ImageWrapper>
-          <img
-            src={image}
-            alt={title}
+      {is_public && (
+        <>
+          <S.CardContainer
+            id={id}
+            to={`/view/${id}`}>
+            <S.ImageWrapper>
+              <img
+                src={image}
+                alt={title}
+              />
+              {track > 0 && <S.TrackTag>Track: {track}</S.TrackTag>}
+            </S.ImageWrapper>
+            <S.ContentWrapper>
+              <S.ProfileImage>
+                <img
+                  src={profileImage}
+                  alt="Profile"
+                />
+              </S.ProfileImage>
+              <S.TextWrapper>
+                <S.Title>{title}</S.Title>
+                <S.nickname>{nickname}</S.nickname>
+                <FeedFooter
+                  likes={likes}
+                  comments={comments}
+                  date={dateKoreanFormat(date)}
+                  onClick={handleOptionsPopup}
+                  onLikeClick={() => handleUpdateLike(id)}
+                  likesState={likesState}
+                />
+              </S.TextWrapper>
+            </S.ContentWrapper>
+          </S.CardContainer>
+          <FeedListOptionPopUp
+            isOpen={isOpen}
+            handleOptionsPopState={handleOptionsPopState}
+            id={id}
+            playlist_user_id={playlist_user_id}
+            setIsOpen={setIsOpen}
           />
-          {track > 0 && <S.TrackTag>Track: {track}</S.TrackTag>}
-        </S.ImageWrapper>
-        <S.ContentWrapper>
-          <S.ProfileImage>
-            <img
-              src={profileImage}
-              alt="Profile"
-            />
-          </S.ProfileImage>
-          <S.TextWrapper>
-            <S.Title>{title}</S.Title>
-            <S.nickname>{nickname}</S.nickname>
-            <FeedFooter
-              likes={likes}
-              comments={comments}
-              date={dateKoreanFormat(date)}
-              onClick={handleOptionsPopup}
-              onLikeClick={() => handleUpdateLike(id)}
-              likesState={likesState}
-            />
-          </S.TextWrapper>
-        </S.ContentWrapper>
-      </S.CardContainer>
-      <FeedListOptionPopUp
-        isOpen={isOpen}
-        handleOptionsPopState={handleOptionsPopState}
-        id={id}
-        playlist_user_id={playlist_user_id}
-      />
+        </>
+      )}
     </>
   )
 }

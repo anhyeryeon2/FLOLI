@@ -4,7 +4,7 @@ export const ToastMessageContainer = styled.div`
   bottom: 7.5rem;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 50;
+  z-index: 999;
   display: flex;
   flex-direction: column;
   gap: 0.8rem;

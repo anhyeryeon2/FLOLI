@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prepare": "husky && husky install",
-    "test": "echo \"testing\""
+    "test": "echo \"testing\"",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@hookform/resolvers": "^3.9.1",
@@ -32,6 +33,8 @@
     "@commitlint/cli": "^19.6.1",
     "@commitlint/config-conventional": "^19.6.0",
     "@eslint/js": "^9.13.0",
+    "@playwright/test": "^1.49.1",
+    "@types/node": "^22.10.6",
     "@types/react": "^18.3.12",
     "@types/react-dom": "^18.3.1",
     "@types/styled-components": "^5.1.34",
