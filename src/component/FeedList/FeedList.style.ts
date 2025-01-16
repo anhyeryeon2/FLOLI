@@ -10,7 +10,7 @@ export const FeedConteiner = styled.div`
   justify-content: center;
 `
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   background-color: var(--color-bg1);
@@ -49,20 +49,6 @@ export const ContentWrapper = styled.div`
   align-items: flex-start;
   width: 100%;
   padding: var(--spacing-4) var(--spacing-3) var(--spacing-3) var(--spacing-3);
-`
-
-export const ProfileImage = styled(Link)`
-  width: 5rem;
-  height: 5rem;
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  margin-right: var(--spacing-4);
-  margin-bottom: var(--spacing-1);
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
 `
 
 export const TextWrapper = styled.div`

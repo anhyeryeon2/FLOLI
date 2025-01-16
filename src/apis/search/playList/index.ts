@@ -1,6 +1,6 @@
 import axiosInstance from '../../axiosInstance'
 
-const ITEM_COUNT = 3
+const ITEM_COUNT = 4
 
 export const getSearchPlayLists = async (
   search_term: string,
@@ -12,9 +12,9 @@ export const getSearchPlayLists = async (
       'rpc/get_user_and_search_playlists',
       {
         params: {
-          search_term: search_term,
           page: page,
-          item: item
+          item: item,
+          search_term: search_term
         }
       }
     )
