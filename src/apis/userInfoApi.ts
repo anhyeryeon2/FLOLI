@@ -98,11 +98,15 @@ export async function LikedPlayList(
 }
 
 //좋아요 리스트 삭제
-export async function DeleteLikeList(userId: string | undefined) {
+export async function DeleteLikeList(
+  userId: string | undefined,
+  playlistId: string | undefined
+) {
   const { data, error } = await supabase
     .from('likes')
     .delete()
     .eq('user_id', userId)
+    .eq('playlist_id', playlistId)
 
   if (error) {
     console.error(error)

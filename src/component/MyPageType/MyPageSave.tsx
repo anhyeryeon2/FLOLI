@@ -48,7 +48,7 @@ function MyPageSave() {
   const queryClient = useQueryClient()
 
   const { mutate } = useMutation({
-    mutationFn: () => DeleteSaveList(user?.id, playlistData?.[0]?.playlist_id),
+    mutationFn: (PlayListId: string) => DeleteSaveList(user?.id, PlayListId),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['SavedPlayList'] })
       handleToastSuccess('해당 플리를 저장목록에서 삭제 하였습니다')
@@ -57,8 +57,8 @@ function MyPageSave() {
       handleToastError(`해당 플리를 저장목록에서 삭제하는데 실패하였습니다. `)
   })
 
-  function handleDelete() {
-    mutate()
+  function handleDelete(PlayListId: string) {
+    mutate(PlayListId)
   }
 
   if (!playlistData || playlistData.length === 0) {
@@ -83,7 +83,7 @@ function MyPageSave() {
             comments={playlistData.comments_count}
             optionIcon="removeBookmark"
             nickname={playlistData.nickname}
-            onOptionClick={handleDelete}
+            onOptionClick={() => handleDelete(playlistData.playlist_id)}
           />
         </S.ItemList>
       ))}
