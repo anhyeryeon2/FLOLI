@@ -9,12 +9,14 @@ import { useAuthStore } from '@/store/useAuthStore'
 import { CiCirclePlus } from 'react-icons/ci'
 import { useUserInfo, useToast } from '@/hooks'
 import { FormData, EditProfile } from '@/types/profileEdit'
+import { useNavigate } from 'react-router-dom'
 
 export function ProfileEdit() {
+  const [image, setImage] = useState<string | null>(null)
+  const fileInputRef = useRef<HTMLInputElement>(null)
+  const navigate = useNavigate()
   const { user, updateUser } = useAuthStore()
   const userId = user?.id
-  const fileInputRef = useRef<HTMLInputElement>(null)
-  const [image, setImage] = useState<string | null>(null)
   const { handleToastError, handleToastSuccess } = useToast()
 
   // data get는 커스텀훅으로 처리
@@ -31,7 +33,10 @@ export function ProfileEdit() {
       image: string | FileList | null
       id: string
     }) => UserProfileEdit(data, image, id),
-    onSuccess: () => handleToastSuccess(`수정되었습니다!! `),
+
+    onSuccess: () => {
+      handleToastSuccess(`수정되었습니다!!`)
+    },
 
     onError: () => handleToastError(`수정에 실패하였습니다... `)
   })
@@ -97,6 +102,8 @@ export function ProfileEdit() {
       nickname: editProfileData.nickname,
       introduction: editProfileData.introduction
     })
+
+    navigate('/mypage')
   }
 
   return (
@@ -160,14 +167,9 @@ export function ProfileEdit() {
         <S.ContentBox>
           <Input
             id="introduction"
-            {...register('introduction', {
-              required: '소개 글을 입력해주세요.'
-            })}
+            {...register('introduction')}
             placeholder="소개 글을 입력해주세요"
           />
-          {errors.introduction && (
-            <S.Errormsg>{errors.introduction.message}</S.Errormsg>
-          )}
         </S.ContentBox>
         <S.CompleteBox>
           <Button
