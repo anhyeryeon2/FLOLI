@@ -8,6 +8,7 @@ export const FeedConteiner = styled.div`
   max-width: var(--max-width);
   gap: 20px;
   justify-content: center;
+  transition: opacity 0.3s ease-in-out;
 `
 
 export const CardContainer = styled(Link)`
