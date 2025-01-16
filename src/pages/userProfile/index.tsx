@@ -25,12 +25,13 @@ export function UserProfile() {
           />
           <S.ProfileDetailBox>
             <S.UserName>{data?.[0]?.nickname}</S.UserName>
-            <S.SubscribeCount>{data?.[0]?.subsc_count} 구독자</S.SubscribeCount>
+            <S.IntruductionBox>{data?.[0]?.introduction}</S.IntruductionBox>
+            <S.SubscribeCountForOthers>
+              {data?.[0]?.subsc_count} 구독자
+            </S.SubscribeCountForOthers>
           </S.ProfileDetailBox>
         </S.ProfileBox>
-        <S.ButtonBox></S.ButtonBox>
       </S.HeaderBoxForOther>
-      <S.IntruductionBox>{data?.[0]?.introduction}</S.IntruductionBox>
 
       <S.SeparatingBox>
         <S.ShowTypes>플레이리스트</S.ShowTypes>

@@ -48,12 +48,18 @@ export const SubscribeCount = styled.div`
   font-weight: 500;
 `
 
+export const SubscribeCountForOthers = styled.div`
+  padding: var(--spacing-1) 0 var(--spacing-6) 0;
+  font-size: var(--fs-m);
+  font-weight: 500;
+`
+
 export const ButtonBox = styled.div`
   margin-bottom: var(--spacing-6);
 `
 
 export const IntruductionBox = styled.div`
-  padding: 0 0 var(--spacing-7) 0;
+  padding: var(--spacing-2) 0;
   font-size: var(--fs-l);
   text-align: center;
 `

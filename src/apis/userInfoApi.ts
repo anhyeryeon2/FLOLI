@@ -116,16 +116,18 @@ export async function DeleteLikeList(
   return data
 }
 
-//저장된 플레이리스트 정보
 export async function SavedPlayList(
   userId: string | undefined,
   pageParam: number = 1
 ) {
   const PAGE_SIZE = 10
+
+  // 북마크 테이블에서 해당 사용자의 playlist_id를 가져옵니다.
   const { data: savedPlaylists, error } = await supabase
     .from('bookmarks')
-    .select('playlist_id')
+    .select('playlist_id, created_at') // 북마크 생성 시점도 가져옵니다.
     .eq('user_id', userId)
+    .order('created_at', { ascending: false }) // 북마크 생성 시점 기준 내림차순 정렬
 
   if (error) {
     console.error(error)
@@ -134,11 +136,14 @@ export async function SavedPlayList(
 
   const playlistIds = savedPlaylists.map(item => item.playlist_id)
 
+  // playlists 테이블에서 playlist_id를 기반으로 플레이리스트 정보를 가져옵니다.
+  // 추가적으로 playlist의 created_at 기준으로 내림차순 정렬
   const { data: playlists, error: playlistError } = await supabase
     .from('playlists')
     .select('*')
     .in('playlist_id', playlistIds)
-    .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1)
+    .order('created_at', { ascending: false }) // 플레이리스트 생성 시점 기준 내림차순 정렬
+    .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1) // 페이지네이션 처리
 
   if (playlistError) {
     console.error(playlistError)
