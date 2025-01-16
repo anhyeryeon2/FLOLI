@@ -17,7 +17,7 @@ export const FeedList = ({
   comments,
   date,
   track,
-  key,
+
   id,
   likesState,
   playlist_user_id
@@ -51,10 +51,9 @@ export const FeedList = ({
   return (
     <>
       <S.CardContainer
-        key={key}
         id={id}
         to={`/view/${id}`}>
-        <S.ImageWrapper key={key}>
+        <S.ImageWrapper>
           <img
             src={image}
             alt={title}
