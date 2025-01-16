@@ -47,4 +47,9 @@ const StyledInput = styled.input<
   width: ${props => props.width || '100%'};
   height: ${props => props.height || 'auto'};
   ${props => !props.isCustom && mainStyle};
+
+  &:-webkit-autofill {
+    -webkit-box-shadow: 0 0 0 1000px #fff inset !important;
+    box-shadow: 0 0 0 1000px #fff inset !important;
+  }
 `

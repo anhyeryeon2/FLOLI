@@ -1,5 +1,6 @@
 import styled from 'styled-components'
 import { FaEllipsisH } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 export const FeedConteiner = styled.div`
   display: flex;
@@ -10,7 +11,7 @@ export const FeedConteiner = styled.div`
   transition: opacity 0.3s ease-in-out;
 `
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(Link)`
   display: flex;
   flex-direction: column;
   background-color: var(--color-bg1);
@@ -48,21 +49,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   width: 100%;
-  padding: var(--spacing-4) var(--spacing-3) 0 var(--spacing-3);
-`
-
-export const ProfileImage = styled.div`
-  width: 5rem;
-  height: 5rem;
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  margin-right: var(--spacing-4);
-  margin-bottom: var(--spacing-1);
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  padding: var(--spacing-4) var(--spacing-3) var(--spacing-3) var(--spacing-3);
 `
 
 export const TextWrapper = styled.div`
@@ -70,6 +57,7 @@ export const TextWrapper = styled.div`
   flex-direction: column;
   flex: 1;
   position: relative;
+  margin-left: 1rem;
 `
 
 export const Title = styled.h3`

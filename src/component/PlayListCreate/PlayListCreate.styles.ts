@@ -154,14 +154,15 @@ export const ThumbnailTitle = styled.p`
   font-size: var(--fs-l);
   font-weight: 600;
   color: var(--color-black);
-  padding: var(--spacing-2);
+  margin-top: var(--spacing-4);
+  padding: 0 var(--spacing-3);
   ${TextEllipsis}
 `
 export const ThumbnailMaker = styled.p`
   font-size: var(--fs-m);
   font-weight: 500;
   color: var(--color-black);
-  padding-left: var(--spacing-2);
+  padding: var(--spacing-3);
   ${TextEllipsis}
 `
 export const TrackTag = styled.div`
