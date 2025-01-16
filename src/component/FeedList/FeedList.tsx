@@ -7,6 +7,7 @@ import { updateLike } from '@/apis/like'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 import FeedListOptionPopUp from './FeedListOptionPopUp'
+import { Profile } from '../Profile/Profile'
 
 export const FeedList = ({
   image,
@@ -64,12 +65,12 @@ export const FeedList = ({
               {track > 0 && <S.TrackTag>Track: {track}</S.TrackTag>}
             </S.ImageWrapper>
             <S.ContentWrapper>
-              <S.ProfileImage>
-                <img
-                  src={profileImage}
-                  alt="Profile"
-                />
-              </S.ProfileImage>
+              <Profile
+                imageUrl={profileImage}
+                altText="profile"
+                to={`/profile/${playlist_user_id}`}
+                size={'small'}
+              />
               <S.TextWrapper>
                 <S.Title>{title}</S.Title>
                 <S.nickname>{nickname}</S.nickname>
