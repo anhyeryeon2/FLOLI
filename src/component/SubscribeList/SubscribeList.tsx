@@ -76,7 +76,10 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
             </S.SubscribeListItem>
           ))
         ) : (
-          <div>구독한 사람이 없습니다.</div>
+          <div
+            style={{ display: 'flex', justifyContent: 'center', color: 'red' }}>
+            구독한 사람이 없습니다.
+          </div>
         )}
       </S.SubscribeListContainer>
       <S.SubscribeAllList onClick={handleSubscribeListOpen}>
