@@ -48,7 +48,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   width: 100%;
-  padding: var(--spacing-4) var(--spacing-3) 0 var(--spacing-3);
+  padding: var(--spacing-4) var(--spacing-3) var(--spacing-3) var(--spacing-3);
 `
 
 export const ProfileImage = styled(Link)`
@@ -70,6 +70,7 @@ export const TextWrapper = styled.div`
   flex-direction: column;
   flex: 1;
   position: relative;
+  margin-left: 1rem;
 `
 
 export const Title = styled.h3`
