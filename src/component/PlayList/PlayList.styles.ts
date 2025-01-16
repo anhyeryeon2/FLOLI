@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { MdOutlinePlaylistAdd } from 'react-icons/md'
+import { MdOutlinePlaylistAdd, MdOutlinePlaylistRemove } from 'react-icons/md'
 
 export const CardContainer = styled.div`
   display: flex;
@@ -70,6 +70,10 @@ export const Icon = styled.span`
 export const PlayListSaveIcon = styled(MdOutlinePlaylistAdd)`
   font-size: var(--fs-xl);
 `
+export const PlayListDeleteIcon = styled(MdOutlinePlaylistRemove)`
+  font-size: var(--fs-xl);
+`
+
 export const ModalWrapper = styled.div`
   display: flex;
   font-size: var(--fs-xl);
