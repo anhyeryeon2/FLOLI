@@ -71,8 +71,9 @@ export async function LikedPlayList(
   const PAGE_SIZE = 10
   const { data: likedPlaylists, error } = await supabase
     .from('likes')
-    .select('playlist_id')
+    .select('playlist_id, created_at')
     .eq('user_id', userId)
+    .order('created_at', { ascending: false })
 
   if (error) {
     console.error(error)
@@ -94,7 +95,19 @@ export async function LikedPlayList(
     )
   }
 
-  return playlists
+  const sortedLikeList = likedPlaylists
+    .map(cur => {
+      const playlist = playlists.find(
+        cur2 => cur2.playlist_id === cur.playlist_id
+      )
+      if (playlist) {
+        return { ...playlist, likes_created_at: cur.created_at }
+      }
+      return null
+    })
+    .filter(item => item !== null)
+
+  return sortedLikeList
 }
 
 //좋아요 리스트 삭제
@@ -122,12 +135,11 @@ export async function SavedPlayList(
 ) {
   const PAGE_SIZE = 10
 
-  // 북마크 테이블에서 해당 사용자의 playlist_id를 가져옵니다.
   const { data: savedPlaylists, error } = await supabase
     .from('bookmarks')
-    .select('playlist_id, created_at') // 북마크 생성 시점도 가져옵니다.
+    .select('playlist_id, created_at')
     .eq('user_id', userId)
-    .order('created_at', { ascending: false }) // 북마크 생성 시점 기준 내림차순 정렬
+    .order('created_at', { ascending: false })
 
   if (error) {
     console.error(error)
@@ -136,14 +148,11 @@ export async function SavedPlayList(
 
   const playlistIds = savedPlaylists.map(item => item.playlist_id)
 
-  // playlists 테이블에서 playlist_id를 기반으로 플레이리스트 정보를 가져옵니다.
-  // 추가적으로 playlist의 created_at 기준으로 내림차순 정렬
   const { data: playlists, error: playlistError } = await supabase
     .from('playlists')
     .select('*')
     .in('playlist_id', playlistIds)
-    .order('created_at', { ascending: false }) // 플레이리스트 생성 시점 기준 내림차순 정렬
-    .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1) // 페이지네이션 처리
+    .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1)
 
   if (playlistError) {
     console.error(playlistError)
@@ -152,7 +161,19 @@ export async function SavedPlayList(
     )
   }
 
-  return playlists
+  const sortedPlaylists = savedPlaylists
+    .map(saved => {
+      const playlist = playlists.find(
+        playlist => playlist.playlist_id === saved.playlist_id
+      )
+      if (playlist) {
+        return { ...playlist, bookmark_created_at: saved.created_at }
+      }
+      return null
+    })
+    .filter(item => item !== null)
+
+  return sortedPlaylists
 }
 
 //저장된 리스트 삭제
