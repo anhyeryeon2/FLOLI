@@ -76,8 +76,7 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
             </S.SubscribeListItem>
           ))
         ) : (
-          <div
-            style={{ display: 'flex', justifyContent: 'center', color: 'red' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             구독한 사람이 없습니다.
           </div>
         )}

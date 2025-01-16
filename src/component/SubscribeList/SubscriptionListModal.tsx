@@ -67,8 +67,7 @@ const SubscriptionListModal = ({
             </S.ModalfullContent>
           ))
         ) : (
-          <div
-            style={{ display: 'flex', justifyContent: 'center', color: 'red' }}>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
             구독 목록이 없습니다.
           </div>
         )}

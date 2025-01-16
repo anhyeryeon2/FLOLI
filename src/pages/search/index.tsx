@@ -74,8 +74,7 @@ export const SearchPage = () => {
           />
         ))
       ) : (
-        <div
-          style={{ display: 'flex', justifyContent: 'center', color: 'red' }}>
+        <div style={{ display: 'flex', justifyContent: 'center' }}>
           검색한 내용이 없습니다.
         </div>
       )}
