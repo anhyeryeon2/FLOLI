@@ -3,7 +3,7 @@ import * as S from './EditProfile.styled'
 import { Profile, Input, Button } from '@/component'
 import img from '@/assets/img/profile/default_profile.png'
 import { useForm } from 'react-hook-form'
-import { useMutation } from '@tanstack/react-query'
+import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { UserProfileEdit } from '@/apis/userInfoApi'
 import { useAuthStore } from '@/store/useAuthStore'
 import { CiCirclePlus } from 'react-icons/ci'
@@ -22,6 +22,8 @@ export function ProfileEdit() {
   // data get는 커스텀훅으로 처리
   const { userinfo } = useUserInfo()
 
+  const queryClient = useQueryClient()
+
   // data edit
   const { mutate } = useMutation({
     mutationFn: ({
@@ -33,11 +35,29 @@ export function ProfileEdit() {
       image: string | FileList | null
       id: string
     }) => UserProfileEdit(data, image, id),
-
     onSuccess: () => {
       handleToastSuccess(`수정되었습니다!!`)
-    },
 
+      queryClient
+        .refetchQueries({ queryKey: ['userInfo', user?.id] })
+        .then(() => {
+          const updatedUserInfo = queryClient.getQueryData<
+            {
+              profile_img: string
+              nickname: string
+              introduction: string
+            }[]
+          >(['userInfo', user?.id])
+
+          if (updatedUserInfo) {
+            updateUser({
+              profile_img: updatedUserInfo[0].profile_img,
+              nickname: updatedUserInfo[0].nickname,
+              introduction: updatedUserInfo[0].introduction
+            })
+          }
+        })
+    },
     onError: () => handleToastError(`수정에 실패하였습니다... `)
   })
 
@@ -96,13 +116,6 @@ export function ProfileEdit() {
     }
 
     mutate({ data: editProfileData, image: newImage, id: userId })
-
-    updateUser({
-      profile_img: userinfo![0].profile_img,
-      nickname: editProfileData.nickname,
-      introduction: editProfileData.introduction
-    })
-
     navigate('/mypage')
   }
 
