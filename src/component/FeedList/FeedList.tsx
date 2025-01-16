@@ -23,7 +23,6 @@ export const FeedList = ({
   playlist_user_id
 }: FeedListProps) => {
   const [isOpen, setIsOpen] = useState(false)
-
   const { showToastMessage } = useToastMessageContext()
   const queryClient = useQueryClient()
   const { mutate } = useMutation({
@@ -48,6 +47,7 @@ export const FeedList = ({
   const handleUpdateLike = (id: string) => {
     mutate(id)
   }
+
   return (
     <>
       <S.CardContainer
@@ -86,6 +86,7 @@ export const FeedList = ({
         handleOptionsPopState={handleOptionsPopState}
         id={id}
         playlist_user_id={playlist_user_id}
+        setIsOpen={setIsOpen}
       />
     </>
   )

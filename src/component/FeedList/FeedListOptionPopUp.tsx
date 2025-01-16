@@ -7,19 +7,22 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { updateBookmarks } from '@/apis/feed/books'
 import * as S from './FeedList.style'
 import { subscribeCreate } from '@/apis/subscribe/subscribeCreate'
+import { SetStateAction } from 'react'
 
 interface FeedListOption {
   isOpen: boolean
   handleOptionsPopState: () => void
   id: string
   playlist_user_id: string
+  setIsOpen: React.Dispatch<SetStateAction<boolean>>
 }
 
 const FeedListOptionPopUp = ({
   isOpen,
   handleOptionsPopState,
   id,
-  playlist_user_id
+  playlist_user_id,
+  setIsOpen
 }: FeedListOption) => {
   const { showToastMessage } = useToastMessageContext()
   const queryClient = useQueryClient()
@@ -57,13 +60,17 @@ const FeedListOptionPopUp = ({
   })
 
   const handleSubscribeCreate = (playListId: string) => {
+    setIsOpen(false)
     subscribeCreateMutate(playListId)
   }
   const handlePlayListBookmarks = (id: string) => {
+    setIsOpen(false)
     updateMutate(id)
   }
 
   const handleSharePlaylist = (id: string) => {
+    setIsOpen(false)
+
     const shareUrl = `${window.location.origin}/view/${id}`
     navigator.clipboard
       .writeText(shareUrl)
