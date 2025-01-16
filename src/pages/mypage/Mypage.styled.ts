@@ -11,6 +11,11 @@ export const HeaderBox = styled.div`
   align-items: center;
   padding-top: var(--spacing-4);
 `
+
+export const HeaderBoxForOther = styled.div`
+  align-items: center;
+`
+
 export const logout = styled.div`
   position: absolute;
   top: 0;
@@ -48,8 +53,9 @@ export const ButtonBox = styled.div`
 `
 
 export const IntruductionBox = styled.div`
-  padding: var(--spacing-1) 0;
+  padding: 0 0 var(--spacing-7) 0;
   font-size: var(--fs-l);
+  text-align: center;
 `
 
 export const SeparatingBox = styled.div`

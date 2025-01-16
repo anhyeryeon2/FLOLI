@@ -15,7 +15,7 @@ export function UserProfile() {
 
   return (
     <S.Container>
-      <S.HeaderBox>
+      <S.HeaderBoxForOther>
         <S.ProfileBox>
           <Profile
             className="profile-img"
@@ -29,7 +29,7 @@ export function UserProfile() {
           </S.ProfileDetailBox>
         </S.ProfileBox>
         <S.ButtonBox></S.ButtonBox>
-      </S.HeaderBox>
+      </S.HeaderBoxForOther>
       <S.IntruductionBox>{data?.[0]?.introduction}</S.IntruductionBox>
 
       <S.SeparatingBox>
