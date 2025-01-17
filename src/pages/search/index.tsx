@@ -1,6 +1,6 @@
 import { getSearchPlayLists } from '@/apis/search/playList/index'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import * as S from '@/component/FeedList/FeedList.style'
 import { FeedList, Loading } from '@/component'
 import { IPlayListType } from '@/types/playList'
@@ -9,7 +9,11 @@ import { useLocation } from 'react-router-dom'
 
 export const SearchPage = () => {
   const location = useLocation()
-  const searchTerm = location.state
+
+  const searchUrl = location.state
+
+  const [searchTerm, setSearchTerm] = useState<string>(searchUrl)
+
   const observerElem = useRef<HTMLDivElement | null>(null)
   const queryClient = useQueryClient()
   const {
@@ -36,6 +40,15 @@ export const SearchPage = () => {
 
     staleTime: 1000 * 60
   })
+  useEffect(() => {
+    if (location.state && location.state.searchTerm) {
+      setSearchTerm(location.state.searchTerm)
+    }
+  }, [location.state])
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ['playListSearch'] })
+  }, [data])
 
   useInfiniteScroll({
     observerElem,
@@ -43,9 +56,6 @@ export const SearchPage = () => {
     isFetchingNextPage,
     fetchNextPage
   })
-  useEffect(() => {
-    queryClient.invalidateQueries({ queryKey: ['playListSearch'] })
-  }, [data])
 
   if (isError)
     return (

@@ -17,7 +17,6 @@ export const ModalFull = ({
   const modalRoot = document.getElementById('modal-container')
   const navigate = useNavigate()
   const { pathname } = useLocation()
-
   useScrollLock({ isOpen })
 
   const handleModalClose = useCallback(() => {

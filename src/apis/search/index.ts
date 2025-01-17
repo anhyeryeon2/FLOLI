@@ -7,6 +7,7 @@ export const getSearch = async (search_term: string) => {
         search_term: search_term
       }
     })
+
     return playListData.data
   } catch (error) {
     if (error instanceof Error) {

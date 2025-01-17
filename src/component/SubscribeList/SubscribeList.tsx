@@ -30,7 +30,7 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
     staleTime: 1000 * 60
   })
 
-  const { onDragStart, onDragEnd, isDrag, onThrottleDragMove } =
+  const { onMouseDown, onTouchStart, onDragEnd, isDrag, onThrottleDragMove } =
     useDragScroll(scrollRef)
 
   const handleSubscribeClick = (userId: string) => {
@@ -60,10 +60,13 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
     <S.SubscribeContainer>
       <S.SubscribeListContainer
         ref={scrollRef}
-        onMouseDown={onDragStart} // 마우스 클릭 시
+        onMouseDown={onMouseDown} // 마우스 클릭 시
         onMouseUp={onDragEnd} // 마우스 클릭을 뗀 후
-        onMouseLeave={onDragEnd} //마우스가 해당 요소 영역을 벗어낫을 때
-        onMouseMove={isDrag ? onThrottleDragMove : undefined} //마우스가 움직일때
+        onMouseLeave={onDragEnd} // 마우스가 해당 요소 영역을 벗어났을 때
+        onMouseMove={isDrag ? onThrottleDragMove : undefined} // 마우스가 움직일 때
+        onTouchStart={onTouchStart} // 터치 시작 시
+        onTouchEnd={onDragEnd} // 터치 종료 시
+        onTouchMove={isDrag ? onThrottleDragMove : undefined} // 터치 이동 시
       >
         {subscribeList && subscribeList.length > 0 ? (
           subscribeList?.map(subscribe => (

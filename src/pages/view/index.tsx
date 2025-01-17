@@ -382,7 +382,10 @@ export const View = (): JSX.Element => {
             <span>{comments_count}</span>
           </div>
           <CommentEditor playlistId={playlist_id!} />
-          <CommentList playlistId={playlist_id!} />
+          <CommentList
+            playlistId={playlist_id!}
+            creatorId={creator_id}
+          />
         </S.CommentWrapper>
 
         <S.VideoListPanel onClick={openVideoList}>
