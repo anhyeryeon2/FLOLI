@@ -2,7 +2,7 @@ import { IoIosSearch } from 'react-icons/io'
 import * as S from './Header.styled'
 import MainLogo from '@/assets/img/logo/floli.svg'
 import { IoChevronBack } from 'react-icons/io5'
-import { useNavigate, useLocation } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import { useSearchTermStore } from '@/store/useSearchTermStore'
 import { useSearchModalFullStore } from '@/store/useSearchModalFullStore'
 
@@ -30,7 +30,6 @@ export default function Header({ isBack }: HeaderProps) {
 
   const handleNavgiate = () => {
     setSearchTerm('')
-
     navigate('/')
   }
 
