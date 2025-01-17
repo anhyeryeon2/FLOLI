@@ -35,20 +35,20 @@
 
 ## 기술 스택 및 개발환경
 
-| **분류**                   | **기술 스택**                                                                                                                                                                                                     | **도입 이유**                                                                          |
-| -------------------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
-| **프론트엔드**             | <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black">                                                                                                              | 선언적 UI 작성이 가능하며, 커뮤니티와 생태계가 활발해 빠른 문제 해결이 가능            |
-|                            | <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">                                                                                                                | 빠른 번들링과 개발 서버 실행, 간편한 설정으로 개발 생산성 향상                         |
-|                            | <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">                                                                                                    | 정적 타이핑을 통해 버그를 사전에 방지하고, 협업 시 코드 가독성 향상에 유리             |
-| **상태 관리, 데이터 처리** | <img src="https://img.shields.io/badge/Tanstackquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white">                                                                                                 | 비동기 데이터 요청 및 캐싱 기능으로 효율적인 서버 데이터 관리                          |
-|                            | <img src="https://img.shields.io/badge/Zustand-82612C?style=for-the-badge&logo=&logoColor=white">                                                                                                                 | 애플리케이션의 전역 상태 관리를 단순하고 직관적으로 관리 및 처리                       |
-|                            | <img src="https://img.shields.io/badge/reacthookform-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white">                                                                                              | React와 자연스럽게 통합되며, 간결한 API로 폼 상태 관리와 유효성 검사를 효율적으로 처리 |
-|                            | <img src="https://img.shields.io/badge/zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white">                                                                                                                  | 폼 데이터 유효성을 간단하고 직관적으로 처리                                            |
-| **스타일링**               | <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">                                                                                        | CSS-in-JS로 컴포넌트 단위 스타일링이 가능하며, 스타일 충돌을 방지                      |
-| **데이터베이스**           | <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white">                                                                                                        | 실시간 DB, 인증 등 백엔드 기능을 빠르게 구축하고 확장성을 확보                         |
-| **코드 품질, 테스트**      | <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white"> <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black"> | 코드 스타일을 통일하고 품질을 유지하며 잠재적인 오류를 사전에 방지                     |
-|                            | <img src="https://img.shields.io/badge/PlayWright-34A853?style=for-the-badge&logo=&logoColor=white">                                                                                                              | E2E 테스트를 통해 사용자 경험을 자동화된 방식으로 검증                          |
-| **협업 도구**              | <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">       | 실시간 커뮤니케이션, 작업 관리 및 문서화를 통해 팀 간 효율적인 협업 가능               |
+| **기술 스택**                                                                                                                                                                                                     | **도입 이유**                                                                          |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
+| <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black">                                                                                                              | 선언적 UI 작성이 가능하며, 커뮤니티와 생태계가 활발해 빠른 문제 해결이 가능            |
+| <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">                                                                                                                | 빠른 번들링과 개발 서버 실행, 간편한 설정으로 개발 생산성 향상                         |
+| <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">                                                                                                    | 정적 타이핑을 통해 버그를 사전에 방지하고, 협업 시 코드 가독성 향상에 유리             |
+| <img src="https://img.shields.io/badge/Tanstackquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white">                                                                                                 | 비동기 데이터 요청 및 캐싱 기능으로 효율적인 서버 데이터 관리                          |
+| <img src="https://img.shields.io/badge/Zustand-82612C?style=for-the-badge&logo=&logoColor=white">                                                                                                                 | 애플리케이션의 전역 상태 관리를 단순하고 직관적으로 관리 및 처리                       |
+| <img src="https://img.shields.io/badge/reacthookform-EC5990?style=for-the-badge&logo=reacthookform&logoColor=white">                                                                                              | React와 자연스럽게 통합되며, 간결한 API로 폼 상태 관리와 유효성 검사를 효율적으로 처리 |
+| <img src="https://img.shields.io/badge/zod-3E67B1?style=for-the-badge&logo=zod&logoColor=white">                                                                                                                  | 폼 데이터 유효성을 간단하고 직관적으로 처리                                            |
+| <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">                                                                                        | CSS-in-JS로 컴포넌트 단위 스타일링이 가능하며, 스타일 충돌을 방지                      |
+| <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white">                                                                                                        | 실시간 DB, 인증 등 백엔드 기능을 빠르게 구축하고 확장성을 확보                         |
+| <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white"> <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black"> | 코드 스타일을 통일하고 품질을 유지하며 잠재적인 오류를 사전에 방지                     |
+| <img src="https://img.shields.io/badge/PlayWright-34A853?style=for-the-badge&logo=&logoColor=white">                                                                                                              | E2E 테스트를 통해 사용자 경험을 자동화된 방식으로 검증                                 |
+| <img src="https://img.shields.io/badge/Notion-000000?style=for-the-badge&logo=notion&logoColor=white"> <img src="https://img.shields.io/badge/Slack-4A154B?style=for-the-badge&logo=slack&logoColor=white">       | 실시간 커뮤니케이션, 작업 관리 및 문서화를 통해 팀 간 효율적인 협업 가능               |
 
 <br>
 
@@ -114,7 +114,7 @@
 - Input, 바텀시트 모달, 풀페이지 모달 등 공통 컴포넌트 제작
 - 플레이리스트 상세페이지 UI 작업 및 기능 구현
   - 기능에 필요한 데이터 테이블을 생성한 후, 호출&가공하여 적용
-  
+    
     ＋ 관련 custom hooks 제작
   - 구독, 좋아요, 저장을 토글 형태로, 실시간으로 반영되도록 구현
   - 댓글 목록, 댓글 작성/수정/삭제 구현
