@@ -16,7 +16,6 @@ import KakaoLogo from '@/assets/img/login/kakao.svg'
 import { UserData } from '@/types/user'
 
 type SocialProvider = 'kakao' | 'google'
-const REDIRECT_URL = 'http://localhost:5173/login'
 
 export function SignIn() {
   const { setUser, user } = useAuthStore()
@@ -64,7 +63,6 @@ export function SignIn() {
       }
     } catch (error) {
       handleToastError('세션 확인 중 문제가 발생했습니다. 다시 시도해주세요.')
-      console.log(error)
       localStorage.clear()
       navigate('/login')
     }
@@ -74,7 +72,7 @@ export function SignIn() {
     try {
       const { error } = await supabase.auth.signInWithOAuth({
         provider,
-        options: { redirectTo: REDIRECT_URL }
+        options: { redirectTo: '/' }
       })
       checkSession()
       if (error) {

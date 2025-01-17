@@ -16,7 +16,7 @@ export default defineConfig({
     [
       'html',
       {
-        outputFolder: path.join(__dirname, 'e2e/test-results/playwright-report')
+        outputFolder: path.join(__dirname, './e2e/playwright-html-report')
       }
     ]
   ],
