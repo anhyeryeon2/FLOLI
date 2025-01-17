@@ -7,7 +7,7 @@ type ViewVideoContentProps = {
 
 const ViewVideoContent = forwardRef<HTMLDivElement, ViewVideoContentProps>(
   ({ videoId }, ref) => {
-    const embedUrl = 'https://www.youtube.com/embed/' + videoId
+    const embedUrl = 'https://www.youtube.com/embed/' + videoId + '?autoplay=1'
 
     return (
       <S.Container ref={ref}>
