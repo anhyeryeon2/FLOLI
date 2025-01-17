@@ -58,12 +58,12 @@ const SubscriptionListModal = ({
                 src={subscribe.user_profile_image}
                 alt="구독한 프로필 이미지"
               />
-              <span>{subscribe.user_nickname}</span>
+              <S.NickNameSpan>{subscribe.user_nickname}</S.NickNameSpan>
               <S.ModalfullClickContent
                 onClick={() =>
                   handleSubscribeDelete(subscribe.subscribed_user_id)
                 }>
-                <RiUserUnfollowLine size={30} />
+                <RiUserUnfollowLine size={20} />
               </S.ModalfullClickContent>
             </S.ModalfullContent>
           ))

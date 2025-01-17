@@ -33,7 +33,6 @@ export default function HeaderSub({ children, onClick }: HeaderSubProps) {
       navigate(`/search?search=${searchValue}`, { state: searchValue }) // navigate로 검색어와 함께 이동
     }
   }
-
   return (
     <S.HeaderWrapper>
       <S.Logo onClick={onClick ? onClick : handleClick}>

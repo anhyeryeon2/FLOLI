@@ -5,6 +5,7 @@ import { IModalDefaultProps } from '@/types/modal'
 import { MouseEvent, useCallback, useEffect } from 'react'
 import HeaderSub from '../header/header-sub/HeaderSub'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useSearchModalFullStore } from '@/store/useSearchModalFullStore'
 
 export const ModalFull = ({
   id,
@@ -17,9 +18,14 @@ export const ModalFull = ({
   const modalRoot = document.getElementById('modal-container')
   const navigate = useNavigate()
   const { pathname } = useLocation()
-  useScrollLock({ isOpen })
 
+  useScrollLock({ isOpen })
+  const setModalSearchState = useSearchModalFullStore(
+    state => state.setModalSearchState
+  )
   const handleModalClose = useCallback(() => {
+    setModalSearchState(false)
+
     navigate(-1)
     closeModal()
   }, [navigate, closeModal])

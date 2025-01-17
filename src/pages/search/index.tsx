@@ -13,7 +13,6 @@ export const SearchPage = () => {
   const searchUrl = location.state
 
   const [searchTerm, setSearchTerm] = useState<string>(searchUrl)
-
   const observerElem = useRef<HTMLDivElement | null>(null)
   const queryClient = useQueryClient()
   const {
