@@ -1,6 +1,6 @@
 import { userInfoGet } from '@/apis/userInfoApi'
 import UserProfileList from '@/component/MyPageType/UserProfileList'
-import { Button, Profile } from '@/component'
+import { Button, Loading, Profile } from '@/component'
 import * as S from '@/pages/mypage/Mypage.styled'
 import { useQuery } from '@tanstack/react-query'
 import { useParams } from 'react-router-dom'
@@ -21,7 +21,7 @@ export function UserProfile() {
 
   const { data: isSubsc } = useFetchUserSubscStatus(
     currentUser!.id,
-    data?.[0].id
+    data?.[0]?.id
   )
 
   const { mutate: toggleSubscMutate, isPending: isToggleSubscPending } =
@@ -44,8 +44,13 @@ export function UserProfile() {
   }
 
   if (isPending) {
-    return <div>잠시만 기다려주세요!</div>
+    return <Loading />
   }
+
+  if (!data?.[0]?.id) {
+    return <div>데이터가 페칭되고있지 않아요...</div>
+  }
+
   if (isError) {
     return <div>에러가 발생했어요...</div>
   }
@@ -71,14 +76,16 @@ export function UserProfile() {
                   type="button"
                   className="subsc-cancel"
                   onClick={handleSubscClick}
-                  disabled={isToggleSubscPending}>
-                  구독 취소
+                  disabled={isToggleSubscPending}
+                  width="70%">
+                  구독취소
                 </Button>
               ) : (
                 <Button
                   type="button"
                   onClick={handleSubscClick}
-                  disabled={isToggleSubscPending}>
+                  disabled={isToggleSubscPending}
+                  width="70%">
                   구독
                 </Button>
               ))}
