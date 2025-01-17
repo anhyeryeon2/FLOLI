@@ -26,8 +26,9 @@ import { Loading, ErrorFallback } from '@/component'
 
 export function ProtectedRoute({ children }: { children: JSX.Element }) {
   const user = useAuthStore(state => state.user)
+  const token = localStorage.getItem('accessToken')
 
-  if (!user) {
+  if (!user || !token) {
     return (
       <Navigate
         to="/login"

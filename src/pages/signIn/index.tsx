@@ -30,6 +30,9 @@ export function SignIn() {
   } = useForm<LoginFormInputs>({ resolver: zodResolver(loginSchema) })
 
   const handleAuthSuccess = (userData: UserData) => {
+    if (user?.id === userData.id) {
+      return
+    }
     setUser(userData)
     handleToastSuccess('로그인 성공하였습니다')
     navigate('/')
@@ -74,18 +77,16 @@ export function SignIn() {
         provider,
         options: { redirectTo: '/' }
       })
-      checkSession()
+
       if (error) {
         const providerName = provider === 'kakao' ? '카카오' : '구글'
         handleToastError(`${providerName} 로그인 실패하였습니다`)
-        console.error(`${provider} Login error:`, error)
       } else {
         await checkSession()
       }
     } catch (error) {
       const providerName = provider === 'kakao' ? '카카오' : '구글'
       handleToastError(`${providerName} 로그인 중 오류가 발생했습니다`)
-      console.error(`${provider} Login error:`, error)
     } finally {
       setSocialLoading(false)
     }
