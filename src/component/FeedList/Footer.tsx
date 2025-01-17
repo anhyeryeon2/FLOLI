@@ -18,7 +18,7 @@ export const FeedFooter = ({
   likes: number
   comments: number
   date: string
-  onClick: () => void
+  onClick: (e: React.MouseEvent<HTMLButtonElement>) => void // 이벤트 타입 수정
   onLikeClick: () => void
   likesState: boolean
 }) => (
@@ -48,6 +48,7 @@ export const FeedFooter = ({
     </S.Footer>
   </>
 )
+
 const HeartIcon = styled(FaHeart)<HeartIconProps>`
   color: ${({ liked }) => (liked ? 'red' : 'gray')};
   cursor: pointer;

@@ -1,8 +1,8 @@
 import { FeedList, Loading } from '@/component'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { getPlayList } from '@/apis/feed'
 import { IPlayListType } from '@/types/playList'
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useInfiniteScroll } from '@/hooks'
 import { useLocation } from 'react-router-dom'
 
@@ -11,14 +11,15 @@ export function Home() {
   const isMainPage = location.pathname === '/'
 
   const observerElem = useRef<HTMLDivElement | null>(null)
+  const queryClient = useQueryClient()
+
   const {
     data,
     isError,
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isLoading,
-    refetch
+    isLoading
   } = useInfiniteQuery({
     queryKey: ['playList'],
     queryFn: ({ pageParam }) => getPlayList(undefined, pageParam as number),
@@ -28,6 +29,7 @@ export function Home() {
 
       return nextPage <= lastPage.length ? nextPage : undefined
     },
+
     select: data => {
       return data.pages.flat()
     },
@@ -44,6 +46,10 @@ export function Home() {
     isFetchingNextPage,
     fetchNextPage
   })
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ['playList'] })
+  }, [data])
 
   if (isLoading) {
     return <Loading />

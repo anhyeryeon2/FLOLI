@@ -138,7 +138,11 @@ const router = createBrowserRouter([
       },
       {
         path: ROUTER_PATH.SEARCH_PLAYLIST,
-        element: <SearchPage />
+        element: (
+          <ProtectedRoute>
+            <SearchPage />
+          </ProtectedRoute>
+        )
       },
       { path: ROUTER_PATH.ProfileEdit, element: <ProfileEdit /> }
     ]

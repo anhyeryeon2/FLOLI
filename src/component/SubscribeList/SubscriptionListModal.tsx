@@ -29,6 +29,7 @@ const SubscriptionListModal = ({
     onSuccess: () => {
       handleToastSuccess(`구독을 취소하였습니다. `)
       queryClient.invalidateQueries({ queryKey: ['subscribeList'] })
+      queryClient.invalidateQueries({ queryKey: ['allSubscribePlayList'] })
     },
     onError: () => {
       handleToastError(`예상치 못한 이유로 구독을 취소하지 못하였습니다.`)

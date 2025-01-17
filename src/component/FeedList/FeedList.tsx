@@ -8,6 +8,7 @@ import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 import FeedListOptionPopUp from './FeedListOptionPopUp'
 import { Profile } from '../Profile/Profile'
+import { useNavigate } from 'react-router-dom'
 
 export const FeedList = ({
   image,
@@ -18,7 +19,6 @@ export const FeedList = ({
   comments,
   date,
   track,
-
   id,
   likesState,
   playlist_user_id,
@@ -27,6 +27,8 @@ export const FeedList = ({
   const [isOpen, setIsOpen] = useState(false)
   const { showToastMessage } = useToastMessageContext()
   const queryClient = useQueryClient()
+  const navigate = useNavigate()
+  const path = window.location.pathname
   const { mutate } = useMutation({
     mutationFn: (id: string) => updateLike(id, undefined),
     onSuccess: () => {
@@ -36,6 +38,7 @@ export const FeedList = ({
       })
       queryClient.invalidateQueries({ queryKey: ['playList'] })
     },
+
     onError: () =>
       showToastMessage({
         message: `좋아요를 누르는데 실패했습니다.`,
@@ -43,13 +46,17 @@ export const FeedList = ({
       })
   })
 
-  const handleOptionsPopup = () => setIsOpen(true)
+  const handleOptionsPopup = () => {
+    setIsOpen(true)
+  }
 
-  const handleOptionsPopState = () => setIsOpen(false)
+  const handleOptionsPopState = () => {
+    setIsOpen(false)
+    navigate(path)
+  }
   const handleUpdateLike = (id: string) => {
     mutate(id)
   }
-
   return (
     <>
       {is_public && (

@@ -7,7 +7,8 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { updateBookmarks } from '@/apis/feed/books'
 import * as S from './FeedList.style'
 import { subscribeCreate } from '@/apis/subscribe/subscribeCreate'
-import { SetStateAction } from 'react'
+import { SetStateAction, useEffect, useState } from 'react'
+import { useAuthStore } from '@/store/useAuthStore'
 
 interface FeedListOption {
   isOpen: boolean
@@ -26,6 +27,9 @@ const FeedListOptionPopUp = ({
 }: FeedListOption) => {
   const { showToastMessage } = useToastMessageContext()
   const queryClient = useQueryClient()
+  const [isDisabled, setIsDisabled] = useState(false)
+
+  const { user: currentUser } = useAuthStore()
 
   const { mutate: updateMutate } = useMutation({
     mutationFn: (id: string) => updateBookmarks(id),
@@ -89,10 +93,14 @@ const FeedListOptionPopUp = ({
       })
   }
 
+  useEffect(() => {
+    if (playlist_user_id === currentUser?.id) setIsDisabled(true)
+  }, [currentUser?.id, playlist_user_id])
+
   return (
     <>
       <Modal
-        id="testmodal"
+        id="FeedListModal"
         isOpen={isOpen}
         closeModal={handleOptionsPopState}
         className="feedoption"
@@ -101,18 +109,24 @@ const FeedListOptionPopUp = ({
           key={id}
           id={id}>
           <S.ModalContentContainer
+            isDisabled={isDisabled}
             onClick={() => handleSubscribeCreate(playlist_user_id)}>
             <MdSubscriptions size={24} />
-            <p>구독하기</p>
+            <p>
+              {playlist_user_id !== currentUser?.id
+                ? '구독하기'
+                : '구독할 수 없습니다'}
+            </p>
           </S.ModalContentContainer>
-          <S.ModalContentContainer onClick={() => handlePlayListBookmarks(id)}>
+          <S.ModalContentSubContainer
+            onClick={() => handlePlayListBookmarks(id)}>
             <MdPlaylistAdd size={24} />
             <p>저장</p>
-          </S.ModalContentContainer>
-          <S.ModalContentContainer onClick={() => handleSharePlaylist(id)}>
+          </S.ModalContentSubContainer>
+          <S.ModalContentSubContainer onClick={() => handleSharePlaylist(id)}>
             <FaShareAlt size={24} />
             <p>공유</p>
-          </S.ModalContentContainer>
+          </S.ModalContentSubContainer>
         </S.ModalWrapper>
       </Modal>
     </>

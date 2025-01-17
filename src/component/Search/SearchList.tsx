@@ -11,7 +11,6 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { IPlayList } from '@/types/playList'
 import { useDebounce } from '@/hooks'
-import { getSearch } from '@/apis/search'
 import { useQuery } from '@tanstack/react-query'
 import { getSearchPlayLists } from '@/apis/search/playList'
 
@@ -27,10 +26,12 @@ const SearchList = () => {
   const navigate = useNavigate()
 
   const debouncedTitle = useDebounce(searchTerm, 300)
+  const path = window.location.pathname
 
   const handleMoalFullClose = () => {
     setModalFull(false)
     setSearchTerm('')
+    navigate(path)
   }
 
   const handleSearchClick = (term?: string) => {
