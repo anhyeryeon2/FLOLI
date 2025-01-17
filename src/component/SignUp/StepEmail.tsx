@@ -1,7 +1,7 @@
 import * as S from './SignUp.styles'
 import { useNavigate } from 'react-router-dom'
 import MainLogo from '@/assets/img/logo/floli.svg'
-import { Input } from '@/component'
+import { Input, Loading } from '@/component'
 import { Button } from '../Button/Button'
 import { useSignupStore } from '@/store/signupStore'
 import { EmailForm, emailSchema } from '@/schema/signupSchema'
@@ -58,9 +58,7 @@ export default function StepEmail() {
             {errors.email && (
               <S.ErrorMessage>{errors.email.message}</S.ErrorMessage>
             )}
-            {isLoading && (
-              <S.LoadingMessage>이메일 확인 중...</S.LoadingMessage>
-            )}
+            {isLoading && <Loading />}
             {isError && <S.ErrorMessage>오류가 발생했습니다.</S.ErrorMessage>}
           </S.InputWrapper>
         </S.TopSection>

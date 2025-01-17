@@ -16,12 +16,12 @@ export default defineConfig({
     [
       'html',
       {
-        outputFolder: path.join(__dirname, 'e2e/test-results/playwright-report')
+        outputFolder: path.join(__dirname, './e2e/playwright-html-report')
       }
     ]
   ],
   use: {
-    baseURL: 'http://127.0.0.1:5173',
+    baseURL: 'http://localhost:5173',
     trace: 'on-first-retry'
     // 실패한 테스트만 스크린샷 찍을 때
     // screenshot: 'only-on-failure'
@@ -65,12 +65,13 @@ export default defineConfig({
     //   name: 'Google Chrome',
     //   use: { ...devices['Desktop Chrome'], channel: 'chrome' },
     // },
-  ]
+  ],
 
-  // /* Vite dev 서버를 띄운 뒤 테스트 시작 */
-  // webServer: {
-  //   command: 'npm run dev',
-  //   url: 'http://127.0.0.1:5173',
-  //   reuseExistingServer: !process.env.CI
-  // }
+  /* Vite dev 서버를 띄운 뒤 테스트 시작 */
+  webServer: {
+    command: 'npm run dev',
+    port: 5173,
+    reuseExistingServer: !process.env.CI,
+    timeout: 60_000
+  }
 })
