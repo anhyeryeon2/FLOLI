@@ -30,8 +30,8 @@ export const SubscribeItem = styled.div`
 `
 
 export const SubscribeAvatar = styled.img`
-  width: 61px;
-  height: 59px;
+  width: 40px;
+  height: 38px;
   border-radius: 999px;
   object-fit: cover;
 `
@@ -45,8 +45,8 @@ export const SubscribeAllList = styled.button`
 
 export const ModalfullContent = styled.div`
   display: flex;
-  font-size: var(--fs-xl);
-  gap: 10rem;
+  font-size: var(--fs-mg);
+  gap: 3rem;
   position: relative;
   padding: var(--spacing-3);
   align-items: center;
@@ -61,4 +61,10 @@ export const ModalfullClickContent = styled.div`
 export const SubscribeAllLength = styled.p`
   margin-left: 1.5rem;
   margin-bottom: 2rem;
+`
+
+export const NickNameSpan = styled.span`
+  white-space: nowrap;
+  width: 68%;
+  overflow: hidden;
 `

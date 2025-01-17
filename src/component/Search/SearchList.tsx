@@ -24,14 +24,15 @@ const SearchList = () => {
   const addSearchTerm = useSearchTermListStore(state => state.addSearchTerm)
 
   const navigate = useNavigate()
-
+  const searchPersist = localStorage.getItem('searchTermList')
+  const parsedData = JSON.parse(searchPersist || '')
   const debouncedTitle = useDebounce(searchTerm, 300)
-  const path = window.location.pathname
+  // const path = window.location.pathname
 
   const handleMoalFullClose = () => {
     setModalFull(false)
     setSearchTerm('')
-    navigate(path)
+    navigate(`/search?search=${parsedData}`)
   }
 
   const handleSearchClick = (term?: string) => {
