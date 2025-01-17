@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { FaEllipsisH } from 'react-icons/fa'
+import { Link } from 'react-router-dom'
 
 export const FeedConteiner = styled.div`
   display: flex;
@@ -7,25 +7,29 @@ export const FeedConteiner = styled.div`
   max-width: var(--max-width);
   gap: 20px;
   justify-content: center;
+  transition: opacity 0.3s ease-in-out;
 `
 
-export const CardContainer = styled.div`
+export const CardContainer = styled(Link)`
   display: flex;
   flex-direction: column;
-  background-color: var(--color-bg1);
-  box-shadow: var(--shadow-s);
   justify-content: center;
   align-items: center;
   margin: auto;
   width: 100%;
-  height: calc(var(--max-width) * 9 / 16);
 `
 
 export const ImageWrapper = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
+  padding-top: 56.25%;
+  height: 0;
+
   img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -47,21 +51,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   width: 100%;
-  padding: var(--spacing-4) var(--spacing-3) 0 var(--spacing-3);
-`
-
-export const ProfileImage = styled.div`
-  width: 5rem;
-  height: 5rem;
-  border-radius: var(--radius-full);
-  overflow: hidden;
-  margin-right: var(--spacing-4);
-  margin-bottom: var(--spacing-1);
-  img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
+  padding: var(--spacing-3) var(--spacing-3) 2rem;
 `
 
 export const TextWrapper = styled.div`
@@ -69,6 +59,7 @@ export const TextWrapper = styled.div`
   flex-direction: column;
   flex: 1;
   position: relative;
+  margin-left: 1rem;
 `
 
 export const Title = styled.h3`
@@ -93,7 +84,7 @@ export const Footer = styled.div`
   align-items: center;
   gap: var(--spacing-5);
   color: var(--color-gray);
-  margin: var(--spacing-2) 0;
+  margin: var(--spacing-1) 0 0;
 `
 export const Stat = styled.div`
   display: flex;
@@ -105,11 +96,10 @@ export const Icon = styled.span`
   font-size: var(--fs-m);
 `
 
-export const OptionsIcon = styled(FaEllipsisH)`
-  font-size: var(--fs-l);
+export const OptionButton = styled.button`
   margin-left: auto;
-  margin-bottom: var(--spacing-1);
-  color: var(--color-gray);
+  padding: 0.4rem;
+  line-height: 0;
   cursor: pointer;
 `
 export const ModalWrapper = styled.div`

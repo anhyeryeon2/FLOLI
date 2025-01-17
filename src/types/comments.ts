@@ -20,6 +20,7 @@ export interface ICommentItemProps {
 
 export type CommentListProps = {
   playlistId: string
+  creatorId: string
 }
 
 export type CommentEditorProps = {

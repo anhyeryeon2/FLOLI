@@ -34,6 +34,7 @@ import useFetchVideoList from '@/hooks/useFetchVideoList'
 import { LAST_VIDEO_TITLE } from '@/constants/constant'
 import axiosInstance from '@/apis/axiosInstance'
 import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
+import WritingHashtags from '@/utils/writingHashtags'
 
 const DescriptionText = ({ description }: Pick<IViewProps, 'description'>) => {
   const textRef = useRef<HTMLDivElement>(null)
@@ -52,7 +53,7 @@ const DescriptionText = ({ description }: Pick<IViewProps, 'description'>) => {
         <div
           className={`desc-text ${isOpen ? 'open' : ''}`}
           ref={textRef}>
-          {description}
+          <WritingHashtags description={description} />
         </div>
         {isOverflow && (
           <span className="desc-toggle-text">
@@ -381,7 +382,10 @@ export const View = (): JSX.Element => {
             <span>{comments_count}</span>
           </div>
           <CommentEditor playlistId={playlist_id!} />
-          <CommentList playlistId={playlist_id!} />
+          <CommentList
+            playlistId={playlist_id!}
+            creatorId={creator_id}
+          />
         </S.CommentWrapper>
 
         <S.VideoListPanel onClick={openVideoList}>

@@ -1,9 +1,10 @@
-import { FeedList, PlayListSkeleton } from '@/component'
+import { FeedList, Loading } from '@/component'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getSubscribePlayLists } from '@/apis/subscribe/subscribePlayList/index'
 import { useInfiniteScroll } from '@/hooks'
 import { useRef, useEffect } from 'react'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import { IPlayListType } from '@/types/playList'
 
 interface Props {
   userId: string
@@ -50,11 +51,11 @@ const SubscribePlayLists = ({ userId }: Props) => {
     }
   }, [isError, showToastMessage])
 
-  if (isLoading || isFetchingNextPage) return <PlayListSkeleton />
+  if (isLoading) return <Loading />
 
   return (
     <>
-      {subscribePlayLists?.map(playList => (
+      {subscribePlayLists?.map((playList: IPlayListType) => (
         <FeedList
           image={playList.thumbnail}
           profileImage={playList.profile_img_path}
@@ -66,8 +67,12 @@ const SubscribePlayLists = ({ userId }: Props) => {
           comments={playList.comments_count}
           key={playList.playlist_id}
           id={playList.playlist_id}
+          likesState={playList.is_liked}
+          playlist_user_id={playList.playlist_user_id}
+          is_public={playList.is_public}
         />
       ))}
+      {isFetchingNextPage && <Loading />}
       <div ref={observerElem} />
     </>
   )

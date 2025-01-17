@@ -12,9 +12,9 @@ export const getSearchPlayLists = async (
       'rpc/get_user_and_search_playlists',
       {
         params: {
-          search_term: search_term,
           page: page,
-          item: item
+          item: item,
+          search_term: search_term
         }
       }
     )

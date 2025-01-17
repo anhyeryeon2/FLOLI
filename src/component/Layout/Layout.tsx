@@ -35,9 +35,13 @@ const Layout = () => {
     ROUTER_PATH.VIEW
   ]
   const backHeaderPaths = ROUTER_PATH_REGEX.VIEW.test(location.pathname)
+  const secondBackHeaderPaths = ROUTER_PATH_REGEX.USERPROFILE.test(
+    location.pathname
+  )
 
   const isNoHeaderPaths = noHeaderPaths.includes(location.pathname)
   const isBackHeaderPaths = backHeaderPaths
+  const isSecondBackHeaderPaths = secondBackHeaderPaths
   const isNoNavbarPaths =
     noNavbarPaths.includes(location.pathname) ||
     ROUTER_PATH_REGEX.VIEW.test(location.pathname)
@@ -48,6 +52,8 @@ const Layout = () => {
     if (isSubHeaderPaths) {
       return <HeaderSub />
     } else if (isBackHeaderPaths) {
+      return <Header isBack={true} />
+    } else if (isSecondBackHeaderPaths) {
       return <Header isBack={true} />
     } else if (isNoHeaderPaths) {
       return null

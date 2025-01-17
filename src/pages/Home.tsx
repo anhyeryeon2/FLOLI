@@ -1,14 +1,15 @@
-import { FeedList, PlayListSkeleton } from '@/component'
+import { FeedList, Loading } from '@/component'
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getPlayList } from '@/apis/feed'
 import { IPlayListType } from '@/types/playList'
-import { useEffect, useRef } from 'react'
-import { useLocation } from 'react-router-dom'
+import { useRef } from 'react'
 import { useInfiniteScroll } from '@/hooks'
+import { useLocation } from 'react-router-dom'
 
 export function Home() {
-  // const location = useLocation()
+  const location = useLocation()
   const isMainPage = location.pathname === '/'
+
   const observerElem = useRef<HTMLDivElement | null>(null)
   const {
     data,
@@ -16,8 +17,8 @@ export function Home() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isLoading
-    // refetch
+    isLoading,
+    refetch
   } = useInfiniteQuery({
     queryKey: ['playList'],
     queryFn: ({ pageParam }) => getPlayList(undefined, pageParam as number),
@@ -37,12 +38,6 @@ export function Home() {
     enabled: isMainPage
   })
 
-  // useEffect(() => {
-  //   if (location.state?.refetch) {
-  //     refetch()
-  //   }
-  // }, [location.state, refetch])
-
   useInfiniteScroll({
     observerElem,
     hasNextPage,
@@ -50,8 +45,8 @@ export function Home() {
     fetchNextPage
   })
 
-  if (isLoading || isFetchingNextPage) {
-    return <PlayListSkeleton />
+  if (isLoading) {
+    return <Loading />
   }
 
   if (isError) <div>예상치 못한 에러가 발생했습니다.</div>
@@ -72,8 +67,10 @@ export function Home() {
           id={playList.playlist_id}
           likesState={playList.is_liked}
           playlist_user_id={playList.playlist_user_id}
+          is_public={playList.is_public}
         />
       ))}
+      {isFetchingNextPage && <Loading />}
       <div ref={observerElem} />
     </>
   )

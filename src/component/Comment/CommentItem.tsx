@@ -24,6 +24,7 @@ type CommentItemProps = {
   createAt: string
   updatedAt: string | null
   playlistId: string
+  creatorId: string
 }
 
 // 댓글 내용 '자세히 보기' 버튼
@@ -60,7 +61,8 @@ const CommentItem = ({
   content,
   createAt,
   updatedAt,
-  playlistId
+  playlistId,
+  creatorId
 }: CommentItemProps) => {
   const [isModifier, setIsModifier] = useState(false)
 
@@ -131,7 +133,7 @@ const CommentItem = ({
       <div className="comment-box">
         <div className="comment-title">
           <span className="comment-user-nickname">{nickname}</span>
-          {commentUserId === currentUserId && (
+          {commentUserId === creatorId && (
             <img
               className="is-creator-nickname"
               src={LogoAsset}

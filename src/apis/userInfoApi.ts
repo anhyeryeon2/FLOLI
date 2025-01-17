@@ -71,8 +71,9 @@ export async function LikedPlayList(
   const PAGE_SIZE = 10
   const { data: likedPlaylists, error } = await supabase
     .from('likes')
-    .select('playlist_id')
+    .select('playlist_id, created_at')
     .eq('user_id', userId)
+    .order('created_at', { ascending: false })
 
   if (error) {
     console.error(error)
@@ -94,15 +95,31 @@ export async function LikedPlayList(
     )
   }
 
-  return playlists
+  const sortedLikeList = likedPlaylists
+    .map(cur => {
+      const playlist = playlists.find(
+        cur2 => cur2.playlist_id === cur.playlist_id
+      )
+      if (playlist) {
+        return { ...playlist, likes_created_at: cur.created_at }
+      }
+      return null
+    })
+    .filter(item => item !== null)
+
+  return sortedLikeList
 }
 
 //좋아요 리스트 삭제
-export async function DeleteLikeList(userId: string | undefined) {
+export async function DeleteLikeList(
+  userId: string | undefined,
+  playlistId: string | undefined
+) {
   const { data, error } = await supabase
     .from('likes')
     .delete()
     .eq('user_id', userId)
+    .eq('playlist_id', playlistId)
 
   if (error) {
     console.error(error)
@@ -112,23 +129,24 @@ export async function DeleteLikeList(userId: string | undefined) {
   return data
 }
 
-//저장된 플레이리스트 정보
 export async function SavedPlayList(
   userId: string | undefined,
   pageParam: number = 1
 ) {
   const PAGE_SIZE = 10
-  const { data: likedPlaylists, error } = await supabase
+
+  const { data: savedPlaylists, error } = await supabase
     .from('bookmarks')
-    .select('playlist_id')
+    .select('playlist_id, created_at')
     .eq('user_id', userId)
+    .order('created_at', { ascending: false })
 
   if (error) {
     console.error(error)
     throw new Error('userId와 일치하는 row 데이터가 존재하지 않습니다.')
   }
 
-  const playlistIds = likedPlaylists.map(item => item.playlist_id)
+  const playlistIds = savedPlaylists.map(item => item.playlist_id)
 
   const { data: playlists, error: playlistError } = await supabase
     .from('playlists')
@@ -143,15 +161,31 @@ export async function SavedPlayList(
     )
   }
 
-  return playlists
+  const sortedPlaylists = savedPlaylists
+    .map(saved => {
+      const playlist = playlists.find(
+        playlist => playlist.playlist_id === saved.playlist_id
+      )
+      if (playlist) {
+        return { ...playlist, bookmark_created_at: saved.created_at }
+      }
+      return null
+    })
+    .filter(item => item !== null)
+
+  return sortedPlaylists
 }
 
 //저장된 리스트 삭제
-export async function DeleteSaveList(userId: string | undefined) {
+export async function DeleteSaveList(
+  userId: string | undefined,
+  playlistId: string | undefined
+) {
   const { data, error } = await supabase
     .from('bookmarks')
     .delete()
     .eq('user_id', userId)
+    .eq('playlist_id', playlistId)
 
   if (error) {
     console.error(error)

@@ -11,6 +11,11 @@ export const HeaderBox = styled.div`
   align-items: center;
   padding-top: var(--spacing-4);
 `
+
+export const HeaderBoxForOther = styled.div`
+  align-items: center;
+`
+
 export const logout = styled.div`
   position: absolute;
   top: 0;
@@ -48,8 +53,9 @@ export const ButtonBox = styled.div`
 `
 
 export const IntruductionBox = styled.div`
-  padding: var(--spacing-1) 0;
+  padding: var(--spacing-2) 0;
   font-size: var(--fs-l);
+  text-align: center;
 `
 
 export const SeparatingBox = styled.div`
@@ -71,6 +77,15 @@ export const ShowTypes = styled.button<{ isActive?: boolean }>`
     border-bottom: 0.2rem solid var(--color-main1);
   `}
 `
+
+export const PlayListBoxForOther = styled.div`
+  margin-top: var(--spacing-5);
+  font-size: var(--fs-xl);
+  font-weight: 500;
+  cursor: pointer;
+  padding-bottom: var(--spacing-5);
+`
+
 export const PlayListsBox = styled.div`
   display: flex;
   flex-direction: column;
@@ -81,4 +96,22 @@ export const NotFound = styled.div`
   margin: 0 auto;
   font-size: var(--fs-xl);
   font-weight: 700;
+`
+
+export const StyledButton = styled.button`
+  flex: 0 0 auto;
+  width: auto;
+  padding: 0.8rem 1.6rem;
+  font-size: 1.4rem;
+  font-weight: 500;
+  color: var(--color-white);
+  background: var(--color-black);
+  border-radius: var(--radius-full);
+  border: 1px solid var(--color-black);
+
+  &.subsc-cancel {
+    padding: 0.8rem 1rem;
+    background: var(--color-white);
+    color: var(--color-black);
+  }
 `

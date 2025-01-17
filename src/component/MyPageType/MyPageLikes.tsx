@@ -37,7 +37,7 @@ export default function MyPageLikes() {
     },
     initialPageParam: 1,
 
-    staleTime: 1000 * 60
+    staleTime: 0
   })
 
   useInfiniteScroll({
@@ -48,7 +48,7 @@ export default function MyPageLikes() {
   })
 
   const { mutate } = useMutation({
-    mutationFn: () => DeleteLikeList(userId),
+    mutationFn: (playlistId: string) => DeleteLikeList(userId, playlistId),
     onSuccess: () => {
       queryClient.invalidateQueries({
         queryKey: ['LikedPlayList']
@@ -60,8 +60,8 @@ export default function MyPageLikes() {
     }
   })
 
-  function handleDelete() {
-    mutate()
+  function handleDelete(playlistId: string) {
+    mutate(playlistId)
   }
 
   if (!playlistData || playlistData.length === 0) {
@@ -86,7 +86,7 @@ export default function MyPageLikes() {
             comments={playlistData.comments_count}
             optionIcon="heart"
             nickname={playlistData.nickname}
-            onOptionClick={() => handleDelete()}
+            onOptionClick={() => handleDelete(playlistData.playlist_id)}
           />
         </S.ItemList>
       ))}

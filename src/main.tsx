@@ -14,23 +14,21 @@ import { Loading, ErrorFallback } from './component'
 const queryClient = new QueryClient()
 
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <QueryClientProvider client={queryClient}>
-      <GlobalStyle />
-      <Providers>
-        <QueryErrorResetBoundary>
-          {({ reset }) => (
-            <ErrorBoundary
-              onReset={reset}
-              FallbackComponent={ErrorFallback}>
-              <Suspense fallback={<Loading />}>
-                <App />
-              </Suspense>
-            </ErrorBoundary>
-          )}
-        </QueryErrorResetBoundary>
-        <ToastMessageContainer />
-      </Providers>
-    </QueryClientProvider>
-  </StrictMode>
+  <QueryClientProvider client={queryClient}>
+    <GlobalStyle />
+    <Providers>
+      <QueryErrorResetBoundary>
+        {({ reset }) => (
+          <ErrorBoundary
+            onReset={reset}
+            FallbackComponent={ErrorFallback}>
+            <Suspense fallback={<Loading />}>
+              <App />
+            </Suspense>
+          </ErrorBoundary>
+        )}
+      </QueryErrorResetBoundary>
+      <ToastMessageContainer />
+    </Providers>
+  </QueryClientProvider>
 )
