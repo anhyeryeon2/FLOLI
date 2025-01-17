@@ -35,7 +35,7 @@ function MyPageSave() {
     },
     initialPageParam: 1,
 
-    staleTime: 1000 * 60
+    staleTime: 0
   })
 
   useInfiniteScroll({
