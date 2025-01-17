@@ -18,14 +18,19 @@ export const CardContainer = styled(Link)`
   align-items: center;
   margin: auto;
   width: 100%;
-  height: calc(var(--max-width) * 9 / 16);
 `
 
 export const ImageWrapper = styled.div`
   width: 100%;
   position: relative;
   overflow: hidden;
+  padding-top: 56.25%;
+  height: 0;
+
   img {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     object-fit: cover;
