@@ -14,7 +14,6 @@ export const FeedConteiner = styled.div`
 export const CardContainer = styled(Link)`
   display: flex;
   flex-direction: column;
-  background-color: var(--color-bg1);
   box-shadow: var(--shadow-s);
   justify-content: center;
   align-items: center;
