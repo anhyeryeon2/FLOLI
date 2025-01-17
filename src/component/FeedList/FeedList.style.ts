@@ -1,5 +1,4 @@
 import styled from 'styled-components'
-import { FaEllipsisH } from 'react-icons/fa'
 import { Link } from 'react-router-dom'
 
 export const FeedConteiner = styled.div`
@@ -52,7 +51,7 @@ export const ContentWrapper = styled.div`
   display: flex;
   align-items: flex-start;
   width: 100%;
-  padding: var(--spacing-4) var(--spacing-3) var(--spacing-3) var(--spacing-3);
+  padding: var(--spacing-3) var(--spacing-3) 2rem;
 `
 
 export const TextWrapper = styled.div`
@@ -97,11 +96,10 @@ export const Icon = styled.span`
   font-size: var(--fs-m);
 `
 
-export const OptionsIcon = styled(FaEllipsisH)`
-  font-size: var(--fs-l);
+export const OptionButton = styled.button`
   margin-left: auto;
-  margin-bottom: var(--spacing-1);
-  color: var(--color-gray);
+  padding: 0.4rem;
+  line-height: 0;
   cursor: pointer;
 `
 export const ModalWrapper = styled.div`

@@ -1,5 +1,5 @@
 import * as S from './FeedList.style'
-import { FaHeart } from 'react-icons/fa'
+import { FaEllipsisH, FaHeart } from 'react-icons/fa'
 import { BiConversation } from 'react-icons/bi'
 import styled from 'styled-components'
 
@@ -40,7 +40,11 @@ export const FeedFooter = ({
         {comments}
       </S.Stat>
       <S.Stat>{date}</S.Stat>
-      <S.OptionsIcon onClick={onClick} />
+      <S.OptionButton
+        type="button"
+        onClick={onClick}>
+        <FaEllipsisH />
+      </S.OptionButton>
     </S.Footer>
   </>
 )
