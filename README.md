@@ -1,9 +1,6 @@
-<p align="center" style="display: flex; align-items: center; justify-content: center;">
-  <img src="https://hackmd.io/_uploads/Bk74THSv1g.png" alt="Floli Logo" width="50" />
-  <span style="margin-left: 10px; font-size: 28px; font-weight: bold;">FLOLI - 영상 공유 SNS 플랫폼</span>
+<p align="center" style="display: flex; align-items: center;">
+  <h1 align="center" style="margin-left: 10px;">FLOLI - 영상 공유 SNS 플랫폼</h1>
 </p>
-
----
 
 <p align="center " style="font-size: 16px; line-height: 1.6;">
   <strong>“취향은 나누면 나눌수록 커진다!”</strong><br>
@@ -13,7 +10,7 @@
 ## 프로젝트 소개
 
 **Floli**는 YouTube의 다양한 영상 링크를 모아 **나만의 플레이리스트**를 만들고,  
-서로 **공유하고 구독하며** 영상 취향을 중심으로 **소통**할 수 있는 **SNS 플랫폼**입니다.
+서로 **공유하고 구독하며** 영상 취향을 중심으로 소통할 수 있는 SNS 플랫폼입니다.
 
 - 🎥 **플레이리스트 만들기**: 내 맘대로 구성한 영상 플레이리스트를 쉽고 간편하게 생성 및 공유
 - 🤝 **구독 & 피드**: 서로를 구독하며 '나만의 타임라인' 형성
@@ -85,9 +82,14 @@
 
 ## 팀원소개
 
-| <img src="https://avatars.githubusercontent.com/u/100520490?v=4" alt="o" width="100" /> | <img src="https://avatars.githubusercontent.com/u/56241150?v=4" alt="o" width="100" /> | <img src="https://avatars.githubusercontent.com/u/182200395?v=4" alt="o" width="100" /> | <img src="https://avatars.githubusercontent.com/u/55516901?v=4" alt="o" width="100" /> |
+<p align="center" >
+  
+| <img src="https://avatars.githubusercontent.com/u/100520490?v=4" alt="o" width="150" /> | <img src="https://avatars.githubusercontent.com/u/56241150?v=4" alt="o" width="150" /> | <img src="https://avatars.githubusercontent.com/u/182200395?v=4" alt="o" width="150" /> | <img src="https://avatars.githubusercontent.com/u/55516901?v=4" alt="o" width="150" /> |
 | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | 안혜련                                                                                  | 권샘이                                                                                 | 전영훈                                                                                  | 박진현                                                                                 |
+
+
+</p>
 
 ### 역할 분담
 
@@ -173,7 +175,7 @@ src/
 
 ## 데이터베이스 구조
 
-![alt text](image.png)
+ <img src="./gif/image.png" alt="데베" />
 
 ## 설치 및 실행
 
