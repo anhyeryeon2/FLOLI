@@ -1,6 +1,6 @@
-![header](https://capsule-render.vercel.app/api?type=Waving&color=e5dbff&height=100&section=header&text=%20&fontSize=90)
+![header](https://capsule-render.vercel.app/api?type=Waving&color=e5dbff&height=130&section=header&text=%20&fontSize=90)
 <p align="center" style="display: flex; align-items: center;">
-  <h1 align="center" style="margin-left: 10px;">🎵FLOLI - 영상 공유 SNS 플랫폼</h1>
+  <h1 align="center">🎵FLOLI - 영상 공유 SNS 플랫폼</h1>
 </p>
 <p align="center " style="font-size: 16px; line-height: 1.6;">
   <strong>“취향은 나누면 나눌수록 커진다!”</strong><br>
@@ -103,8 +103,12 @@
 
 - 기본적인 수준의 디자인 가이드
 - Input, 바텀시트 모달, 풀페이지 모달 등 공통 컴포넌트 제작
-- 플레이리스트 상세페이지 UI 작업 및 기능 구현 - 기능에 필요한 데이터 테이블을 생성한 후, 호출&가공하여 적용
-  ＋ 관련 custom hooks 제작 - 구독, 좋아요, 저장을 토글 형태로, 실시간으로 반영되도록 구현 - 댓글 목록, 댓글 작성/수정/삭제 구현
+- 플레이리스트 상세페이지 UI 작업 및 기능 구현 
+    - 기능에 필요한 데이터 테이블을 생성한 후, 호출&가공하여 적용
+       
+        ＋ 관련 custom hooks 제작 
+    - 구독, 좋아요, 저장을 토글 형태로, 실시간으로 반영되도록 구현 
+    - 댓글 목록, 댓글 작성/수정/삭제 구현
 - 전반적인 테스트
 
 #### 🧑‍💻전영훈 [@Hoonshi](https://github.com/Hoonshi)
