@@ -8,6 +8,7 @@
 </p>
 <br>
 
+
 ## 프로젝트 소개
 
 **Floli**는 YouTube의 다양한 영상 링크를 모아 **나만의 플레이리스트**를 만들고,  
@@ -16,6 +17,8 @@
 - 🎥 **플레이리스트 만들기**: 내 맘대로 구성한 영상 플레이리스트를 쉽고 간편하게 생성 및 공유
 - 🤝 **구독 & 피드**: 서로를 구독하며 '나만의 타임라인' 형성
 - 🌍 **취향 중심 네트워킹**: 영상 취향을 기반으로 자유롭게 소통하고 연결
+
+<br>
 
 ## 프로젝트 일정
 
@@ -30,6 +33,9 @@
 - 기능 구현 : 2025.01.09 - 2025.01.16
 - 리팩토링 : 2025.01.17 - 2025.01.22
 
+
+<br>
+
 ## 기술 스택 및 개발환경
 
 | 기술 스택                                                                                                                                                                                                         | 도입 이유                                                                    |
@@ -42,6 +48,8 @@
 | <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">                                                                                        | CSS-in-JS로 컴포넌트 단위 스타일링이 가능하며, 스타일 충돌을 방지            |
 | <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white">                                                                                                        | 실시간 DB, 인증 등 백엔드 기능을 빠르게 구축하고 확장성을 확보도입           |
 | <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white"> <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black"> | 코드 스타일을 통일하고 품질을 유지하며 잠재적인 오류를 사전에 방지           |
+
+<br>
 
 ## FLOLI 미리보기
 
