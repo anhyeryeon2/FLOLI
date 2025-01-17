@@ -55,26 +55,29 @@ const CommentModifier = ({
       title: '댓글을 수정하시겠습니까?',
       confirmText: '수정',
       cancelText: '취소',
-      onConfirm: () => {
-        const props = { commentId, playlistId, content: modifiedContent }
-        modifyCommentMutate(props, {
-          onSuccess: () => {
-            showToastMessage({
-              message: '댓글이 수정되었습니다.',
-              type: 'success'
-            })
-          },
-          onError: () => {
-            showToastMessage({
-              message:
-                '댓글 수정에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
-              type: 'success',
-              delay: 10000
-            })
-            throw new Error('댓글 수정에 실패하였습니다.')
+      onConfirm: async () => {
+        try {
+          const props = {
+            commentId,
+            playlistId,
+            content: modifiedContent
           }
-        })
-        setIsModifier(false)
+
+          await modifyCommentMutate(props)
+
+          showToastMessage({
+            message: '댓글이 수정되었습니다.',
+            type: 'success'
+          })
+          setIsModifier(false)
+        } catch (error) {
+          showToastMessage({
+            message:
+              '댓글 수정에 실패하였습니다. 새로고침 이후에도 문제가 지속될 경우 관리자에 문의해 주세요.',
+            type: 'error',
+            delay: 10000
+          })
+        }
       }
     })
   }
