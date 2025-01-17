@@ -1,6 +1,10 @@
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
+interface ModalContentContainerProps {
+  isDisabled: boolean
+}
+
 export const FeedConteiner = styled.div`
   display: flex;
   flex-direction: column;
@@ -111,7 +115,17 @@ export const ModalWrapper = styled.div`
   flex-direction: column;
 `
 
-export const ModalContentContainer = styled.div`
+export const ModalContentContainer = styled.div<ModalContentContainerProps>`
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  align-items: center;
+  font-size: var(--fs-xl);
+  opacity: ${({ isDisabled }) => (isDisabled ? 0.5 : 1)};
+  pointer-events: ${({ isDisabled }) => (isDisabled ? 'none' : 'auto')};
+`
+
+export const ModalContentSubContainer = styled.div`
   display: flex;
   width: 100%;
   gap: 20px;

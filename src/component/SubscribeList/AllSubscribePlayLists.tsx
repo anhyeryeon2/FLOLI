@@ -1,5 +1,5 @@
-import { FeedList, Loading, PlayListSkeleton } from '@/component'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { FeedList, Loading } from '@/component'
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { getSubscribeAllPlayLists } from '@/apis/subscribe/playList/index'
 import { useInfiniteScroll } from '@/hooks'
 import { useRef, useEffect } from 'react'
@@ -9,6 +9,7 @@ import { IPlayListType } from '@/types/playList'
 const AllSubscribePlayLists = () => {
   const observerElem = useRef<HTMLDivElement | null>(null)
   const { showToastMessage } = useToastMessageContext()
+  const queryClient = useQueryClient()
 
   const {
     data: allPlayLists,
@@ -21,10 +22,12 @@ const AllSubscribePlayLists = () => {
     queryKey: ['allSubscribePlayList'],
     queryFn: ({ pageParam }) =>
       getSubscribeAllPlayLists(undefined, pageParam as number),
+
     getNextPageParam: (lastPage, allPages) => {
       const nextPage = allPages.length + 1
       return nextPage <= lastPage.length ? nextPage : undefined
     },
+
     select: data => data.pages.flat(),
     initialPageParam: 1,
     staleTime: 1000 * 60
@@ -36,6 +39,11 @@ const AllSubscribePlayLists = () => {
     isFetchingNextPage,
     fetchNextPage
   })
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ['allSubscribePlayList'] })
+  }, [allPlayLists])
+
   useEffect(() => {
     if (isError) {
       showToastMessage({

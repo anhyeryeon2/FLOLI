@@ -1,5 +1,5 @@
 import { FeedList, Loading } from '@/component'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { getSubscribePlayLists } from '@/apis/subscribe/subscribePlayList/index'
 import { useInfiniteScroll } from '@/hooks'
 import { useRef, useEffect } from 'react'
@@ -13,6 +13,7 @@ interface Props {
 const SubscribePlayLists = ({ userId }: Props) => {
   const observerElem = useRef<HTMLDivElement | null>(null)
   const { showToastMessage } = useToastMessageContext()
+  const queryClient = useQueryClient()
 
   const {
     data: subscribePlayLists,
@@ -50,6 +51,10 @@ const SubscribePlayLists = ({ userId }: Props) => {
       })
     }
   }, [isError, showToastMessage])
+
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ['subscribePlayList'] })
+  }, [subscribePlayLists])
 
   if (isLoading) return <Loading />
 

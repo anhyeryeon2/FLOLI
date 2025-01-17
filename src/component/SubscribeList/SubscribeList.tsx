@@ -2,7 +2,7 @@ import { SetStateAction, useRef, useEffect } from 'react'
 import * as S from './SubscribeList.module'
 import { useDragScroll } from '@/hooks/useDragScroll'
 import { getSubscribe } from '@/apis/subscribe'
-import { useQuery } from '@tanstack/react-query'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
 import { SubscribeType } from '@/types/subscribe'
 import { Loading } from '@/component'
 import { useState } from 'react'
@@ -18,6 +18,8 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
   const scrollRef = useRef<HTMLDivElement | null>(null)
   const { showToastMessage } = useToastMessageContext()
   const [isOpen, setIsOpen] = useState(false)
+  const queryClient = useQueryClient()
+
   const {
     data: subscribeList,
     isError,
@@ -48,6 +50,9 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
       })
     }
   }, [isError, showToastMessage])
+  useEffect(() => {
+    queryClient.invalidateQueries({ queryKey: ['subscribeList'] })
+  }, [subscribeList])
 
   if (isLoading) <Loading />
 

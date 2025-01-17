@@ -68,6 +68,8 @@ const Layout = () => {
   const addSearchTerm = useSearchTermListStore(state => state.addSearchTerm)
   const searchTermList = useSearchTermListStore(state => state.searchTermList)
   const navigate = useNavigate()
+  const path = window.location.pathname
+
   const renderHeader = () => {
     if (isSubHeaderPaths) {
       return <HeaderSub />
@@ -93,7 +95,9 @@ const Layout = () => {
 
   const handleMoalFullClose = () => {
     setModalFull(false)
+
     setSearchTerm('')
+    navigate(path)
   }
 
   const handleSearchClick = (term?: string) => {

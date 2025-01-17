@@ -56,7 +56,6 @@ const ViewVideoList = ({
           <IoIosArrowDown size="20" />
         </button>
       </S.TitleWrapper>
-
       <div className="detail-play-List">
         {videoData?.map((data: videoDataType, index: number) => {
           const nextTitle =
