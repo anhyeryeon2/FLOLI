@@ -46,7 +46,7 @@ test.describe('회원가입', () => {
     await modalConfirmButton.click()
 
     await page.waitForNavigation({ url: '/signup/complete', timeout: 10000 })
-    expect(page.url()).toBe('/signup/complete')
+    expect(page.url()).toBe('http://localhost:5173/signup/complete')
   })
 
   test('이메일 중복 체크 실패', async ({ page }) => {
