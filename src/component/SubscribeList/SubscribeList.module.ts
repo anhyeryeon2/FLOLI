@@ -65,6 +65,7 @@ export const SubscribeAllLength = styled.p`
 
 export const NickNameSpan = styled.span`
   white-space: nowrap;
-  width: 68%;
+  width: 66%;
   overflow: hidden;
+  text-overflow: ellipsis;
 `
