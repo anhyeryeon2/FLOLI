@@ -1,12 +1,3 @@
-<!-- > “취향은 나누면 나눌수록 커진다!”
-
->혼자 보기 아까운 영상, 플레이리스트로 만들어 세상과 공유해보세요
-
-<p align="center" style="display: flex; align-items: center;">
-  <img src="https://hackmd.io/_uploads/Bk74THSv1g.png" alt="o" width="50" />
-  <h1 style="margin-left: 10px;">Floli - 영상 공유 SNS 플랫폼</h1>
-</p> -->
-
 <p align="center" style="display: flex; align-items: center; justify-content: center;">
   <img src="https://hackmd.io/_uploads/Bk74THSv1g.png" alt="Floli Logo" width="50" />
   <span style="margin-left: 10px; font-size: 28px; font-weight: bold;">FLOLI - 영상 공유 SNS 플랫폼</span>
