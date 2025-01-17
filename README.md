@@ -1,11 +1,12 @@
 <p align="center" style="display: flex; align-items: center;">
-  <h1 align="center" style="margin-left: 10px;">FLOLI - 영상 공유 SNS 플랫폼</h1>
+  <h1 align="center" style="margin-left: 10px;">🎵FLOLI - 영상 공유 SNS 플랫폼</h1>
 </p>
 
 <p align="center " style="font-size: 16px; line-height: 1.6;">
   <strong>“취향은 나누면 나눌수록 커진다!”</strong><br>
   혼자 보기 아까운 영상, 플레이리스트로 만들어 세상과 공유해보세요!🌟
 </p>
+<br> 
 
 ## 프로젝트 소개
 
