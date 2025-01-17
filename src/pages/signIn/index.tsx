@@ -31,6 +31,9 @@ export function SignIn() {
   } = useForm<LoginFormInputs>({ resolver: zodResolver(loginSchema) })
 
   const handleAuthSuccess = (userData: UserData) => {
+    if (user?.id === userData.id) {
+      return
+    }
     setUser(userData)
     handleToastSuccess('로그인 성공하였습니다')
     navigate('/')
@@ -64,7 +67,6 @@ export function SignIn() {
       }
     } catch (error) {
       handleToastError('세션 확인 중 문제가 발생했습니다. 다시 시도해주세요.')
-      console.log(error)
       localStorage.clear()
       navigate('/login')
     }
@@ -76,18 +78,16 @@ export function SignIn() {
         provider,
         options: { redirectTo: REDIRECT_URL }
       })
-      checkSession()
+
       if (error) {
         const providerName = provider === 'kakao' ? '카카오' : '구글'
         handleToastError(`${providerName} 로그인 실패하였습니다`)
-        console.error(`${provider} Login error:`, error)
       } else {
         await checkSession()
       }
     } catch (error) {
       const providerName = provider === 'kakao' ? '카카오' : '구글'
       handleToastError(`${providerName} 로그인 중 오류가 발생했습니다`)
-      console.error(`${provider} Login error:`, error)
     } finally {
       setSocialLoading(false)
     }
