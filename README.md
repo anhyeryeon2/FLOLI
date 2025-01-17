@@ -1,3 +1,5 @@
+![header](https://capsule-render.vercel.app/api?type=Waving&color=e5dbff&height=100&section=header&text=%20&fontSize=90)
+
 <p align="center" style="display: flex; align-items: center;">
   <h1 align="center" style="margin-left: 10px;">🎵FLOLI - 영상 공유 SNS 플랫폼</h1>
 </p>
@@ -6,7 +8,7 @@
   <strong>“취향은 나누면 나눌수록 커진다!”</strong><br>
   혼자 보기 아까운 영상, 플레이리스트로 만들어 세상과 공유해보세요!🌟
 </p>
-<br> 
+<br>
 
 ## 프로젝트 소개
 
@@ -16,8 +18,6 @@
 - 🎥 **플레이리스트 만들기**: 내 맘대로 구성한 영상 플레이리스트를 쉽고 간편하게 생성 및 공유
 - 🤝 **구독 & 피드**: 서로를 구독하며 '나만의 타임라인' 형성
 - 🌍 **취향 중심 네트워킹**: 영상 취향을 기반으로 자유롭게 소통하고 연결
-
----
 
 ## 프로젝트 일정
 
@@ -34,27 +34,26 @@
 
 ## 기술 스택 및 개발환경
 
-| 기술 스택                                                                                                                                                                                                         | 도입 이유                                                                                            |
-| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------- |
-| <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black">                                                                                                              | 선언적 UI 작성이 가능하며, 커뮤니티와 생태계가 활발해 빠른 문제 해결이 가능                          |
-| <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">                                                                                                    | 정적 타이핑을 통해 버그를 사전에 방지하고, 협업 시 코드 가독성 향상에 유리                           |
-| <img src="https://img.shields.io/badge/Tanstackquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white">                                                                                                 | 비동기 데이터 요청 및 캐싱 기능으로 효율적인 서버 데이터 관리                                        |
-| <img src="https://img.shields.io/badge/Zustand-82612C?style=for-the-badge&logo=&logoColor=white">                                                                                                                 | 애플리케이션의 전역 상태 관리를 단순하고 직관적으로 관리 및 처리                                     |
-| <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">                                                                                                                | 빠른 번들링과 개발 서버 실행, 간편한 설정으로 개발 생산성을 높이기 위해 도입                         |
-| <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">                                                                                        | CSS-in-JS로 컴포넌트 단위 스타일링이 가능하며, 스타일 충돌을 방지하기 위해 도입                      |
-| <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white">                                                                                                        | 실시간 DB, 인증 등 백엔드 기능을 빠르게 구축하고 확장성을 확보하기 위해 도입                         |
-| <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white"> <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black"> | 코드 스타일을 통일하고 품질을 유지하며 잠재적인 오류를 사전에 방지하기 위해 ESLint와 Prettier를 도입 |
+| 기술 스택                                                                                                                                                                                                         | 도입 이유                                                                    |
+| ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| <img src="https://img.shields.io/badge/React-61DAFB?style=for-the-badge&logo=react&logoColor=black">                                                                                                              | 선언적 UI 작성이 가능하며, 커뮤니티와 생태계가 활발해 빠른 문제 해결이 가능  |
+| <img src="https://img.shields.io/badge/TypeScript-3178C6?style=for-the-badge&logo=TypeScript&logoColor=white">                                                                                                    | 정적 타이핑을 통해 버그를 사전에 방지하고, 협업 시 코드 가독성 향상에 유리   |
+| <img src="https://img.shields.io/badge/Tanstackquery-FF4154?style=for-the-badge&logo=reactquery&logoColor=white">                                                                                                 | 비동기 데이터 요청 및 캐싱 기능으로 효율적인 서버 데이터 관리                |
+| <img src="https://img.shields.io/badge/Zustand-82612C?style=for-the-badge&logo=&logoColor=white">                                                                                                                 | 애플리케이션의 전역 상태 관리를 단순하고 직관적으로 관리 및 처리             |
+| <img src="https://img.shields.io/badge/vite-646CFF?style=for-the-badge&logo=vite&logoColor=white">                                                                                                                | 빠른 번들링과 개발 서버 실행, 간편한 설정으로 개발 생산성을 높이기 위해 도입 |
+| <img src="https://img.shields.io/badge/styledcomponents-DB7093?style=for-the-badge&logo=styledcomponents&logoColor=white">                                                                                        | CSS-in-JS로 컴포넌트 단위 스타일링이 가능하며, 스타일 충돌을 방지            |
+| <img src="https://img.shields.io/badge/supabase-3FCF8E?style=for-the-badge&logo=supabase&logoColor=white">                                                                                                        | 실시간 DB, 인증 등 백엔드 기능을 빠르게 구축하고 확장성을 확보도입           |
+| <img src="https://img.shields.io/badge/eslint-4B32C3?style=for-the-badge&logo=eslint&logoColor=white"> <img src="https://img.shields.io/badge/prettier-F7B93E?style=for-the-badge&logo=prettier&logoColor=black"> | 코드 스타일을 통일하고 품질을 유지하며 잠재적인 오류를 사전에 방지           |
 
 ## FLOLI 미리보기
 
-|                                                                    |                                                          |                                                                     |
-| ------------------------------------------------------------------ | -------------------------------------------------------- | ------------------------------------------------------------------- |
-| **1. 회원가입 및 소셜 로그인**                                     | **2. 메인 홈 - 모든 플레이리스트 조회, 검색**            | **3. 구독 탭 - 구독한 사람의 플레이리스트 필터**                    |
-| <img src="./gif/플로리-가입로그인.gif" alt="회원가입 및 로그인" /> | <img src="./gif/플로리-메인탭.gif" alt="메인 홈" />      | <img src="./gif/플로리-구독탭.gif" alt="구독 탭" />                 |
-| **4. 영상 링크로 플레이리스트 생성**                               | **5. 내 플레이리스트 관리 - 삭제, 공개여부 설정**        | **6. 마이페이지 - 프로필 수정, 좋아요 및 저장한 플레이리스트 조회** |
-| <img src="./gif/플로리-생성.gif" alt="플리 생성" />                | <img src="./gif/플로리-내플리탭.gif" alt="내 플리 탭" /> | <img src="./gif/플로리-마이페이지.gif" alt="마이페이지" />          |
-| **7. 상세 페이지 - 플레이리스트 세부 정보 확인 및 영상 재생**      |                                                          |                                                                     |
-| <img src="./gif/플로리-상세탭.gif" alt="상세 페이지" />            |                                                          |                                                                     |
+| **1. 회원가입 및 소셜 로그인**                                     | **2. 메인 홈 - 모든 플레이리스트 조회, 검색**               | **3. 구독 탭 - 구독한 사람의 플레이리스트 필터**              |
+| ------------------------------------------------------------------ | ----------------------------------------------------------- | ------------------------------------------------------------- |
+| <img src="./gif/플로리-가입로그인.gif" alt="회원가입 및 로그인" /> | <img src="./gif/플로리-메인탭.gif" alt="메인 홈" />         | <img src="./gif/플로리-구독탭.gif" alt="구독 탭" />           |
+| **4. 영상 링크로 플레이리스트 생성**                               | **5. 내 플레이리스트 관리 - 삭제, 공개여부 설정**           | **6. 상세 페이지 - 플레이리스트 세부 정보 확인 및 영상 재생** |
+| <img src="./gif/플로리-생성.gif" alt="플리 생성" />                | <img src="./gif/플로리-내플리탭.gif" alt="내 플리 탭" />    | <img src="./gif/플로리-상세탭.gif" alt="상세 페이지" />       |
+| **7. 마이페이지 - 프로필 수정**                                    | **8. 마이페이지 - 좋아요 및 저장한 플레이리스트 조회 지원** |                                                               |
+| <img src="./gif/플로리-프로필수정.gif" alt="상세 페이지" />        | <img src="./gif/플로리-마이페이지탭.gif" alt="마이페이지" />  |                                                               |
 
 <!--
 회원가입 및 소셜 로그인
@@ -83,14 +82,13 @@
 
 ## 팀원소개
 
-<p align="center" >
+<div align="center" >
   
 | <img src="https://avatars.githubusercontent.com/u/100520490?v=4" alt="o" width="150" /> | <img src="https://avatars.githubusercontent.com/u/56241150?v=4" alt="o" width="150" /> | <img src="https://avatars.githubusercontent.com/u/182200395?v=4" alt="o" width="150" /> | <img src="https://avatars.githubusercontent.com/u/55516901?v=4" alt="o" width="150" /> |
 | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------- |
 | 안혜련                                                                                  | 권샘이                                                                                 | 전영훈                                                                                  | 박진현                                                                                 |
 
-
-</p>
+</div>
 
 ### 역할 분담
 
