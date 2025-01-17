@@ -14,7 +14,6 @@ export const FeedConteiner = styled.div`
 export const CardContainer = styled(Link)`
   display: flex;
   flex-direction: column;
-  box-shadow: var(--shadow-s);
   justify-content: center;
   align-items: center;
   margin: auto;
@@ -81,7 +80,7 @@ export const Footer = styled.div`
   align-items: center;
   gap: var(--spacing-5);
   color: var(--color-gray);
-  margin: var(--spacing-2) 0;
+  margin: var(--spacing-1) 0 0;
 `
 export const Stat = styled.div`
   display: flex;

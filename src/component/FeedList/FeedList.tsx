@@ -69,7 +69,7 @@ export const FeedList = ({
                 imageUrl={profileImage}
                 altText="profile"
                 to={`/profile/${playlist_user_id}`}
-                size={'small'}
+                size={'4rem'}
               />
               <S.TextWrapper>
                 <S.Title>{title}</S.Title>
