@@ -100,6 +100,12 @@ const CommentItem = ({
       onConfirm: () => {
         const props = { commentId, playlistId }
         deleteCommentMutate(props, {
+          onSuccess: () => {
+            showToastMessage({
+              message: '댓글이 삭제되었습니다.',
+              type: 'success'
+            })
+          },
           onError: () => {
             showToastMessage({
               message:
