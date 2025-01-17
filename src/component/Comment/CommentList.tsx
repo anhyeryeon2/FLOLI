@@ -6,7 +6,7 @@ import { Loading } from '@/component'
 import { useInfiniteScroll } from '@/hooks'
 import { useRef } from 'react'
 
-const CommentList = ({ playlistId }: CommentListProps) => {
+const CommentList = ({ playlistId, creatorId }: CommentListProps) => {
   const {
     data: commentsData,
     fetchNextPage,
@@ -45,6 +45,7 @@ const CommentList = ({ playlistId }: CommentListProps) => {
           createAt={data.created_at}
           updatedAt={data.updated_at ? data.updated_at : null}
           playlistId={playlistId}
+          creatorId={creatorId}
         />
       ))}
       <div ref={observerElem}>{isFetchingNextPage && <Loading />}</div>
