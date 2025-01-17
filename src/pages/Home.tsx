@@ -4,8 +4,12 @@ import { getPlayList } from '@/apis/feed'
 import { IPlayListType } from '@/types/playList'
 import { useRef } from 'react'
 import { useInfiniteScroll } from '@/hooks'
+import { useLocation } from 'react-router-dom'
 
 export function Home() {
+  const location = useLocation()
+  const isMainPage = location.pathname === '/'
+
   const observerElem = useRef<HTMLDivElement | null>(null)
   const {
     data,
@@ -13,7 +17,8 @@ export function Home() {
     hasNextPage,
     fetchNextPage,
     isFetchingNextPage,
-    isLoading
+    isLoading,
+    refetch
   } = useInfiniteQuery({
     queryKey: ['playList'],
     queryFn: ({ pageParam }) => getPlayList(undefined, pageParam as number),
@@ -29,7 +34,8 @@ export function Home() {
 
     initialPageParam: 1,
 
-    staleTime: 1000 * 60
+    staleTime: 1000 * 60,
+    enabled: isMainPage
   })
 
   useInfiniteScroll({
