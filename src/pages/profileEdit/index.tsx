@@ -119,6 +119,7 @@ export function ProfileEdit() {
     navigate('/mypage')
   }
 
+  console.log(image?.[0])
   return (
     <>
       <S.ContentContainer onSubmit={handleSubmit(onSubmit)}>
