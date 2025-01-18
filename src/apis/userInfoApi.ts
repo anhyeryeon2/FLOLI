@@ -112,6 +112,7 @@ export async function LikedPlayList(
 }
 
 //좋아요 리스트 삭제
+
 export async function DeleteLikeList(
   userId: string | undefined,
   playlistId: string | undefined
@@ -123,87 +124,81 @@ export async function DeleteLikeList(
   return deleteList
 }
 
+//저장된 플리 조회
+
 export async function SavedPlayList(
   userId: string | undefined,
   pageParam: number = 1
 ) {
   const PAGE_SIZE = 10
+  const offset = (pageParam - 1) * PAGE_SIZE
+  const limit = PAGE_SIZE
 
-  const { data: savedPlaylists, error } = await supabase
-    .from('bookmarks')
-    .select('playlist_id, created_at')
-    .eq('user_id', userId)
-    .order('created_at', { ascending: false })
+  const savedRes = await axiosInstance.get('/bookmarks', {
+    params: {
+      user_id: `eq.${userId}`,
+      order: 'created_at.desc'
+    }
+  })
 
-  if (error) {
-    console.error(error)
-    throw new Error('userId와 일치하는 row 데이터가 존재하지 않습니다.')
-  }
+  const playlistIds = savedRes.data
+    .map((item: LikedPlaylist) => item.playlist_id)
+    .join(',')
 
-  const playlistIds = savedPlaylists.map(item => item.playlist_id)
+  const PlayRes = await axiosInstance.get('/playlists', {
+    params: {
+      playlist_id: `in.(${playlistIds})`,
+      limit: limit,
+      offset: offset
+    }
+  })
 
-  const { data: playlists, error: playlistError } = await supabase
-    .from('playlists')
-    .select('*')
-    .in('playlist_id', playlistIds)
-    .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1)
-
-  if (playlistError) {
-    console.error(playlistError)
-    throw new Error(
-      '해당 playlist_id와 일치하는 row 데이터가 존재하지 않습니다.'
-    )
-  }
-
-  const sortedPlaylists = savedPlaylists
-    .map(saved => {
-      const playlist = playlists.find(
-        playlist => playlist.playlist_id === saved.playlist_id
+  const sortedSavedList = savedRes.data
+    .map((cur: LikedPlaylist) => {
+      const playlist = PlayRes.data.find(
+        (cur2: LikedPlaylist) => cur2.playlist_id === cur.playlist_id
       )
       if (playlist) {
-        return { ...playlist, bookmark_created_at: saved.created_at }
+        return { ...playlist }
+      } else {
+        return null
       }
-      return null
     })
-    .filter(item => item !== null)
+    .filter((item: LikedPlaylist) => item !== null)
 
-  return sortedPlaylists
+  return sortedSavedList
 }
 
 //저장된 리스트 삭제
+
 export async function DeleteSaveList(
   userId: string | undefined,
   playlistId: string | undefined
 ) {
-  const { data, error } = await supabase
-    .from('bookmarks')
-    .delete()
-    .eq('user_id', userId)
-    .eq('playlist_id', playlistId)
+  const deleteList = axiosInstance.delete('/bookmarks', {
+    params: { user_id: `eq.${userId}`, playlist_id: `eq.${playlistId}` }
+  })
 
-  if (error) {
-    console.error(error)
-    throw new Error('저장된 플레이리스트 삭제에 실패했어요.')
-  }
-
-  return data
+  return deleteList
 }
 
 //유저 플레이리스트 불러오기
+
 export async function userPlayListGet(
   userId: string | undefined,
-  pageParam: number = 1
+  pageParam: number = 0
 ) {
   const PAGE_SIZE = 10
-  const { data, error } = await supabase
-    .from('playlists')
-    .select('*')
-    .eq('user_id', userId)
-    .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1)
+  const offset = (pageParam - 1) * PAGE_SIZE
+  const limit = PAGE_SIZE
 
-  if (error) {
-    console.error(error)
-  }
+  const userPlayList = await axiosInstance.get('/playlists', {
+    params: {
+      user_id: `eq.${userId}`,
+      limit: limit,
+      offset: offset
+    }
+  })
 
-  return data
+  return userPlayList.data
 }

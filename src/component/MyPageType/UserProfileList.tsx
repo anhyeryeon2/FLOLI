@@ -1,6 +1,6 @@
-import { useRef } from 'react'
+import { useEffect, useRef } from 'react'
 import { useNavigate, useParams } from 'react-router-dom'
-import { useInfiniteQuery } from '@tanstack/react-query'
+import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import * as S from './MyPageLikes.styled'
 import { PlayList } from '@/component'
 import { userPlayListGet } from '@/apis/userInfoApi'
@@ -10,6 +10,7 @@ function UserProfileList() {
   const navigate = useNavigate()
   const observerElem = useRef<HTMLDivElement | null>(null)
   const { userId } = useParams()
+  const queryClient = useQueryClient()
 
   const {
     data: playlistData,
@@ -33,6 +34,12 @@ function UserProfileList() {
 
     staleTime: 1000 * 60
   })
+
+  useEffect(() => {
+    queryClient.invalidateQueries({
+      queryKey: ['userPlayList']
+    })
+  }, [queryClient])
 
   useInfiniteScroll({
     observerElem,
