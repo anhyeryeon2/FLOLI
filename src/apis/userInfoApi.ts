@@ -1,6 +1,7 @@
 import { supabase, supabaseUrl } from '../supabase/supabaseConfig'
+import axiosInstance from './axiosInstance'
 
-interface EditProfile {
+type EditProfile = {
   nickname?: string
   introduction?: string
 }
@@ -48,64 +49,64 @@ export async function UserProfileEdit(
   return data
 }
 
-//유저정보 불러오기 함수 (추후 zustand로 유저정보 불러올 예정 )
+//유저정보 불러오기 함수
 export async function userInfoGet(userId: string | undefined) {
-  const { data, error } = await supabase
-    .from('userinfo')
-    .select('*')
-    .eq('id', userId)
-
-  if (error) {
-    console.error(error)
-    throw new Error('유저 정보를 불러오지 못했습니다다')
-  }
-
-  return data
+  const res = await axiosInstance.get('/userinfo', {
+    params: {
+      id: `eq.${userId}`
+    }
+  })
+  return res.data
 }
 
 //좋아요 누른 플레이리스트 정보
+
+interface LikedPlaylist extends EditProfile {
+  playlist_id: string
+  created_at: string
+  user_id: string
+  like_id: string
+}
+
 export async function LikedPlayList(
   userId: string | undefined,
   pageParam: number = 1
 ) {
   const PAGE_SIZE = 10
-  const { data: likedPlaylists, error } = await supabase
-    .from('likes')
-    .select('playlist_id, created_at')
-    .eq('user_id', userId)
-    .order('created_at', { ascending: false })
+  const offset = (pageParam - 1) * PAGE_SIZE
+  const limit = PAGE_SIZE
 
-  if (error) {
-    console.error(error)
-    throw new Error('userId와 일치하는 row 데이터가 존재하지 않습니다.')
-  }
+  const likedRes = await axiosInstance.get('/likes', {
+    params: {
+      user_id: `eq.${userId}`,
+      order: 'created_at.desc'
+    }
+  })
 
-  const playlistIds = likedPlaylists.map(item => item.playlist_id)
+  const playlistIds = likedRes.data
+    .map((item: LikedPlaylist) => item.playlist_id)
+    .join(',')
 
-  const { data: playlists, error: playlistError } = await supabase
-    .from('playlists')
-    .select('*')
-    .in('playlist_id', playlistIds)
-    .range((pageParam - 1) * PAGE_SIZE, pageParam * PAGE_SIZE - 1)
+  const PlayRes = await axiosInstance.get('/playlists', {
+    params: {
+      playlist_id: `in.(${playlistIds})`,
+      limit: limit,
+      offset: offset
+    }
+  })
 
-  if (playlistError) {
-    console.error(playlistError)
-    throw new Error(
-      '해당 playlist_id와 일치하는 row 데이터가 존재하지 않습니다.'
-    )
-  }
-
-  const sortedLikeList = likedPlaylists
-    .map(cur => {
-      const playlist = playlists.find(
-        cur2 => cur2.playlist_id === cur.playlist_id
+  const sortedLikeList = likedRes.data
+    .map((cur: LikedPlaylist) => {
+      const playlist = PlayRes.data.find(
+        (cur2: LikedPlaylist) => cur2.playlist_id === cur.playlist_id
       )
       if (playlist) {
-        return { ...playlist, likes_created_at: cur.created_at }
+        return { ...playlist }
+      } else {
+        return null
       }
-      return null
     })
-    .filter(item => item !== null)
+    .filter((item: LikedPlaylist) => item !== null)
 
   return sortedLikeList
 }
@@ -115,18 +116,11 @@ export async function DeleteLikeList(
   userId: string | undefined,
   playlistId: string | undefined
 ) {
-  const { data, error } = await supabase
-    .from('likes')
-    .delete()
-    .eq('user_id', userId)
-    .eq('playlist_id', playlistId)
+  const deleteList = axiosInstance.delete('/likes', {
+    params: { user_id: `eq.${userId}`, playlist_id: `eq.${playlistId}` }
+  })
 
-  if (error) {
-    console.error(error)
-    throw new Error('좋아요 누른 플레이리스트 삭제에 실패했어요.')
-  }
-
-  return data
+  return deleteList
 }
 
 export async function SavedPlayList(
