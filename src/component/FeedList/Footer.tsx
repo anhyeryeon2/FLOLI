@@ -19,7 +19,7 @@ export const FeedFooter = ({
   comments: number
   date: string
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void // 이벤트 타입 수정
-  onLikeClick: () => void
+  onLikeClick: (e: React.MouseEvent<SVGAElement>) => void
   likesState: boolean
 }) => (
   <>

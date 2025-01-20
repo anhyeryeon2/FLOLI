@@ -9,6 +9,8 @@ import * as S from './FeedList.style'
 import { subscribeCreate } from '@/apis/subscribe/subscribeCreate'
 import { SetStateAction, useEffect, useState } from 'react'
 import { useAuthStore } from '@/store/useAuthStore'
+import useBookmarksMututation from '@/hooks/useBookmarksMututation'
+import useSubscribeCreate from '@/hooks/useSubscribeCreate'
 
 interface FeedListOption {
   isOpen: boolean
@@ -26,43 +28,13 @@ const FeedListOptionPopUp = ({
   setIsOpen
 }: FeedListOption) => {
   const { showToastMessage } = useToastMessageContext()
-  const queryClient = useQueryClient()
   const [isDisabled, setIsDisabled] = useState(false)
 
   const { user: currentUser } = useAuthStore()
 
-  const { mutate: updateMutate } = useMutation({
-    mutationFn: (id: string) => updateBookmarks(id),
-    onSuccess: () => {
-      showToastMessage({
-        message: `나의 플레이리스트에 추가되었습니다.!! `,
-        type: 'success'
-      })
-      queryClient.invalidateQueries({ queryKey: ['playList'] })
-    },
-    onError: () =>
-      showToastMessage({
-        message: `나의 플레이리스트 추가에 실패하였습니다.`,
-        type: 'error'
-      })
-  })
+  const { mutate: updateMutate } = useBookmarksMututation()
 
-  const { mutate: subscribeCreateMutate } = useMutation({
-    mutationFn: (id: string) => subscribeCreate(id),
-    onSuccess: () => {
-      showToastMessage({
-        message: `구독을 성공하였습니다.!! `,
-        type: 'success'
-      })
-      queryClient.invalidateQueries({ queryKey: ['playList'] })
-    },
-    onError: () =>
-      showToastMessage({
-        message: `구독을 실패하였습니다.`,
-        type: 'error'
-      })
-  })
-
+  const { mutate: subscribeCreateMutate } = useSubscribeCreate()
   const handleSubscribeCreate = (playListId: string) => {
     setIsOpen(false)
     subscribeCreateMutate(playListId)
