@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom'
 import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import * as S from './MyPageLikes.styled'
 import { PlayList } from '@/component'
-import { userPlayListGet } from '@/apis/userInfoApi'
+import { userPlayListGet } from '@/apis/user/fetchUserPlayList'
 import { useInfiniteScroll } from '@/hooks'
 
 function UserProfileList() {

@@ -5,7 +5,8 @@ import {
   useMutation,
   useQueryClient
 } from '@tanstack/react-query'
-import { DeleteSaveList, SavedPlayList } from '@/apis/userInfoApi'
+import { DeleteSaveList } from '@/apis/bookmark/deleteUserBookmarkPlayList'
+import { SavedPlayList } from '@/apis/bookmark/fetchUserBookmarkPlayList'
 import { PlayList } from '@/component'
 import { useInfiniteScroll, useToast } from '@/hooks'
 import { useRef } from 'react'

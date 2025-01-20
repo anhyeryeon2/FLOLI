@@ -1,4 +1,4 @@
-import { userInfoGet } from '@/apis/userInfoApi'
+import { userInfoGet } from '@/apis/user/fetchUserDataType/index'
 import UserProfileList from '@/component/MyPageType/UserProfileList'
 import { Button, Loading, Profile } from '@/component'
 import * as S from '@/pages/mypage/Mypage.styled'
