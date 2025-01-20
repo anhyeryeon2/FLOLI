@@ -1,10 +1,10 @@
 import { FeedList, Loading } from '@/component'
-import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
-import { getSubscribeAllPlayLists } from '@/apis/subscribe/playList/index'
+import { useQueryClient } from '@tanstack/react-query'
 import { useInfiniteScroll } from '@/hooks'
 import { useRef, useEffect } from 'react'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { IPlayListType } from '@/types/playList'
+import useFetchAllSubscribePlayList from '@/hooks/useFetchAllSubscribePlayList'
 
 const AllSubscribePlayLists = () => {
   const observerElem = useRef<HTMLDivElement | null>(null)
@@ -18,21 +18,7 @@ const AllSubscribePlayLists = () => {
     hasNextPage,
     isFetchingNextPage,
     fetchNextPage
-  } = useInfiniteQuery({
-    queryKey: ['allSubscribePlayList'],
-    queryFn: ({ pageParam }) =>
-      getSubscribeAllPlayLists(undefined, pageParam as number),
-
-    getNextPageParam: (lastPage, allPages) => {
-      const nextPage = allPages.length + 1
-      return nextPage <= lastPage.length ? nextPage : undefined
-    },
-
-    select: data => data.pages.flat(),
-    initialPageParam: 1,
-    staleTime: 1000 * 60
-  })
-
+  } = useFetchAllSubscribePlayList()
   useInfiniteScroll({
     observerElem,
     hasNextPage,

@@ -12,7 +12,6 @@ const axiosInstance = axios.create({
     'Content-Type': 'application/json; charset=UTF-8'
   }
 })
-
 axiosInstance.interceptors.request.use(
   async config => {
     const INITIAL_TOKEN = 'accessToken'
