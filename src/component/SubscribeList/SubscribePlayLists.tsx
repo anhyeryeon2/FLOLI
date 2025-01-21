@@ -5,6 +5,7 @@ import { useInfiniteScroll } from '@/hooks'
 import { useRef, useEffect } from 'react'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { IPlayListType } from '@/types/playList'
+import useFetchSubscribePlayList from '@/hooks/useFetchSubscribePlayList'
 
 interface Props {
   userId: string
@@ -22,19 +23,7 @@ const SubscribePlayLists = ({ userId }: Props) => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading
-  } = useInfiniteQuery({
-    queryKey: ['subscribePlayList', userId],
-    queryFn: ({ pageParam }) =>
-      getSubscribePlayLists(userId, pageParam as number),
-    getNextPageParam: (lastPage, allPages) => {
-      const nextPage = allPages.length + 1
-      return nextPage <= lastPage.length ? nextPage : undefined
-    },
-    select: data => data.pages.flat(),
-    enabled: !!userId,
-    initialPageParam: 1,
-    staleTime: 1000 * 60
-  })
+  } = useFetchSubscribePlayList(userId)
 
   useInfiniteScroll({
     observerElem,
