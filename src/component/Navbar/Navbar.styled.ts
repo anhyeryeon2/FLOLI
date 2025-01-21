@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 
 interface IconProps {
-  active?: boolean
+  $active?: boolean
   size?: number
 }
 
