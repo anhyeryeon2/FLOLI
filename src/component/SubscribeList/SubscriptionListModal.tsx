@@ -2,7 +2,7 @@ import { ModalFull } from '@/component'
 import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { deleteSubscribe } from '@/apis/subscribe/subscribeDelete'
 import { SubscribeType } from '@/types/subscribe'
-import { SetStateAction } from 'react'
+import { SetStateAction, useCallback } from 'react'
 import * as S from './SubscribeList.module'
 import { RiUserUnfollowLine } from 'react-icons/ri'
 import { useToast } from '@/hooks/useToast'
@@ -35,12 +35,16 @@ const SubscriptionListModal = ({
       handleToastError(`예상치 못한 이유로 구독을 취소하지 못하였습니다.`)
     }
   })
-  const handleMoalFullClose = () => {
+  const handleMoalFullClose = useCallback(() => {
     setIsOpen(false)
-  }
-  const handleSubscribeDelete = (id: string) => {
-    mutate(id)
-  }
+  }, [])
+  const handleSubscribeDelete = useCallback(
+    (id: string) => {
+      mutate(id)
+    },
+    [mutate]
+  )
+
   return (
     <>
       <ModalFull
