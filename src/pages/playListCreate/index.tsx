@@ -31,6 +31,7 @@ export function PlayListCreate() {
   const { handleToastError, handleToastSuccess } = useToast()
 
   const user = useAuthStore(state => state.user)
+
   const {
     videoLink,
     setVideoLink,
@@ -58,33 +59,39 @@ export function PlayListCreate() {
       queryClient.invalidateQueries({ queryKey: ['playlists'] })
       handleToastSuccess('플레이리스트가 성공적으로 생성되었습니다.')
 
-      setPlaylistTitle('')
-      setPlaylistDescription('')
-      setVideoList([])
-      resetThumbnail()
+      resetForm()
       navigate('/', { state: { refetch: true } })
     },
-    onError: error => {
-      console.error(error)
+    onError: () => {
       handleToastError('플레이리스트 생성에 실패했습니다')
     }
   })
 
-  const handleCreatePlaylist = async () => {
-    const accessToken = localStorage.getItem('accessToken')
+  // 폼 초기화 함수
+  const resetForm = () => {
+    setPlaylistTitle('')
+    setPlaylistDescription('')
+    setVideoList([])
+    resetThumbnail()
+  }
 
-    if (!accessToken) {
+  const handleCreatePlaylist = async () => {
+    if (!user) {
       handleToastError('로그인이 필요합니다.')
       navigate('/login')
+      return
     }
 
     if (!playlistTitle.trim()) {
       handleToastError('플레이리스트 제목을 입력해주세요.')
+      return
     }
 
     if (videoList.length === 0) {
-      handleToastError('영상을 추가해주세요 ')
+      handleToastError('영상을 추가해주세요.')
+      return
     }
+
     const payload: CreatePlaylistPayload = {
       user_id: user?.id || '',
       title: playlistTitle,
