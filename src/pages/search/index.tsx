@@ -6,6 +6,7 @@ import { FeedList, Loading } from '@/component'
 import { IPlayListType } from '@/types/playList'
 import { useInfiniteScroll } from '@/hooks'
 import { useLocation } from 'react-router-dom'
+import useFetchSearchPlayLists from '@/hooks/useFetchSearchPlayList'
 
 export const SearchPage = () => {
   const location = useLocation()
@@ -15,6 +16,7 @@ export const SearchPage = () => {
   const [searchTerm, setSearchTerm] = useState<string>(searchUrl)
   const observerElem = useRef<HTMLDivElement | null>(null)
   const queryClient = useQueryClient()
+
   const {
     data,
     isError,
@@ -22,23 +24,8 @@ export const SearchPage = () => {
     fetchNextPage,
     isFetchingNextPage,
     isLoading
-  } = useInfiniteQuery({
-    queryKey: ['playListSearch', searchTerm],
-    queryFn: ({ pageParam }) =>
-      getSearchPlayLists(searchTerm, pageParam as number),
+  } = useFetchSearchPlayLists(searchTerm)
 
-    getNextPageParam: (lastPage, allPages) => {
-      const nextPage = allPages.length + 1
-
-      return nextPage <= lastPage.length ? nextPage : undefined
-    },
-    select: data => {
-      return data.pages.flat()
-    },
-    initialPageParam: 1,
-
-    staleTime: 1000 * 60
-  })
   useEffect(() => {
     if (location.state && location.state.searchTerm) {
       setSearchTerm(location.state.searchTerm)

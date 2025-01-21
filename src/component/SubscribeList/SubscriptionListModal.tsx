@@ -1,11 +1,9 @@
 import { ModalFull } from '@/component'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { deleteSubscribe } from '@/apis/subscribe/subscribeDelete'
 import { SubscribeType } from '@/types/subscribe'
 import { SetStateAction, useCallback } from 'react'
 import * as S from './SubscribeList.module'
 import { RiUserUnfollowLine } from 'react-icons/ri'
-import { useToast } from '@/hooks/useToast'
+import useDeleteSubscribe from '@/hooks/useDeleteSubscribe'
 
 interface SubscriptionListModalProps {
   isOpen: boolean
@@ -18,26 +16,12 @@ const SubscriptionListModal = ({
   subscribeList,
   setIsOpen
 }: SubscriptionListModalProps) => {
-  const queryClient = useQueryClient()
-  const { handleToastError, handleToastSuccess } = useToast()
+  const { mutate } = useDeleteSubscribe()
 
-  const { mutate } = useMutation({
-    mutationFn: async (subscribe_id: string) => {
-      const res = await deleteSubscribe(subscribe_id)
-      return res.data
-    },
-    onSuccess: () => {
-      handleToastSuccess(`구독을 취소하였습니다. `)
-      queryClient.invalidateQueries({ queryKey: ['subscribeList'] })
-      queryClient.invalidateQueries({ queryKey: ['allSubscribePlayList'] })
-    },
-    onError: () => {
-      handleToastError(`예상치 못한 이유로 구독을 취소하지 못하였습니다.`)
-    }
-  })
   const handleMoalFullClose = useCallback(() => {
     setIsOpen(false)
   }, [])
+
   const handleSubscribeDelete = useCallback(
     (id: string) => {
       mutate(id)

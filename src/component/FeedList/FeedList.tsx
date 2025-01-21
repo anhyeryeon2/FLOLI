@@ -2,13 +2,11 @@ import { FeedListProps } from '@/types/List'
 import * as S from './FeedList.style'
 import { FeedFooter } from './Footer'
 import { memo, useCallback, useState } from 'react'
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { updateLike } from '@/apis/like'
-import { useToastMessageContext } from '@/providers/ToastMessageProvider'
 import { dateKoreanFormat } from '@/utils/dateKoreanFormat'
 import FeedListOptionPopUp from './FeedListOptionPopUp'
 import { Profile } from '../Profile/Profile'
 import { useNavigate } from 'react-router-dom'
+import useUpdateLike from '@/hooks/useUpdateLike'
 
 export const FeedList = memo(
   ({
@@ -26,26 +24,11 @@ export const FeedList = memo(
     is_public
   }: FeedListProps) => {
     const [isOpen, setIsOpen] = useState(false)
-    const { showToastMessage } = useToastMessageContext()
-    const queryClient = useQueryClient()
+
     const navigate = useNavigate()
     const path = window.location.pathname
-    const { mutate } = useMutation({
-      mutationFn: (id: string) => updateLike(id, undefined),
-      onSuccess: () => {
-        showToastMessage({
-          message: `좋아요를 눌렀습니다.!! `,
-          type: 'success'
-        })
-        queryClient.invalidateQueries({ queryKey: ['playList'] })
-      },
 
-      onError: () =>
-        showToastMessage({
-          message: `좋아요를 누르는데 실패했습니다.`,
-          type: 'error'
-        })
-    })
+    const { mutate } = useUpdateLike()
 
     const handleOptionsPopup = useCallback(() => {
       setIsOpen(true)
@@ -55,8 +38,11 @@ export const FeedList = memo(
       setIsOpen(false)
       navigate(path)
     }, [setIsOpen])
+
     const handleUpdateLike = useCallback(
-      (id: string) => {
+      (id: string, e: React.MouseEvent<SVGAElement>) => {
+        e.preventDefault()
+        e.stopPropagation()
         mutate(id)
       },
       [mutate]
@@ -91,7 +77,7 @@ export const FeedList = memo(
                     comments={comments}
                     date={dateKoreanFormat(date)}
                     onClick={handleOptionsPopup}
-                    onLikeClick={() => handleUpdateLike(id)}
+                    onLikeClick={e => handleUpdateLike(id, e)}
                     likesState={likesState}
                   />
                 </S.TextWrapper>

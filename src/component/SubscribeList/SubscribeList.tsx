@@ -1,13 +1,13 @@
 import { SetStateAction, useRef, useEffect, memo, useCallback } from 'react'
 import * as S from './SubscribeList.module'
 import { useDragScroll } from '@/hooks/useDragScroll'
-import { getSubscribe } from '@/apis/subscribe'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
-import { SubscribeType } from '@/types/subscribe'
+import { useQueryClient } from '@tanstack/react-query'
+
 import { Loading } from '@/component'
 import { useState } from 'react'
 import SubscriptionListModal from './SubscriptionListModal'
 import { useToastMessageContext } from '@/providers/ToastMessageProvider'
+import useFetchSubscribeList from '@/hooks/useFetchSubscribeList'
 
 interface Props {
   setUserId: React.Dispatch<SetStateAction<string>>
@@ -20,16 +20,7 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
   const [isOpen, setIsOpen] = useState(false)
   const queryClient = useQueryClient()
 
-  const {
-    data: subscribeList,
-    isError,
-    isLoading
-  } = useQuery<SubscribeType[]>({
-    queryKey: ['subscribeList'],
-    queryFn: () => getSubscribe(),
-    staleTime: 1000 * 60
-  })
-
+  const { data: subscribeList, isError, isLoading } = useFetchSubscribeList()
   const { onMouseDown, onTouchStart, onDragEnd, isDrag, onThrottleDragMove } =
     useDragScroll(scrollRef)
 

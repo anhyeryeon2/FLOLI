@@ -11,8 +11,7 @@ import {
 import { useNavigate } from 'react-router-dom'
 import { IPlayList } from '@/types/playList'
 import { useDebounce } from '@/hooks'
-import { useQuery } from '@tanstack/react-query'
-import { getSearchPlayLists } from '@/apis/search/playList'
+import useFetchSearchPlayList from '@/hooks/useFetchSearchList'
 import { memo, useCallback } from 'react'
 
 // 검색한 내용을 담아냄
@@ -43,13 +42,7 @@ const SearchList = () => {
     [setModalFull, setSearchTerm, addSearchTerm]
   )
 
-  const { data: searchs, isError } = useQuery<IPlayList[]>({
-    queryKey: ['searchPlayList', debouncedTitle],
-    queryFn: () => getSearchPlayLists(debouncedTitle),
-    enabled: !!debouncedTitle,
-    staleTime: 1000 * 60
-  })
-
+  const { data: searchs, isError } = useFetchSearchPlayList(debouncedTitle)
   if (isError) throw new Error('에러가 발생했습니다.')
 
   return (
