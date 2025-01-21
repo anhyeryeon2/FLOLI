@@ -7,7 +7,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { updateBookmarks } from '@/apis/feed/books'
 import * as S from './FeedList.style'
 import { subscribeCreate } from '@/apis/subscribe/subscribeCreate'
-import { SetStateAction, useEffect, useState } from 'react'
+import { SetStateAction, memo, useCallback, useEffect, useState } from 'react'
 import { useAuthStore } from '@/store/useAuthStore'
 import useBookmarksMututation from '@/hooks/useBookmarksMututation'
 import useSubscribeCreate from '@/hooks/useSubscribeCreate'
@@ -35,35 +35,43 @@ const FeedListOptionPopUp = ({
   const { mutate: updateMutate } = useBookmarksMututation()
 
   const { mutate: subscribeCreateMutate } = useSubscribeCreate()
-  const handleSubscribeCreate = (playListId: string) => {
-    setIsOpen(false)
-    subscribeCreateMutate(playListId)
-  }
-  const handlePlayListBookmarks = (id: string) => {
-    setIsOpen(false)
-    updateMutate(id)
-  }
+  const handleSubscribeCreate = useCallback(
+    (playListId: string) => {
+      setIsOpen(false)
+      subscribeCreateMutate(playListId)
+    },
+    [subscribeCreateMutate]
+  )
+  const handlePlayListBookmarks = useCallback(
+    (id: string) => {
+      setIsOpen(false)
+      updateMutate(id)
+    },
+    [updateMutate]
+  )
 
-  const handleSharePlaylist = (id: string) => {
-    setIsOpen(false)
-
-    const shareUrl = `${window.location.origin}/view/${id}`
-    navigator.clipboard
-      .writeText(shareUrl)
-      .then(() => {
-        showToastMessage({
-          message: `플레이리스트 URL이 클립보드에 복사되었습니다!`,
-          type: 'success'
+  const handleSharePlaylist = useCallback(
+    (id: string) => {
+      setIsOpen(false)
+      const shareUrl = `${window.location.origin}/view/${id}`
+      navigator.clipboard
+        .writeText(shareUrl)
+        .then(() => {
+          showToastMessage({
+            message: `플레이리스트 URL이 클립보드에 복사되었습니다!`,
+            type: 'success'
+          })
         })
-      })
-      .catch(err => {
-        console.error(err)
-        showToastMessage({
-          message: `URL 복사에 실패하였습니다.`,
-          type: 'error'
+        .catch(err => {
+          console.error(err)
+          showToastMessage({
+            message: `URL 복사에 실패하였습니다.`,
+            type: 'error'
+          })
         })
-      })
-  }
+    },
+    [setIsOpen, showToastMessage]
+  )
 
   useEffect(() => {
     if (playlist_user_id === currentUser?.id) setIsDisabled(true)
@@ -105,4 +113,4 @@ const FeedListOptionPopUp = ({
   )
 }
 
-export default FeedListOptionPopUp
+export default memo(FeedListOptionPopUp)

@@ -1,4 +1,4 @@
-import { SetStateAction, useRef, useEffect } from 'react'
+import { SetStateAction, useRef, useEffect, memo, useCallback } from 'react'
 import * as S from './SubscribeList.module'
 import { useDragScroll } from '@/hooks/useDragScroll'
 import { useQueryClient } from '@tanstack/react-query'
@@ -24,14 +24,17 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
   const { onMouseDown, onTouchStart, onDragEnd, isDrag, onThrottleDragMove } =
     useDragScroll(scrollRef)
 
-  const handleSubscribeClick = (userId: string) => {
-    setSubcribeDetail(true)
-    setUserId(userId)
-  }
+  const handleSubscribeClick = useCallback(
+    (userId: string) => {
+      setSubcribeDetail(true)
+      setUserId(userId)
+    },
+    [setSubcribeDetail, setUserId]
+  )
 
-  const handleSubscribeListOpen = () => {
+  const handleSubscribeListOpen = useCallback(() => {
     setIsOpen(true)
-  }
+  }, [setIsOpen])
 
   useEffect(() => {
     if (isError) {
@@ -41,6 +44,7 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
       })
     }
   }, [isError, showToastMessage])
+
   useEffect(() => {
     queryClient.invalidateQueries({ queryKey: ['subscribeList'] })
   }, [subscribeList])
@@ -92,4 +96,4 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
   )
 }
 
-export default SubscribeList
+export default memo(SubscribeList)

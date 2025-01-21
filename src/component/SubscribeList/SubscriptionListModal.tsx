@@ -1,6 +1,6 @@
 import { ModalFull } from '@/component'
 import { SubscribeType } from '@/types/subscribe'
-import { SetStateAction } from 'react'
+import { SetStateAction, useCallback } from 'react'
 import * as S from './SubscribeList.module'
 import { RiUserUnfollowLine } from 'react-icons/ri'
 import useDeleteSubscribe from '@/hooks/useDeleteSubscribe'
@@ -17,12 +17,18 @@ const SubscriptionListModal = ({
   setIsOpen
 }: SubscriptionListModalProps) => {
   const { mutate } = useDeleteSubscribe()
-  const handleMoalFullClose = () => {
+
+  const handleMoalFullClose = useCallback(() => {
     setIsOpen(false)
-  }
-  const handleSubscribeDelete = (id: string) => {
-    mutate(id)
-  }
+  }, [])
+
+  const handleSubscribeDelete = useCallback(
+    (id: string) => {
+      mutate(id)
+    },
+    [mutate]
+  )
+
   return (
     <>
       <ModalFull

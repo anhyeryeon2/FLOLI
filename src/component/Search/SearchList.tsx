@@ -12,6 +12,7 @@ import { useNavigate } from 'react-router-dom'
 import { IPlayList } from '@/types/playList'
 import { useDebounce } from '@/hooks'
 import useFetchSearchPlayList from '@/hooks/useFetchSearchList'
+import { memo, useCallback } from 'react'
 
 // 검색한 내용을 담아냄
 const SearchList = () => {
@@ -25,18 +26,21 @@ const SearchList = () => {
   const navigate = useNavigate()
   const debouncedTitle = useDebounce(searchTerm, 300)
 
-  const handleMoalFullClose = () => {
+  const handleMoalFullClose = useCallback(() => {
     setModalFull(false)
     setSearchTerm('')
-  }
+  }, [setModalFull, setSearchTerm])
 
-  const handleSearchClick = (term?: string) => {
-    setModalFull(false) // 모달 닫기
-    const searchValue = term || searchTerm // term이 있을 경우 사용, 아니면 searchTerm 사용
-    setSearchTerm(searchValue) // 선택된 검색어 설정
-    addSearchTerm(searchValue) // 최근 검색어 목록에 추가
-    navigate(`/search?search=${searchValue}`, { state: searchValue }) // navigate로 검색어와 함께 이동
-  }
+  const handleSearchClick = useCallback(
+    (term?: string) => {
+      setModalFull(false) // 모달 닫기
+      const searchValue = term || searchTerm // term이 있을 경우 사용, 아니면 searchTerm 사용
+      setSearchTerm(searchValue) // 선택된 검색어 설정
+      addSearchTerm(searchValue) // 최근 검색어 목록에 추가
+      navigate(`/search?search=${searchValue}`, { state: searchValue }) // navigate로 검색어와 함께 이동
+    },
+    [setModalFull, setSearchTerm, addSearchTerm]
+  )
 
   const { data: searchs, isError } = useFetchSearchPlayList(debouncedTitle)
   if (isError) throw new Error('에러가 발생했습니다.')
@@ -84,4 +88,4 @@ const SearchList = () => {
   )
 }
 
-export default SearchList
+export default memo(SearchList)
