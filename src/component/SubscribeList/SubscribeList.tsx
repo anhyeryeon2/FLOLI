@@ -1,12 +1,4 @@
-import {
-  SetStateAction,
-  useRef,
-  useEffect,
-  Profiler,
-  ProfilerOnRenderCallback,
-  memo,
-  useCallback
-} from 'react'
+import { SetStateAction, useRef, useEffect, memo, useCallback } from 'react'
 import * as S from './SubscribeList.module'
 import { useDragScroll } from '@/hooks/useDragScroll'
 import { getSubscribe } from '@/apis/subscribe'
@@ -68,72 +60,48 @@ const SubscribeList = ({ setUserId, setSubcribeDetail }: Props) => {
 
   if (isLoading) <Loading />
 
-  const onRenderCallback: ProfilerOnRenderCallback = (
-    id, // 방금 커밋된 Profiler 트리의 "id"
-    phase, // "mount" (트리가 방금 마운트가 된 경우) 혹은 "update"(트리가 리렌더링된 경우)
-    actualDuration, // 커밋된 업데이트를 렌더링하는데 걸린 시간
-    baseDuration, // 메모이제이션 없이 하위 트리 전체를 렌더링하는데 걸리는 예상시간
-    startTime, // React가 언제 해당 업데이트를 렌더링하기 시작했는지
-    commitTime // React가 해당 업데이트를 언제 커밋했는지
-    // interactions,
-  ) => {
-    console.log('[subscribeList] Info]', {
-      id,
-      phase,
-      actualDuration,
-      baseDuration,
-      startTime,
-      commitTime
-      // interactions,
-    })
-  }
-
   return (
-    <Profiler
-      onRender={onRenderCallback}
-      id="subscribeList">
-      <S.SubscribeContainer>
-        <S.SubscribeListContainer
-          ref={scrollRef}
-          onMouseDown={onMouseDown} // 마우스 클릭 시
-          onMouseUp={onDragEnd} // 마우스 클릭을 뗀 후
-          onMouseLeave={onDragEnd} // 마우스가 해당 요소 영역을 벗어났을 때
-          onMouseMove={isDrag ? onThrottleDragMove : undefined} // 마우스가 움직일 때
-          onTouchStart={onTouchStart} // 터치 시작 시
-          onTouchEnd={onDragEnd} // 터치 종료 시
-          onTouchMove={isDrag ? onThrottleDragMove : undefined} // 터치 이동 시
-        >
-          {subscribeList && subscribeList.length > 0 ? (
-            subscribeList?.map(subscribe => (
-              <S.SubscribeListItem
-                key={subscribe.user_id}
-                onClick={() =>
-                  handleSubscribeClick(subscribe.subscribed_user_id)
-                }>
-                <S.SubscribeItem>
-                  <S.SubscribeAvatar
-                    src={subscribe.user_profile_image}
-                    alt="구독한 프로필 이미지"
-                  />
-                </S.SubscribeItem>
-              </S.SubscribeListItem>
-            ))
-          ) : (
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              구독한 사람이 없습니다.
-            </div>
-          )}
-        </S.SubscribeListContainer>
-        <S.SubscribeAllList onClick={handleSubscribeListOpen}>
-          전체
-        </S.SubscribeAllList>
-        <SubscriptionListModal
-          isOpen={isOpen}
-          subscribeList={subscribeList}
-          setIsOpen={setIsOpen}
-        />
-      </S.SubscribeContainer>
-    </Profiler>
+    <S.SubscribeContainer>
+      <S.SubscribeListContainer
+        ref={scrollRef}
+        onMouseDown={onMouseDown} // 마우스 클릭 시
+        onMouseUp={onDragEnd} // 마우스 클릭을 뗀 후
+        onMouseLeave={onDragEnd} // 마우스가 해당 요소 영역을 벗어났을 때
+        onMouseMove={isDrag ? onThrottleDragMove : undefined} // 마우스가 움직일 때
+        onTouchStart={onTouchStart} // 터치 시작 시
+        onTouchEnd={onDragEnd} // 터치 종료 시
+        onTouchMove={isDrag ? onThrottleDragMove : undefined} // 터치 이동 시
+      >
+        {subscribeList && subscribeList.length > 0 ? (
+          subscribeList?.map(subscribe => (
+            <S.SubscribeListItem
+              key={subscribe.user_id}
+              onClick={() =>
+                handleSubscribeClick(subscribe.subscribed_user_id)
+              }>
+              <S.SubscribeItem>
+                <S.SubscribeAvatar
+                  src={subscribe.user_profile_image}
+                  alt="구독한 프로필 이미지"
+                />
+              </S.SubscribeItem>
+            </S.SubscribeListItem>
+          ))
+        ) : (
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            구독한 사람이 없습니다.
+          </div>
+        )}
+      </S.SubscribeListContainer>
+      <S.SubscribeAllList onClick={handleSubscribeListOpen}>
+        전체
+      </S.SubscribeAllList>
+      <SubscriptionListModal
+        isOpen={isOpen}
+        subscribeList={subscribeList}
+        setIsOpen={setIsOpen}
+      />
+    </S.SubscribeContainer>
   )
 }
 
