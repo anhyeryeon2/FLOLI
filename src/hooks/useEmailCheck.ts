@@ -1,19 +1,5 @@
 import { useQuery } from '@tanstack/react-query'
-import { supabase } from '@/supabase/supabaseConfig'
-
-const checkEmailExists = async (email: string): Promise<boolean> => {
-  const { data, error } = await supabase
-    .from('userinfo')
-    .select('email')
-    .eq('email', email)
-
-  if (error) {
-    console.error('Supabase Error', error)
-    return false
-  }
-
-  return data.length > 0
-}
+import { checkEmailExists } from '@/apis/signup'
 
 export const useEmailCheck = (email: string) => {
   const { isLoading, isError, refetch } = useQuery({

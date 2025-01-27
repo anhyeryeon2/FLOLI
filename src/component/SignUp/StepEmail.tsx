@@ -40,7 +40,6 @@ export default function StepEmail() {
       setEmail(data.email)
       navigate('/signup/password')
     } catch (error) {
-      console.error(error)
       setError('email', { message: '중복 확인 중 오류가 발생했습니다.' })
     }
   }
