@@ -33,7 +33,7 @@ export function Navbar() {
         <S.MenuItem
           onClick={() => handleClick('home')}
           to="/">
-          <S.Icon active={active === 'home'}>
+          <S.Icon $active={active === 'home'}>
             {active === 'home' ? <IoHomeSharp /> : <IoHomeOutline />}
           </S.Icon>
           <span>홈</span>
@@ -42,7 +42,7 @@ export function Navbar() {
         <S.MenuItem
           onClick={() => handleClick('subscribe')}
           to="/subscriptions">
-          <S.Icon active={active === 'subscribe'}>
+          <S.Icon $active={active === 'subscribe'}>
             {active === 'subscribe' ? (
               <MdSubscriptions />
             ) : (
@@ -56,7 +56,7 @@ export function Navbar() {
           onClick={() => handleClick('add')}
           to="/playlist/create"
           $isCenter>
-          <S.Icon active={active === 'add'}>
+          <S.Icon $active={active === 'add'}>
             {active === 'add' ? (
               <IoAddCircle size={40} />
             ) : (
@@ -68,7 +68,7 @@ export function Navbar() {
         <S.MenuItem
           onClick={() => handleClick('mine')}
           to="/my-playlists">
-          <S.Icon active={active === 'mine'}>
+          <S.Icon $active={active === 'mine'}>
             {active === 'mine' ? (
               <MdPlaylistAddCheckCircle />
             ) : (
@@ -105,6 +105,7 @@ export function Navbar() {
               userId={user?.id || ''}
               size="xsmall"
               to="/mypage"
+              disabledLink={true}
             />
           )}
 
